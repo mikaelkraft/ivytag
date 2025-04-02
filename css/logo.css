@@ -2,9 +2,13 @@
   0% {
     transform: translateX(0);
   }
+  /* Small pause at the end for smoother reset */
+  98% {
+    transform: translateX(calc(-250px * 9));
+  }
   100% {
-    /* Move by -50% (since slides are duplicated) */
-    transform: translateX(calc(-250px * 9)); /* 9 slides × width */
+    transform: translateX(0);
+    /* Reset instantly (hidden by identical slides) */
   }
 }
 
@@ -12,26 +16,26 @@
   background: transparent;
   height: 100px;
   margin: auto;
-  overflow: hidden; /* Hide overflow for seamless effect */
+  overflow: hidden;
   position: relative;
   width: auto;
 }
 
-/* Gradient fade-out on both sides */
+/* Stronger fade effect to mask the transition */
 .slider::before,
 .slider::after {
-  background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 20%);
   content: "";
   height: 100px;
   position: absolute;
-  width: 80px;
-  z-index: 2; /* Ensure gradients appear above slides */
+  width: 150px; /* Wider gradient for better masking */
+  z-index: 2;
 }
 
 .slider::after {
   right: 0;
   top: 0;
-  transform: rotateZ(180deg); /* Flip gradient for right side */
+  transform: rotateZ(180deg);
 }
 
 .slider::before {
@@ -40,15 +44,21 @@
 }
 
 .slider .slide-track {
-  animation: scroll 40s linear infinite; /* Smooth infinite loop */
+  animation: scroll 30s linear infinite; /* Faster = less noticeable reset */
   display: flex;
-  width: calc(250px * 18); /* Double width (9 slides × 2) */
-  will-change: transform; /* Optimize performance */
+  width: calc(250px * 18);
+  will-change: transform;
 }
 
 .slider .slide {
   height: 100px;
   width: 250px;
   margin: 8px;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
+  /* Slight scale-down to emphasize motion */
+  transition: transform 0.2s ease;
+}
+
+.slider .slide:hover {
+  transform: scale(0.95); /* Optional: Interactive effect */
 }
