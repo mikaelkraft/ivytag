@@ -1,54 +1,57 @@
-  @keyframes scroll {
-                  0% {
-                      left: 0%;
-                        }
-                          100% {
-                              left: 100%;
-                                }
-                                }
-                                .slider {
-                                  background: transparent;
-                                    
-                                      height: 100px;
-                                        margin: auto;
-                                          overflow: hidden;
-                                            position: relative;
-                                              width: auto;
-                                              }
-                                              .slider::before, .slider::after {
-                                                background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 100%);
-                                                  content: "";
-                                                    height: 100px;
-                                                      position: absolute;
-                                                        width: 80px;
-                                                          z-index: 2;
-                                                          }
-                                                          .slider::after {
-                                                            right: 0;
-                                                              top: 0;
-                                                                transform: rotateZ(180deg);
-                                                                }
-                                                                .slider::before {
-                                                                  left: 0;
-                                                                    top: 0;
-                                                                    }
-                                                                    .slider .slide-track {
-                                                                      -webkit-animation: scroll 40s linear infinite;
-                                                                                animation: scroll 40s linear infinite;
-                                                                                  display: flex;
-                                                                                    width: calc(250px * 18);
-                                                                                    }
-                                                                                    .slider .slide {
-                                                                                        height: 100px;
-                                                                                        width: 250px;
-                                                                                        margin: 8px;
-                                                                                        
-                                                                                        }
-                                                                                    .slider .slide:first-child {
-                                                                                          scroll-behavior: smooth;
-                                                                                          left: 0;
-                                                                                          
-                                                                                          -webkit-transition: left .4s ease-in;  
-                                                                                          transition: left .4s ease-in;
-                                                                                        
-                                                                                        }
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Only translate by half the width since we duplicated the slides */
+    transform: translateX(calc(-250px * 9));
+  }
+}
+
+.slider {
+  background: transparent;
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: auto;
+}
+
+.slider::before,
+.slider::after {
+  background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 100%);
+  content: "";
+  height: 100px;
+  position: absolute;
+  width: 80px;
+  z-index: 2;
+}
+
+.slider::after {
+  right: 0;
+  top: 0;
+  transform: rotateZ(180deg);
+}
+
+.slider::before {
+  left: 0;
+  top: 0;
+}
+
+.slider .slide-track {
+  animation: scroll 40s linear infinite;
+  display: flex;
+  /* Double the width to accommodate duplicated slides */
+  width: calc(250px * 18);
+  /* Add will-change for potential performance optimization */
+  will-change: transform;
+}
+
+.slider .slide {
+  height: 100px;
+  width: 250px;
+  margin: 8px;
+  flex-shrink: 0; /* Prevent slides from shrinking */
+}
+
+/* Remove the first-child specific styles as they're not needed */
