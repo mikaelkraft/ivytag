@@ -3,8 +3,8 @@
     transform: translateX(0);
   }
   100% {
-    /* Only translate by half the width since we duplicated the slides */
-    transform: translateX(calc(-250px * 9));
+    /* Move by -50% (since slides are duplicated) */
+    transform: translateX(calc(-250px * 9)); /* 9 slides × width */
   }
 }
 
@@ -12,11 +12,12 @@
   background: transparent;
   height: 100px;
   margin: auto;
-  overflow: hidden;
+  overflow: hidden; /* Hide overflow for seamless effect */
   position: relative;
   width: auto;
 }
 
+/* Gradient fade-out on both sides */
 .slider::before,
 .slider::after {
   background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 100%);
@@ -24,13 +25,13 @@
   height: 100px;
   position: absolute;
   width: 80px;
-  z-index: 2;
+  z-index: 2; /* Ensure gradients appear above slides */
 }
 
 .slider::after {
   right: 0;
   top: 0;
-  transform: rotateZ(180deg);
+  transform: rotateZ(180deg); /* Flip gradient for right side */
 }
 
 .slider::before {
@@ -39,19 +40,15 @@
 }
 
 .slider .slide-track {
-  animation: scroll 40s linear infinite;
+  animation: scroll 40s linear infinite; /* Smooth infinite loop */
   display: flex;
-  /* Double the width to accommodate duplicated slides */
-  width: calc(250px * 18);
-  /* Add will-change for potential performance optimization */
-  will-change: transform;
+  width: calc(250px * 18); /* Double width (9 slides × 2) */
+  will-change: transform; /* Optimize performance */
 }
 
 .slider .slide {
   height: 100px;
   width: 250px;
   margin: 8px;
-  flex-shrink: 0; /* Prevent slides from shrinking */
+  flex-shrink: 0; /* Prevent shrinking */
 }
-
-/* Remove the first-child specific styles as they're not needed */
