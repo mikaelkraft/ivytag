@@ -417,10 +417,13 @@
                                                                                                                                                                                         </div>
                 <hr class="studio__section__hr section__hr list__hr hr">
                 <hr class="studio__section__hr section__hr list__hr hr">
-                <div style="text-align: center; display:block; background-color: rgb(8, 100, 8); width: 100%; height: 50px; ">Ivytag &copy;2023. All rights reserved.</div>
+                <div style="text-align: center; display:block; background-color: rgb(8, 100, 8); width: 100%; height: 50px; ">Ivytag &copy; <span id="year"></span>. All rights reserved.</div>
                 <div class="credits">Inspired by : &nbsp;<a class="credits-link" href="https://dimorph.ch" target="_blank">Dimorph</a>&nbsp; __
                 Icons by : &nbsp;<a href="https://devicon.dev" target="_blank">DevIcon</a></div>
-                </section>
+                <script>
+   document.getElementById("year").textContent = new Date().getFullYear();
+                </script>
+                        </section>
                 
         <div class="webgl__color"></div>
         <div class="preloader" id="preloader">
