@@ -1,16 +1,4 @@
-
-@-webkit-keyframes scroll {
-  0% {
-      transform: translateX(0);
-      delay: .1s;
-      transition: all .2s ease-in;
-        }
-          100% {
-              transform: translateX(calc(-250px * 9));
-                }
-                }
-
-                @keyframes scroll {
+  @keyframes scroll {
                   0% {
                       transform: translateX(0);
                       delay: .1s;
