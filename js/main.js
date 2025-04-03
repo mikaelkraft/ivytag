@@ -20599,3 +20599,13 @@ function producePrompt(message, promptLocation, color) {
     document.getElementById(promptLocation).style.color = color;
 
 }
+//logo slides
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.slide-track');
+  const slides = document.querySelectorAll('.slide');
+  // Double the slides for seamless looping
+  slides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    track.appendChild(clone);
+  });
+});
