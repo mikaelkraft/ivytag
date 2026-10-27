@@ -19542,7 +19542,7 @@
         Lr.core.globals("ScrollTrigger", jo),
         ha(),
         console.log("%cWith ♥ by Mikael Kraft for ➤ https://ivytag.world", "background: green; color: white; padding: 2ch 3ch;");
-    var Od, Id, Nd, zd, Bd, Hd, kd = new pt({
+    var Od, Id, Nd, zd, Bd, Hd, kd = window.kd = new pt({
         el: document.querySelector(".js-smooth-scroll"),
         smooth: !0,
         smoothMobile: !0,
@@ -20162,7 +20162,26 @@
                             }
                         });
                     this.mesh = new Hc(t, e),
-                        this.scene.add(this.mesh)
+                        this.scene.add(this.mesh);
+                    var coreGeo = new xd(0.52, 1);
+                    var coreMat = new oc({
+                        wireframe: true,
+                        color: new ac(0x38ef7d),
+                        transparent: true,
+                        opacity: 0.65
+                    });
+                    this.coreMesh = new Hc(coreGeo, coreMat);
+                    this.scene.add(this.coreMesh);
+                    var haloGeo = new xd(1.42, 0);
+                    var haloMat = new oc({
+                        wireframe: true,
+                        color: new ac(0x10b981),
+                        transparent: true,
+                        opacity: 0.28
+                    });
+                    this.haloMesh = new Hc(haloGeo, haloMat);
+                    this.haloMesh.rotation.x = Math.PI / 4;
+                    this.scene.add(this.haloMesh);
                 }
             }, {
                 key: "addEvents",
@@ -20299,13 +20318,35 @@
             }, {
                 key: "renderMobile",
                 value: function () {
-                    this.mesh.material.uniforms.uTime.value = .22 * this.clock.getElapsedTime(),
+                    var t = this.clock.getElapsedTime();
+                    if (this.coreMesh) {
+                        this.coreMesh.rotation.y = -0.15 * t;
+                        this.coreMesh.rotation.z = 0.1 * t;
+                        var s = 0.52 + 0.05 * Math.sin(2.0 * t);
+                        this.coreMesh.scale.set(s, s, s);
+                    }
+                    if (this.haloMesh) {
+                        this.haloMesh.rotation.x = 0.08 * t;
+                        this.haloMesh.rotation.y = 0.12 * t;
+                    }
+                    this.mesh.material.uniforms.uTime.value = .22 * t,
                         this.renderer.render(this.scene, this.camera)
                 }
             }, {
                 key: "render",
                 value: function () {
-                    this.mesh.material.uniforms.uTime.value = .32 * this.clock.getElapsedTime(),
+                    var t = this.clock.getElapsedTime();
+                    if (this.coreMesh) {
+                        this.coreMesh.rotation.y = -0.22 * t;
+                        this.coreMesh.rotation.z = 0.14 * t;
+                        var s = 0.52 + 0.06 * Math.sin(2.4 * t);
+                        this.coreMesh.scale.set(s, s, s);
+                    }
+                    if (this.haloMesh) {
+                        this.haloMesh.rotation.x = 0.1 * t;
+                        this.haloMesh.rotation.y = 0.18 * t;
+                    }
+                    this.mesh.material.uniforms.uTime.value = .32 * t,
                         this.renderer.render(this.scene, this.camera)
                 }
             }]) && t(n.prototype, i),
@@ -20688,10 +20729,406 @@ function initContactForm() {
 }
 
 // ==========================================================================
-// 4. Initialize Everything on Document Ready
+// 4. Preloader Monospace Digital Counter
+// ==========================================================================
+function initPreloaderCounter() {
+    var counterEl = document.getElementById("preloaderCounter");
+    var fillEl = document.getElementById("preloaderCounterFill");
+    if (!counterEl) return;
+
+    var duration = 2400; // ms
+    var startTime = performance.now();
+
+    function updateCounter(currentTime) {
+        var elapsed = currentTime - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 2.5);
+        var count = Math.floor(eased * 100);
+
+        counterEl.textContent = count + "%";
+        if (fillEl) fillEl.style.width = count + "%";
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        } else {
+            counterEl.textContent = "100%";
+            if (fillEl) fillEl.style.width = "100%";
+        }
+    }
+    requestAnimationFrame(updateCounter);
+}
+
+// ==========================================================================
+// 5. Synthesized Web Audio Cyber Sound Engine
+// ==========================================================================
+var SoundEngine = (function () {
+    var ctx = null;
+    var isMuted = localStorage.getItem("ivytag_sfx") !== "on"; // Default off for user comfort
+
+    function getAudioContext() {
+        if (!ctx) {
+            var AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) ctx = new AudioCtx();
+        }
+        if (ctx && ctx.state === "suspended") {
+            ctx.resume();
+        }
+        return ctx;
+    }
+
+    function playTone(freqStart, freqEnd, type, duration, gainLevel) {
+        if (isMuted) return;
+        try {
+            var c = getAudioContext();
+            if (!c) return;
+
+            var osc = c.createOscillator();
+            var gain = c.createGain();
+
+            osc.type = type || "sine";
+            var now = c.currentTime;
+
+            osc.frequency.setValueAtTime(freqStart, now);
+            if (freqEnd && freqEnd !== freqStart) {
+                osc.frequency.exponentialRampToValueAtTime(freqEnd, now + duration);
+            }
+
+            gain.gain.setValueAtTime(gainLevel || 0.04, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+            osc.connect(gain);
+            gain.connect(c.destination);
+
+            osc.start(now);
+            osc.stop(now + duration + 0.02);
+        } catch (e) {}
+    }
+
+    return {
+        isMuted: function () {
+            return isMuted;
+        },
+        toggle: function () {
+            isMuted = !isMuted;
+            localStorage.setItem("ivytag_sfx", isMuted ? "off" : "on");
+            if (!isMuted) {
+                this.playChime();
+            }
+            return !isMuted;
+        },
+        playHover: function () {
+            playTone(520, 780, "sine", 0.04, 0.025);
+        },
+        playClick: function () {
+            playTone(880, 1320, "triangle", 0.06, 0.05);
+        },
+        playChime: function () {
+            playTone(523.25, 1046.5, "sine", 0.16, 0.06);
+        },
+        playSuccess: function () {
+            playTone(659.25, 987.77, "sine", 0.1, 0.05);
+            setTimeout(function () {
+                playTone(987.77, 1318.5, "sine", 0.15, 0.06);
+            }, 80);
+        }
+    };
+})();
+
+function initSoundToggle() {
+    var btn = document.getElementById("soundToggle");
+    var statusText = document.getElementById("soundStatusText");
+    var iconOn = btn ? btn.querySelector(".sound-icon--on") : null;
+    var iconOff = btn ? btn.querySelector(".sound-icon--off") : null;
+    if (!btn) return;
+
+    function updateUI(isEnabled) {
+        if (statusText) statusText.textContent = isEnabled ? "ON" : "OFF";
+        if (iconOn) iconOn.style.display = isEnabled ? "inline-block" : "none";
+        if (iconOff) iconOff.style.display = isEnabled ? "none" : "inline-block";
+        if (isEnabled) {
+            btn.classList.add("is-active");
+        } else {
+            btn.classList.remove("is-active");
+        }
+    }
+
+    updateUI(!SoundEngine.isMuted());
+
+    btn.addEventListener("click", function () {
+        var enabled = SoundEngine.toggle();
+        updateUI(enabled);
+        CyberToast.show(enabled ? "Cyber Audio FX Enabled" : "Audio FX Muted");
+    });
+
+    var hoverSelector = ".text-link, .text-link-nav, .project-card, .app-form-button, .social-link, .tech-item, .back-to-top-btn, .sound-toggle-btn, .project-card__btn";
+    document.addEventListener("mouseenter", function (e) {
+        if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
+            SoundEngine.playHover();
+        }
+    }, true);
+}
+
+// ==========================================================================
+// 6. Featured Projects Data & Interactive Modal
+// ==========================================================================
+var IVY_PROJECTS = {
+    "norra-ai": {
+        id: "norra-ai",
+        title: "Norra AI",
+        tagline: "Autonomous AI Conversational Intelligence & Enterprise Copilot",
+        badge: "PRODUCTION // AI AGENT",
+        stats: [
+            { label: "Latency", value: "<110ms" },
+            { label: "Active Sessions", value: "100k+" },
+            { label: "Uptime", value: "99.98%" }
+        ],
+        description: "Norra AI is an advanced enterprise-grade AI conversational platform that orchestrates real-time multi-modal streaming reasoning, contextual document retrieval, and adaptive workflows for business teams. Built for high concurrency with zero degradation in latency.",
+        tags: ["React", "TypeScript", "Python", "FastAPI", "WebGL", "Tailwind CSS", "Redis"]
+    },
+    "grantify": {
+        id: "grantify",
+        title: "Grantify Web3",
+        tagline: "Decentralized Grants Distribution & Milestone Verifier",
+        badge: "DECENTRALIZED PROTOCOL",
+        stats: [
+            { label: "Capital Disbursed", value: "$4.2M+" },
+            { label: "Teams Funded", value: "320+" },
+            { label: "Security Audits", value: "2 Pass" }
+        ],
+        description: "Grantify revolutionizes community grant distribution via quadratic funding algorithms and on-chain escrow milestones. Smart contracts safeguard funds while community token-holders vote with cryptographically verified identity attestations.",
+        tags: ["Solidity", "Next.js", "GraphQL", "PostgreSQL", "Ethers.js", "Tailwind CSS"]
+    },
+    "zeebuilder": {
+        id: "zeebuilder",
+        title: "ZeeBuilder Platform",
+        tagline: "High-Performance Visual Site Architect & Edge CMS",
+        badge: "SAAS PLATFORM",
+        stats: [
+            { label: "Lighthouse Score", value: "99/100" },
+            { label: "Build Time", value: "<2.4s" },
+            { label: "Global Edge", value: "280 PoPs" }
+        ],
+        description: "ZeeBuilder is an ultra-fast visual design and component assembly studio enabling marketing and product teams to publish blazing-fast web experiences without technical debt. Compiled code outputs 100% semantic, clean HTML/CSS/JS.",
+        tags: ["JavaScript", "Webpack", "Sass", "PHP", "Node.js", "Redis"]
+    },
+    "metachains": {
+        id: "metachains",
+        title: "MetaChains Gateway",
+        tagline: "Cross-Chain Cryptographic Liquidity Bridge & Portal",
+        badge: "WEB3 INFRASTRUCTURE",
+        stats: [
+            { label: "Total Bridged", value: "$18.5M" },
+            { label: "Avg Finality", value: "<28s" },
+            { label: "Exploits / Loss", value: "$0.00" }
+        ],
+        description: "MetaChains is an institutional-grade cross-chain liquidity portal engineered for frictionless atomic swaps and arbitrary cross-network message passing. Backed by threshold cryptographic signatures and multi-validator attestations.",
+        tags: ["Solidity", "React", "Socket.io", "TypeScript", "Docker", "Node.js"]
+    }
+};
+
+function initProjectModal() {
+    var modal = document.getElementById("projectModal");
+    var closeBtn = document.getElementById("modalCloseBtn");
+    var dismissBtn = document.getElementById("modalDismissBtn");
+    var backdrop = document.getElementById("projectModalBackdrop");
+    if (!modal) return;
+
+    function openModal(projectId) {
+        var p = IVY_PROJECTS[projectId];
+        if (!p) return;
+
+        var titleEl = document.getElementById("modalProjectTitle");
+        var badgeEl = document.getElementById("modalProjectBadge");
+        var nameEl = document.getElementById("modalProjectName");
+        var taglineEl = document.getElementById("modalProjectTagline");
+        var descEl = document.getElementById("modalProjectDesc");
+
+        if (titleEl) titleEl.textContent = p.title + " // System Spec";
+        if (badgeEl) badgeEl.textContent = p.badge;
+        if (nameEl) nameEl.textContent = p.title;
+        if (taglineEl) taglineEl.textContent = p.tagline;
+        if (descEl) descEl.textContent = p.description;
+
+        var metricsContainer = document.getElementById("modalProjectMetrics");
+        if (metricsContainer) {
+            metricsContainer.innerHTML = p.stats.map(function (s) {
+                return '<div class="project-modal__metric-card">' +
+                    '<div class="metric-val">' + s.value + '</div>' +
+                    '<div class="metric-lbl">' + s.label + '</div>' +
+                    '</div>';
+            }).join("");
+        }
+
+        var tagsContainer = document.getElementById("modalProjectTags");
+        if (tagsContainer) {
+            tagsContainer.innerHTML = p.tags.map(function (tag) {
+                return '<span class="project-modal__tag">' + tag + '</span>';
+            }).join("");
+        }
+
+        modal.classList.add("is-active");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        if (SoundEngine) SoundEngine.playChime();
+    }
+
+    function closeModal() {
+        modal.classList.remove("is-active");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        if (SoundEngine) SoundEngine.playClick();
+    }
+
+    document.querySelectorAll(".js-open-project-modal").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("data-project-id");
+            openModal(id);
+        });
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (dismissBtn) dismissBtn.addEventListener("click", closeModal);
+    if (backdrop) backdrop.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("is-active")) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll(".modal-inquire-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            closeModal();
+            setTimeout(function () {
+                var contactEl = document.getElementById("contactForm") || document.getElementById("studio");
+                if (window.kd && typeof window.kd.scrollTo === "function") {
+                    window.kd.scrollTo(contactEl, { duration: 900 });
+                } else if (contactEl) {
+                    contactEl.scrollIntoView({ behavior: "smooth" });
+                }
+            }, 300);
+        });
+    });
+}
+
+// ==========================================================================
+// 7. Scroll Progress Bar & Floating Back-To-Top Button
+// ==========================================================================
+function initScrollFeatures() {
+    var progressBar = document.getElementById("scrollProgressBar");
+    var topBtn = document.getElementById("backToTopBtn");
+
+    function updateProgress(scrollY, maxScroll) {
+        if (progressBar && maxScroll > 0) {
+            var pct = Math.min(Math.max((scrollY / maxScroll) * 100, 0), 100);
+            progressBar.style.width = pct + "%";
+        }
+        if (topBtn) {
+            if (scrollY > 350) {
+                topBtn.classList.add("is-visible");
+            } else {
+                topBtn.classList.remove("is-visible");
+            }
+        }
+    }
+
+    if (window.kd && typeof window.kd.on === "function") {
+        window.kd.on("scroll", function (args) {
+            var scrollY = args.scroll.y;
+            var maxScroll = args.limit ? args.limit.y : (document.documentElement.scrollHeight - window.innerHeight);
+            updateProgress(scrollY, maxScroll);
+        });
+    }
+
+    window.addEventListener("scroll", function () {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        updateProgress(scrollY, maxScroll);
+    }, { passive: true });
+
+    if (topBtn) {
+        topBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (SoundEngine) SoundEngine.playClick();
+            if (window.kd && typeof window.kd.scrollTo === "function") {
+                window.kd.scrollTo("#intro", { duration: 900 });
+            } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        });
+    }
+}
+
+// ==========================================================================
+// 8. Cyber Toast & Clipboard Copy Support
+// ==========================================================================
+var CyberToast = (function () {
+    var toast = document.getElementById("cyberToast");
+    var toastText = document.getElementById("cyberToastText");
+    var timer = null;
+
+    return {
+        show: function (msg, duration) {
+            if (!toast) toast = document.getElementById("cyberToast");
+            if (!toastText) toastText = document.getElementById("cyberToastText");
+            if (!toast) return;
+
+            if (toastText) toastText.textContent = msg || "Action completed";
+            toast.classList.add("is-visible");
+
+            if (SoundEngine) SoundEngine.playSuccess();
+
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(function () {
+                toast.classList.remove("is-visible");
+            }, duration || 3200);
+        }
+    };
+})();
+
+function initClipboardCopy() {
+    document.querySelectorAll("[data-copy]").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            var text = this.getAttribute("data-copy");
+            if (!text) return;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    CyberToast.show("Copied: " + text);
+                }).catch(function () {
+                    CyberToast.show("Copied to clipboard");
+                });
+            } else {
+                var temp = document.createElement("textarea");
+                temp.value = text;
+                temp.style.position = "fixed";
+                temp.style.opacity = "0";
+                document.body.appendChild(temp);
+                temp.select();
+                try {
+                    document.execCommand("copy");
+                    CyberToast.show("Copied: " + text);
+                } catch (err) {
+                    CyberToast.show("Copied to clipboard");
+                }
+                document.body.removeChild(temp);
+            }
+        });
+    });
+}
+
+// ==========================================================================
+// 9. Initialize All Appwide Systems on Document Ready
 // ==========================================================================
 $(document).ready(function () {
+    initPreloaderCounter();
     initMatrixLogo();
     initTechStackRandomizer();
     initContactForm();
+    initSoundToggle();
+    initProjectModal();
+    initScrollFeatures();
+    initClipboardCopy();
 });

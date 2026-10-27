@@ -40,25 +40,41 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     </head>
     <body>
+        <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
         <div class="header">
             <div id="holder" class="holder">PLEASE WAIT</div>
-            <nav class="header__nav">
-                <ul class="header__nav-list">
-                    <li class="header__nav-list-elem">
-                        <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
-                            <span class="icon-scroll-top">↑</span>
-                        </a>
-                    </li>
-                    <li class="header__nav-list-elem">
-                        <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
-                    </li>
-                    <li class="header__nav-list-elem">
-                        <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
-                    </li>
-                </ul>
-                <div class="liner"></div>
-                <div class="liner--before"></div>
-            </nav>
+            <div class="header__actions">
+                <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
+                    <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span class="sound-label">SFX: <b id="soundStatusText">OFF</b></span>
+                </button>
+                <nav class="header__nav">
+                    <ul class="header__nav-list">
+                        <li class="header__nav-list-elem">
+                            <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
+                                <span class="icon-scroll-top">↑</span>
+                            </a>
+                        </li>
+                        <li class="header__nav-list-elem">
+                            <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
+                        </li>
+                        <li class="header__nav-list-elem">
+                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
+                        </li>
+                    </ul>
+                    <div class="liner"></div>
+                    <div class="liner--before"></div>
+                </nav>
+            </div>
         </div>
         <div class="position-wrapper">
             <div class="byline" id="siteByline">
@@ -250,18 +266,114 @@
                                     Creative Developer & Design Agency <p>&nbsp;</p>
                                 </h4>
                             </li>
-                            <li class="list__elem gsap-list">
+                            <li class="list__elem gsap-list portfolio-list-elem">
                                 <div class="list__icon gsap-list-icon">
                                     <svg class="icon icon-angle">
                                         <use xlink:href="#icon-angle"></use>
                                     </svg>
                                 </div>
-                                <div class="list__text">
-                                    <p>
-                                        PORTFOLIO: <br>
-                                        <a class="text-link" href="#" target="_blank" rel="noopener noreferrer">Coming Soon</a>
-                                       
-                                    </p>
+                                <div class="list__text portfolio-container">
+                                    <div class="portfolio-header">
+                                        <span class="portfolio-tagline">// SELECTED CLIENT & ECOSYSTEM WORKS</span>
+                                        <h3 class="portfolio-heading">Featured Deployments</h3>
+                                    </div>
+                                    <div class="portfolio-grid" id="portfolioGrid">
+                                        <!-- Project 1: Norra AI -->
+                                        <div class="project-card" data-project="norra-ai">
+                                            <div class="project-card__header">
+                                                <span class="project-card__badge badge--ai">AI PLATFORM</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> LIVE</span>
+                                            </div>
+                                            <h4 class="project-card__title">Norra AI</h4>
+                                            <p class="project-card__desc">Autonomous conversational reasoning & multi-modal workflow platform for enterprise teams.</p>
+                                            <div class="project-card__metric">
+                                                <span class="metric-val">&lt;110ms</span>
+                                                <span class="metric-label">Latency / 100k+ Users</span>
+                                            </div>
+                                            <div class="project-card__tech">
+                                                <span>React</span>
+                                                <span>TypeScript</span>
+                                                <span>FastAPI</span>
+                                                <span>WebGL</span>
+                                            </div>
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="norra-ai">
+                                                <span>View Case Study</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Project 2: Grantify Web3 -->
+                                        <div class="project-card" data-project="grantify">
+                                            <div class="project-card__header">
+                                                <span class="project-card__badge badge--web3">DECENTRALIZED</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> MAINNET</span>
+                                            </div>
+                                            <h4 class="project-card__title">Grantify Web3</h4>
+                                            <p class="project-card__desc">Decentralized quadratic funding protocol with zero-knowledge milestone verifications.</p>
+                                            <div class="project-card__metric">
+                                                <span class="metric-val">$4.2M+</span>
+                                                <span class="metric-label">Disbursed / 320+ Teams</span>
+                                            </div>
+                                            <div class="project-card__tech">
+                                                <span>Solidity</span>
+                                                <span>Next.js</span>
+                                                <span>GraphQL</span>
+                                                <span>Ethers</span>
+                                            </div>
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
+                                                <span>View Case Study</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Project 3: ZeeBuilder -->
+                                        <div class="project-card" data-project="zeebuilder">
+                                            <div class="project-card__header">
+                                                <span class="project-card__badge badge--saas">SAAS SUITE</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> EDGE</span>
+                                            </div>
+                                            <h4 class="project-card__title">ZeeBuilder</h4>
+                                            <p class="project-card__desc">Ultra-fast visual site architect compiling clean semantic code with sub-second page loads.</p>
+                                            <div class="project-card__metric">
+                                                <span class="metric-val">99/100</span>
+                                                <span class="metric-label">Lighthouse / &lt;2.4s Build</span>
+                                            </div>
+                                            <div class="project-card__tech">
+                                                <span>JavaScript</span>
+                                                <span>Webpack</span>
+                                                <span>Sass</span>
+                                                <span>Node.js</span>
+                                            </div>
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="zeebuilder">
+                                                <span>View Case Study</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Project 4: MetaChains -->
+                                        <div class="project-card" data-project="metachains">
+                                            <div class="project-card__header">
+                                                <span class="project-card__badge badge--infra">INFRASTRUCTURE</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> AUDITED</span>
+                                            </div>
+                                            <h4 class="project-card__title">MetaChains</h4>
+                                            <p class="project-card__desc">High-throughput cross-chain cryptographic asset bridge with instant threshold attestations.</p>
+                                            <div class="project-card__metric">
+                                                <span class="metric-val">$18.5M</span>
+                                                <span class="metric-label">Volume / &lt;28s Finality</span>
+                                            </div>
+                                            <div class="project-card__tech">
+                                                <span>Solidity</span>
+                                                <span>React</span>
+                                                <span>Socket.io</span>
+                                                <span>Docker</span>
+                                            </div>
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="metachains">
+                                                <span>View Case Study</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                             <li class="list__elem gsap-list">
@@ -333,7 +445,16 @@
                                                     </div>
                                                     <div class="app-contact">
                                                         <span>WHATSAPP:</span>
-                                                        <a href="https://wa.me/2348050671490" target="_blank" rel="noopener noreferrer">+234 805 067 1490</a>
+                                                        <div class="contact-copy-wrap">
+                                                            <a href="https://wa.me/2348050671490" target="_blank" rel="noopener noreferrer">+234 805 067 1490</a>
+                                                            <button type="button" class="copy-chip-btn" data-copy="+2348050671490" title="Copy phone number">
+                                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                                </svg>
+                                                                <span>COPY</span>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="screen-body-item">
@@ -504,12 +625,78 @@
                 <h4 class="preloader__brand preloader__elem">IVYTAG</h4>
                 <h4 class="preloader__byline preloader__elem">Making Dreams come true</h4>
             </div>
+            <div class="preloader__counter-wrap">
+                <div class="preloader__counter" id="preloaderCounter">0%</div>
+                <div class="preloader__counter-bar"><div class="preloader__counter-fill" id="preloaderCounterFill"></div></div>
+            </div>
             <div class="preloader__bar js-preloader-bar"></div>
         </div>
         <span class="c-scrollbar">
             <span class="c-scrollbar_thumb"></span>
         </span>
         
+                <!-- Floating Back-to-Top Button -->
+        <button class="back-to-top-btn" id="backToTopBtn" type="button" aria-label="Scroll back to top" title="Scroll back to top">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+            <span class="back-to-top-text">TOP</span>
+        </button>
+
+        <!-- Cyber Toast Alert Notification -->
+        <div class="cyber-toast" id="cyberToast" role="alert" aria-live="polite">
+            <span class="cyber-toast__icon">✓</span>
+            <span class="cyber-toast__text" id="cyberToastText">Copied to clipboard</span>
+        </div>
+
+        <!-- Project Detail Modal Dialog -->
+        <div class="project-modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="project-modal__backdrop" id="projectModalBackdrop"></div>
+            <div class="project-modal__dialog">
+                <div class="project-modal__header">
+                    <div class="project-modal__controls">
+                        <span class="ctrl-dot ctrl-dot--red"></span>
+                        <span class="ctrl-dot ctrl-dot--yellow"></span>
+                        <span class="ctrl-dot ctrl-dot--green"></span>
+                    </div>
+                    <div class="project-modal__title-bar" id="modalProjectTitle">Project Spec</div>
+                    <button type="button" class="project-modal__close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+                </div>
+                <div class="project-modal__body">
+                    <div class="project-modal__meta">
+                        <span class="project-modal__badge" id="modalProjectBadge">PRODUCTION</span>
+                        <h2 class="project-modal__name" id="modalProjectName">Project Name</h2>
+                        <p class="project-modal__tagline" id="modalProjectTagline">Tagline goes here</p>
+                    </div>
+
+                    <div class="project-modal__section">
+                        <h5 class="project-modal__section-heading">// ARCHITECTURAL OVERVIEW</h5>
+                        <p class="project-modal__description" id="modalProjectDesc"></p>
+                    </div>
+
+                    <div class="project-modal__section">
+                        <h5 class="project-modal__section-heading">// PERFORMANCE TELEMETRY</h5>
+                        <div class="project-modal__metrics-grid" id="modalProjectMetrics"></div>
+                    </div>
+
+                    <div class="project-modal__section">
+                        <h5 class="project-modal__section-heading">// STACK & INFRASTRUCTURE</h5>
+                        <div class="project-modal__tags" id="modalProjectTags"></div>
+                    </div>
+
+                    <div class="project-modal__actions">
+                        <a href="#contactForm" class="modal-action-btn modal-action-btn--primary modal-inquire-btn">
+                            <span>Discuss Similar Project</span>
+                            <span>→</span>
+                        </a>
+                        <button type="button" class="modal-action-btn modal-action-btn--secondary" id="modalDismissBtn">
+                            <span>Close [ESC]</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SVG Symbols Definition -->
         <svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
