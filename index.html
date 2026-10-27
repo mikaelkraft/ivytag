@@ -37,55 +37,81 @@
         <script src="js/jquery-3.1.1.js"></script>
         <!-- Include Swal library -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+        <style>
+            /* Critical Preloader Styles to prevent FOUC */
+            html, body {
+                background-color: #000100 !important;
+            }
+            #preloader {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background-color: #000100 !important;
+                z-index: 9999999 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+        </style>
     </head>
     <body>
         <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
         <div class="header">
-            <div id="holder" class="holder">PLEASE WAIT</div>
-            <div class="header__actions">
+            <div class="header__brand-group">
+                <div id="holder" class="holder">PLEASE WAIT</div>
                 <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
-                    <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                     </svg>
-                    <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                         <line x1="23" y1="9" x2="17" y2="15"></line>
                         <line x1="17" y1="9" x2="23" y2="15"></line>
                     </svg>
                     <span class="sound-label">SFX: <b id="soundStatusText">OFF</b></span>
                 </button>
-                <nav class="header__nav">
-                    <ul class="header__nav-list">
-                        <li class="header__nav-list-elem">
-                            <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
-                                <span class="icon-scroll-top">↑</span>
-                            </a>
-                        </li>
-                        <li class="header__nav-list-elem">
-                            <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
-                        </li>
-                        <li class="header__nav-list-elem">
-                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
-                        </li>
-                    </ul>
-                    <div class="liner"></div>
-                    <div class="liner--before"></div>
-                </nav>
             </div>
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li class="header__nav-list-elem">
+                        <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
+                            <span class="icon-scroll-top">↑</span>
+                        </a>
+                    </li>
+                    <li class="header__nav-list-elem">
+                        <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
+                    </li>
+                    <li class="header__nav-list-elem">
+                        <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
+                    </li>
+                </ul>
+                <div class="liner"></div>
+                <div class="liner--before"></div>
+            </nav>
         </div>
         <div class="position-wrapper">
-            <div class="byline" id="siteByline">
-                <span class="byline__brand"><a href="#app" target="app" class="anchor-link text-link">Ivytag</a></span>
-                <span class="byline__by">by</span>
-                <span class="byline__author">Mikael Kraft</span>
-                <span class="byline__icon">
-                    <svg class="icon icon-sun">
-                        <use xlink:href="#icon-sun"></use>
-                    </svg>
-                </span>
+            <div class="byline-track" id="bylineTrack">
+                <div class="byline" id="siteByline">
+                    <span class="byline__brand"><a href="#app" target="app" class="anchor-link text-link">Ivytag</a></span>
+                    <span class="byline__by">by</span>
+                    <span class="byline__author">Mikael Kraft</span>
+                    <span class="byline__icon">
+                        <svg class="icon icon-sun">
+                            <use xlink:href="#icon-sun"></use>
+                        </svg>
+                    </span>
+                </div>
             </div>
             <div class="scroll-down">
                 <span>← Scroll Down </span>
@@ -267,12 +293,7 @@
                                 </h4>
                             </li>
                             <li class="list__elem gsap-list portfolio-list-elem">
-                                <div class="list__icon gsap-list-icon">
-                                    <svg class="icon icon-angle">
-                                        <use xlink:href="#icon-angle"></use>
-                                    </svg>
-                                </div>
-                                <div class="list__text portfolio-container">
+                                <div class="portfolio-container">
                                     <div class="portfolio-header">
                                         <span class="portfolio-tagline">// SELECTED CLIENT & ECOSYSTEM WORKS</span>
                                         <h3 class="portfolio-heading">Featured Deployments</h3>
@@ -281,20 +302,20 @@
                                         <!-- Project 1: Norra AI -->
                                         <div class="project-card" data-project="norra-ai">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--ai">AI PLATFORM</span>
+                                                <span class="project-card__badge badge--ai">FOOTBALL ANALYTICS</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> LIVE</span>
                                             </div>
                                             <h4 class="project-card__title">Norra AI</h4>
-                                            <p class="project-card__desc">Autonomous conversational reasoning & multi-modal workflow platform for enterprise teams.</p>
+                                            <p class="project-card__desc">AI-powered football match analytics, predictive probability modeling & real-time telemetry.</p>
                                             <div class="project-card__metric">
-                                                <span class="metric-val">&lt;110ms</span>
-                                                <span class="metric-label">Latency / 100k+ Users</span>
+                                                <span class="metric-val">84.6% Accuracy</span>
+                                                <span class="metric-label">50+ Global Football Leagues</span>
                                             </div>
                                             <div class="project-card__tech">
-                                                <span>React</span>
-                                                <span>TypeScript</span>
+                                                <span>Python</span>
                                                 <span>FastAPI</span>
-                                                <span>WebGL</span>
+                                                <span>React</span>
+                                                <span>PyTorch</span>
                                             </div>
                                             <button type="button" class="project-card__btn js-open-project-modal" data-project-id="norra-ai">
                                                 <span>View Case Study</span>
@@ -302,47 +323,23 @@
                                             </button>
                                         </div>
 
-                                        <!-- Project 2: Grantify Web3 -->
-                                        <div class="project-card" data-project="grantify">
-                                            <div class="project-card__header">
-                                                <span class="project-card__badge badge--web3">DECENTRALIZED</span>
-                                                <span class="project-card__status"><span class="status-dot"></span> MAINNET</span>
-                                            </div>
-                                            <h4 class="project-card__title">Grantify Web3</h4>
-                                            <p class="project-card__desc">Decentralized quadratic funding protocol with zero-knowledge milestone verifications.</p>
-                                            <div class="project-card__metric">
-                                                <span class="metric-val">$4.2M+</span>
-                                                <span class="metric-label">Disbursed / 320+ Teams</span>
-                                            </div>
-                                            <div class="project-card__tech">
-                                                <span>Solidity</span>
-                                                <span>Next.js</span>
-                                                <span>GraphQL</span>
-                                                <span>Ethers</span>
-                                            </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
-                                                <span>View Case Study</span>
-                                                <span>→</span>
-                                            </button>
-                                        </div>
-
-                                        <!-- Project 3: ZeeBuilder -->
+                                        <!-- Project 2: ZeeBuilder -->
                                         <div class="project-card" data-project="zeebuilder">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--saas">SAAS SUITE</span>
-                                                <span class="project-card__status"><span class="status-dot"></span> EDGE</span>
+                                                <span class="project-card__badge badge--saas">APP GENERATOR</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> CLOUD</span>
                                             </div>
                                             <h4 class="project-card__title">ZeeBuilder</h4>
-                                            <p class="project-card__desc">Ultra-fast visual site architect compiling clean semantic code with sub-second page loads.</p>
+                                            <p class="project-card__desc">Autonomous full-stack web app generator with instant cloud bindings and multiple integrations.</p>
                                             <div class="project-card__metric">
-                                                <span class="metric-val">99/100</span>
-                                                <span class="metric-label">Lighthouse / &lt;2.4s Build</span>
+                                                <span class="metric-val">&lt;60s Deploy</span>
+                                                <span class="metric-label">Turnkey Cloud Integrations</span>
                                             </div>
                                             <div class="project-card__tech">
-                                                <span>JavaScript</span>
-                                                <span>Webpack</span>
-                                                <span>Sass</span>
+                                                <span>Next.js</span>
+                                                <span>TypeScript</span>
                                                 <span>Node.js</span>
+                                                <span>Docker</span>
                                             </div>
                                             <button type="button" class="project-card__btn js-open-project-modal" data-project-id="zeebuilder">
                                                 <span>View Case Study</span>
@@ -350,25 +347,49 @@
                                             </button>
                                         </div>
 
-                                        <!-- Project 4: MetaChains -->
-                                        <div class="project-card" data-project="metachains">
+                                        <!-- Project 3: Grantify -->
+                                        <div class="project-card" data-project="grantify">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--infra">INFRASTRUCTURE</span>
-                                                <span class="project-card__status"><span class="status-dot"></span> AUDITED</span>
+                                                <span class="project-card__badge badge--web3">FINTECH DISCOVERY</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> PLATFORM</span>
                                             </div>
-                                            <h4 class="project-card__title">MetaChains</h4>
-                                            <p class="project-card__desc">High-throughput cross-chain cryptographic asset bridge with instant threshold attestations.</p>
+                                            <h4 class="project-card__title">Grantify</h4>
+                                            <p class="project-card__desc">Intelligent grants and loans discovery platform matching startups with vetted funding opportunities.</p>
                                             <div class="project-card__metric">
-                                                <span class="metric-val">$18.5M</span>
-                                                <span class="metric-label">Volume / &lt;28s Finality</span>
+                                                <span class="metric-val">2,500+ Programs</span>
+                                                <span class="metric-label">Smart Eligibility Matching</span>
                                             </div>
                                             <div class="project-card__tech">
-                                                <span>Solidity</span>
                                                 <span>React</span>
-                                                <span>Socket.io</span>
-                                                <span>Docker</span>
+                                                <span>TypeScript</span>
+                                                <span>PostgreSQL</span>
+                                                <span>GraphQL</span>
                                             </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="metachains">
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
+                                                <span>View Case Study</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Project 4: WIT AI (Acode Plugin) -->
+                                        <div class="project-card" data-project="wit-ai">
+                                            <div class="project-card__header">
+                                                <span class="project-card__badge badge--infra">ACODE PLUGIN</span>
+                                                <span class="project-card__status"><span class="status-dot"></span> ACTIVE</span>
+                                            </div>
+                                            <h4 class="project-card__title">WIT AI</h4>
+                                            <p class="project-card__desc">AI coding assistant plugin for Acode integrating multiple inference providers and live web search.</p>
+                                            <div class="project-card__metric">
+                                                <span class="metric-val">Multi-Model</span>
+                                                <span class="metric-label">Live Web Search &amp; Reasoning</span>
+                                            </div>
+                                            <div class="project-card__tech">
+                                                <span>JavaScript</span>
+                                                <span>Acode API</span>
+                                                <span>Multi-LLM</span>
+                                                <span>REST</span>
+                                            </div>
+                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="wit-ai">
                                                 <span>View Case Study</span>
                                                 <span>→</span>
                                             </button>
@@ -496,31 +517,26 @@
                             <img src="assets/img/ivyfavicon.png" alt="Ivytag Emblem">
                         </div>
                         <div class="social-wrapper">
-                            <h5 class="social-title">Follow Us</h5>
-                            <div class="social-links">
-                                <a href="https://x.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--x" aria-label="X (formerly Twitter)">
-                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <div class="social-links-row">
+                                <a href="https://x.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="X (formerly Twitter)">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                                     </svg>
-                                    <span>X</span>
                                 </a>
-                                <a href="https://linkedin.com/company/ivytag" target="_blank" rel="noopener noreferrer" class="social-link social-link--linkedin" aria-label="LinkedIn">
-                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <a href="https://linkedin.com/company/ivytag" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                                         <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
                                     </svg>
-                                    <span>LinkedIn</span>
                                 </a>
-                                <a href="https://instagram.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--instagram" aria-label="Instagram">
-                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <a href="https://instagram.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
                                     </svg>
-                                    <span>Instagram</span>
                                 </a>
-                                <a href="https://github.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--github" aria-label="GitHub">
-                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <a href="https://github.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                                         <path d="M12 0a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 0z"/>
                                     </svg>
-                                    <span>GitHub</span>
                                 </a>
                             </div>
                         </div>
@@ -604,20 +620,13 @@
                 <hr class="studio__section__hr section__hr list__hr hr">
                             </section>
             
-            <footer class="site-footer">
-                <div class="site-footer__content">
-                    <p class="site-footer__copy">
-                        <span class="brand">Ivytag</span> &copy; <span id="year"></span>. All rights reserved.
-                    </p>
-                    <p class="site-footer__credits">
-                        Crafted with modern web technologies &bull; Icons by <a href="https://devicon.dev" target="_blank" rel="noopener noreferrer">DevIcon</a>
-                    </p>
-                </div>
-            </footer>
+            <div class="original-copyright-bar">Ivytag &copy; <span id="year"></span>. All rights reserved.</div>
+                <div class="credits">__
+                Icons by : &nbsp;<a href="https://devicon.dev" target="_blank" rel="noopener noreferrer">DevIcon</a></div>
         </div>
                 
         <div class="webgl__color"></div>
-        <div class="preloader" id="preloader">
+        <div class="preloader" id="preloader" style="position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; background-color: #000100 !important; z-index: 9999999 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;">
             <div class="preloader__wrapper">
                 <h1 class="preloader__logo preloader__elem">
                     <img class="preloader-spinner-d1" src="assets/img/ivyfavicon.png" alt="Loading">

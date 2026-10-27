@@ -19746,25 +19746,20 @@
             },
             yPercent: -20
         }),
-        document.querySelector(".byline") && (function() {
-            var bEl = document.querySelector(".byline");
-            Lr.to(bEl, {
-                scrollTrigger: {
-                    trigger: "#app",
-                    start: "top -80",
-                    toggleActions: "play none none reverse",
-                    onToggle: function(self) {
-                        if (self.isActive) {
-                            bEl.classList.add("is-visible");
-                        } else {
-                            bEl.classList.remove("is-visible");
-                        }
-                    }
-                },
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out"
-            });
+        (function() {
+            var trackEl = document.getElementById("bylineTrack") || document.querySelector(".byline");
+            if (trackEl) {
+                Lr.to(trackEl, {
+                    scrollTrigger: {
+                        trigger: "#app",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1.2
+                    },
+                    y: -window.innerHeight * 1.35,
+                    ease: "none"
+                });
+            }
         })(),
         Lr.to(".scroll-down span", {
             xPercent: 20,
@@ -20163,15 +20158,6 @@
                         });
                     this.mesh = new Hc(t, e),
                         this.scene.add(this.mesh);
-                    var coreGeo = new xd(0.52, 1);
-                    var coreMat = new oc({
-                        wireframe: true,
-                        color: new ac(0x38ef7d),
-                        transparent: true,
-                        opacity: 0.65
-                    });
-                    this.coreMesh = new Hc(coreGeo, coreMat);
-                    this.scene.add(this.coreMesh);
                     var haloGeo = new xd(1.42, 0);
                     var haloMat = new oc({
                         wireframe: true,
@@ -20319,12 +20305,6 @@
                 key: "renderMobile",
                 value: function () {
                     var t = this.clock.getElapsedTime();
-                    if (this.coreMesh) {
-                        this.coreMesh.rotation.y = -0.15 * t;
-                        this.coreMesh.rotation.z = 0.1 * t;
-                        var s = 0.52 + 0.05 * Math.sin(2.0 * t);
-                        this.coreMesh.scale.set(s, s, s);
-                    }
                     if (this.haloMesh) {
                         this.haloMesh.rotation.x = 0.08 * t;
                         this.haloMesh.rotation.y = 0.12 * t;
@@ -20336,12 +20316,6 @@
                 key: "render",
                 value: function () {
                     var t = this.clock.getElapsedTime();
-                    if (this.coreMesh) {
-                        this.coreMesh.rotation.y = -0.22 * t;
-                        this.coreMesh.rotation.z = 0.14 * t;
-                        var s = 0.52 + 0.06 * Math.sin(2.4 * t);
-                        this.coreMesh.scale.set(s, s, s);
-                    }
                     if (this.haloMesh) {
                         this.haloMesh.rotation.x = 0.1 * t;
                         this.haloMesh.rotation.y = 0.18 * t;
@@ -20503,21 +20477,41 @@ function initTechStackRandomizer() {
     var isPaused = false;
     var grid = document.getElementById("techStackGrid");
 
+    function resumeLighting() {
+        if (!isPaused) return;
+        isPaused = false;
+        if (timerId) clearTimeout(timerId);
+        timerId = setTimeout(lightNextRandom, 250);
+    }
+
+    function pauseLighting() {
+        isPaused = true;
+        if (timerId) clearTimeout(timerId);
+        items.forEach(function (el) {
+            el.classList.remove("is-lit");
+        });
+    }
+
     if (grid) {
-        grid.addEventListener("mouseenter", function () {
-            isPaused = true;
-            items.forEach(function (el) {
-                el.classList.remove("is-lit");
-            });
-        });
-        grid.addEventListener("mouseleave", function () {
-            isPaused = false;
-        });
+        // Desktop mouse hover
+        grid.addEventListener("mouseenter", pauseLighting);
+        grid.addEventListener("mouseleave", resumeLighting);
+
+        // Mobile touch & accessibility focus
+        grid.addEventListener("focusin", pauseLighting);
+        grid.addEventListener("focusout", resumeLighting);
+        grid.addEventListener("touchstart", function () {
+            pauseLighting();
+            setTimeout(resumeLighting, 2500);
+        }, { passive: true });
+        grid.addEventListener("touchend", function () {
+            setTimeout(resumeLighting, 1000);
+        }, { passive: true });
     }
 
     function lightNextRandom() {
         if (isPaused) {
-            timerId = setTimeout(lightNextRandom, 500);
+            timerId = setTimeout(lightNextRandom, 400);
             return;
         }
 
@@ -20538,12 +20532,14 @@ function initTechStackRandomizer() {
             currentItem.classList.add("is-lit");
         }
 
-        // Snappy active duration (450ms), then quick pause (200ms) before next
+        // Snappy active duration (450ms), then quick pause (180ms) before next
         setTimeout(function () {
             if (currentItem) {
                 currentItem.classList.remove("is-lit");
             }
-            timerId = setTimeout(lightNextRandom, 200);
+            if (!isPaused) {
+                timerId = setTimeout(lightNextRandom, 180);
+            }
         }, 450);
     }
 
@@ -20875,54 +20871,54 @@ var IVY_PROJECTS = {
     "norra-ai": {
         id: "norra-ai",
         title: "Norra AI",
-        tagline: "Autonomous AI Conversational Intelligence & Enterprise Copilot",
-        badge: "PRODUCTION // AI AGENT",
+        tagline: "AI-Powered Football Match Analytics & Algorithmic Probability Engine",
+        badge: "FOOTBALL ANALYTICS // AI PREDICTIONS",
         stats: [
-            { label: "Latency", value: "<110ms" },
-            { label: "Active Sessions", value: "100k+" },
-            { label: "Uptime", value: "99.98%" }
+            { label: "Accuracy", value: "84.6%" },
+            { label: "Global Leagues", value: "50+" },
+            { label: "Telemetry", value: "Real-Time" }
         ],
-        description: "Norra AI is an advanced enterprise-grade AI conversational platform that orchestrates real-time multi-modal streaming reasoning, contextual document retrieval, and adaptive workflows for business teams. Built for high concurrency with zero degradation in latency.",
-        tags: ["React", "TypeScript", "Python", "FastAPI", "WebGL", "Tailwind CSS", "Redis"]
-    },
-    "grantify": {
-        id: "grantify",
-        title: "Grantify Web3",
-        tagline: "Decentralized Grants Distribution & Milestone Verifier",
-        badge: "DECENTRALIZED PROTOCOL",
-        stats: [
-            { label: "Capital Disbursed", value: "$4.2M+" },
-            { label: "Teams Funded", value: "320+" },
-            { label: "Security Audits", value: "2 Pass" }
-        ],
-        description: "Grantify revolutionizes community grant distribution via quadratic funding algorithms and on-chain escrow milestones. Smart contracts safeguard funds while community token-holders vote with cryptographically verified identity attestations.",
-        tags: ["Solidity", "Next.js", "GraphQL", "PostgreSQL", "Ethers.js", "Tailwind CSS"]
+        description: "Norra AI is an advanced sports predictive intelligence platform that processes real-time match telemetry, tactical formations, expected goals (xG), team momentum, and head-to-head metrics to generate high-precision football match outcome probabilities.",
+        tags: ["Python", "FastAPI", "React", "TypeScript", "PyTorch", "Tailwind CSS"]
     },
     "zeebuilder": {
         id: "zeebuilder",
-        title: "ZeeBuilder Platform",
-        tagline: "High-Performance Visual Site Architect & Edge CMS",
-        badge: "SAAS PLATFORM",
+        title: "ZeeBuilder",
+        tagline: "Autonomous Full-Stack Web App Generator with Instant Cloud & API Integrations",
+        badge: "AI APP GENERATOR // CLOUD SUITE",
         stats: [
-            { label: "Lighthouse Score", value: "99/100" },
-            { label: "Build Time", value: "<2.4s" },
-            { label: "Global Edge", value: "280 PoPs" }
+            { label: "Deploy Time", value: "<60s" },
+            { label: "Integrations", value: "15+ Turnkey" },
+            { label: "Architecture", value: "Full-Stack" }
         ],
-        description: "ZeeBuilder is an ultra-fast visual design and component assembly studio enabling marketing and product teams to publish blazing-fast web experiences without technical debt. Compiled code outputs 100% semantic, clean HTML/CSS/JS.",
-        tags: ["JavaScript", "Webpack", "Sass", "PHP", "Node.js", "Redis"]
+        description: "ZeeBuilder is an autonomous web engineering and component synthesis platform that turns human ideas into complete, production-ready full-stack applications with turnkey database bindings, auth, UI components, and instant cloud deployment.",
+        tags: ["Next.js", "TypeScript", "Node.js", "Docker", "Tailwind CSS", "Redis"]
     },
-    "metachains": {
-        id: "metachains",
-        title: "MetaChains Gateway",
-        tagline: "Cross-Chain Cryptographic Liquidity Bridge & Portal",
-        badge: "WEB3 INFRASTRUCTURE",
+    "grantify": {
+        id: "grantify",
+        title: "Grantify",
+        tagline: "Intelligent Grants & Loans Discovery Platform for Startups and Innovators",
+        badge: "FINTECH DISCOVERY // SMART MATCH",
         stats: [
-            { label: "Total Bridged", value: "$18.5M" },
-            { label: "Avg Finality", value: "<28s" },
-            { label: "Exploits / Loss", value: "$0.00" }
+            { label: "Active Programs", value: "2,500+" },
+            { label: "Eligibility Match", value: "94%" },
+            { label: "Verification", value: "Vetted" }
         ],
-        description: "MetaChains is an institutional-grade cross-chain liquidity portal engineered for frictionless atomic swaps and arbitrary cross-network message passing. Backed by threshold cryptographic signatures and multi-validator attestations.",
-        tags: ["Solidity", "React", "Socket.io", "TypeScript", "Docker", "Node.js"]
+        description: "Grantify empowers startups, researchers, and small businesses to effortlessly discover, filter, and track verified global grants, innovation funding, and non-dilutive loans tailored specifically to their industry, geography, and growth stage.",
+        tags: ["React", "TypeScript", "PostgreSQL", "GraphQL", "Node.js", "Tailwind CSS"]
+    },
+    "wit-ai": {
+        id: "wit-ai",
+        title: "WIT AI (Acode Plugin)",
+        tagline: "Next-Gen AI Coding Assistant Plugin for Acode with Multi-Provider Inference & Live Web Search",
+        badge: "MOBILE IDE ASSISTANT // DEV TOOLS",
+        stats: [
+            { label: "Providers", value: "Multi-Model" },
+            { label: "Web Search", value: "Live Streaming" },
+            { label: "Platform", value: "Acode Mobile" }
+        ],
+        description: "WIT AI is Mikael Kraft's signature AI programming assistant plugin for the Acode mobile IDE. It connects mobile developers to multiple top-tier AI inference providers, features real-time web search for up-to-date documentation, context-aware codebase analysis, and instantaneous inline code generation.",
+        tags: ["JavaScript", "Acode Plugin API", "Multi-Provider AI", "REST", "Sass"]
     }
 };
 
