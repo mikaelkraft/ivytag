@@ -2048,23 +2048,23 @@ textarea.app-form-control {
     padding: 7px 16px;
     border-radius: 9999px;
     background: rgba(2, 31, 10, 0.82);
-    border: 1px solid rgba(40, 223, 122, 0.4);
+    border: none !important;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 255, 136, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     opacity: 0.95;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    transition: box-shadow 0.25s ease, background 0.25s ease;
     will-change: transform;
 }
 
 .position-wrapper .byline:hover {
-    border-color: rgba(0, 255, 136, 0.85);
+    border: none !important;
     box-shadow: 0 4px 22px rgba(0, 255, 136, 0.5);
 }
 
-/* Burning Flame State */
+/* Burning Flame State - Borderless Flaming Aura */
 .position-wrapper .byline.is-burning {
-    border-color: #ff5500 !important;
+    border: none !important;
     background: linear-gradient(135deg, rgba(70, 15, 0, 0.92), rgba(130, 25, 0, 0.88)) !important;
     box-shadow: 0 0 18px rgba(255, 85, 0, 0.85), 0 0 35px rgba(255, 34, 0, 0.65), inset 0 0 12px rgba(255, 120, 0, 0.5) !important;
     animation: burningFlamePulse 0.35s ease-in-out infinite alternate !important;
@@ -3045,34 +3045,29 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Hero Ambient Glow & High-Contrast Typography for Content Sections
+   Former Transparent Backgrounds with Crisp Typography (WebGL Dimmed for Legibility)
    ========================================================================== */
 .intro__section {
-    position: relative;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.12) 0%, rgba(2, 31, 10, 0.5) 45%, rgba(1, 10, 4, 0.95) 85%);
+    background: transparent !important;
 }
 
 .intro__section .unique {
-    text-shadow: 0 0 24px rgba(0, 255, 136, 0.3), 0 2px 10px rgba(0, 0, 0, 0.95);
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.25), 0 2px 10px rgba(0, 0, 0, 0.95);
 }
 
 .web__section__content {
-    background: rgba(1, 18, 7, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(40, 223, 122, 0.22);
-    border-radius: 20px;
-    padding: clamp(20px, 4vw, 42px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
-    margin: 1.5rem auto;
-    max-width: 1000px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .web__section__h1,
 .web__section__h2,
 .web__section__h3 {
     color: #ffffff !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 255, 136, 0.4) !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
 }
 
 .web__section__p {
@@ -3080,18 +3075,15 @@ textarea.app-form-control {
     font-size: clamp(14px, 1.3vw, 16px) !important;
     line-height: 1.8 !important;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95);
-    font-weight: 300;
 }
 
 .web__section__list .list__elem h5 {
     color: #f8fafc !important;
     font-size: clamp(13px, 1.15vw, 15px) !important;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95);
-    letter-spacing: 0.02em;
 }
 
 .web__section__legende_p {
     color: #a7f3d0 !important;
-    font-weight: 500;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
 }

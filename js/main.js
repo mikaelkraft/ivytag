@@ -20196,55 +20196,73 @@
             }, {
                 key: "addMobileSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 4.0),
-                        Lr.set(".webgl", { opacity: 0.95 }),
+                    this.camera.position.set(0, 0, 8),
+                        Lr.set(".webgl", { opacity: 1 }),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--mobile"
                         }),
-                        this.mesh.material.uniforms.uNoiseDensity.value = 1.0,
-                        this.mesh.material.uniforms.uNoiseStrength.value = 0.45,
-                        this.mesh.material.uniforms.uFrequency.value = 2.0,
-                        this.mesh.material.uniforms.uAmplitude.value = 0.5,
-                        this.mesh.material.uniforms.uAlpha.value = 0.4,
-                        this.mesh.material.uniforms.uIntensity.value = 1.25,
+                        Lr.from(this.mesh.material.uniforms.uNoiseDensity, {
+                            value: 0,
+                            duration: 5,
+                            ease: "expo",
+                            delay: 2.8
+                        }),
                         Lr.from(this.mesh.rotation, {
-                            y: 2 * Math.PI,
-                            duration: 2.2,
-                            ease: "power2.out",
-                            delay: 2.4
+                            y: 2.5 * Math.PI,
+                            duration: 5,
+                            ease: "expo",
+                            delay: 2.8
                         }),
                         Lr.from(this.camera.position, {
-                            z: 7.5,
-                            duration: 2.2,
-                            ease: "power2.out",
-                            delay: 2.4
+                            z: 50,
+                            duration: 5,
+                            ease: "expo",
+                            delay: 2.8
                         })
                 }
             }, {
                 key: "addDesktopSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 3.8),
-                        Lr.set(".webgl", { opacity: 0.95 }),
+                    this.camera.position.set(0, 0, 4),
+                        Lr.set(".webgl", { opacity: 1 }),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--desktop"
                         }),
-                        this.mesh.material.uniforms.uNoiseDensity.value = 1.2,
-                        this.mesh.material.uniforms.uNoiseStrength.value = 0.55,
-                        this.mesh.material.uniforms.uFrequency.value = 2.5,
-                        this.mesh.material.uniforms.uAmplitude.value = 0.65,
-                        this.mesh.material.uniforms.uAlpha.value = 0.45,
-                        this.mesh.material.uniforms.uIntensity.value = 1.35,
-                        Lr.from(this.camera.position, {
-                            z: 7.0,
-                            duration: 2.2,
-                            ease: "power2.out",
-                            delay: 2.4
+                        Lr.set(this.mesh.material.uniforms.uNoiseDensity, {
+                            value: 1
                         }),
-                        Lr.from(this.mesh.rotation, {
-                            y: 2 * Math.PI,
-                            duration: 2.2,
-                            ease: "power2.out",
-                            delay: 2.4
+                        Lr.set(this.mesh.material.uniforms.uNoiseStrength, {
+                            value: 0
+                        }),
+                        Lr.set(this.mesh.material.uniforms.uFrequency, {
+                            value: 0
+                        }),
+                        Lr.set(this.mesh.material.uniforms.uAmplitude, {
+                            value: 0
+                        }),
+                        Lr.set(this.mesh.material.uniforms.uAlpha, {
+                            value: 1
+                        }),
+                        Lr.set(this.mesh.material.uniforms.uIntensity, {
+                            value: 1.5
+                        }),
+                        Lr.from(this.mesh.material.uniforms.uNoiseStrength, {
+                            value: 5,
+                            duration: 3,
+                            ease: "expo",
+                            delay: 2.8
+                        }),
+                        Lr.from(this.mesh.material.uniforms.uIntensity, {
+                            value: 0,
+                            duration: 3,
+                            ease: "expo",
+                            delay: 2.8
+                        }),
+                        Lr.from(this.camera.position, {
+                            z: 20,
+                            duration: 3,
+                            ease: "expo",
+                            delay: 2.8
                         })
                 }
             }, {
@@ -20296,20 +20314,20 @@
                                 end: "bottom bottom"
                             }
                         }).to(this.camera.position, {
-                            x: 0.8,
-                            y: 0.4,
-                            z: 4.2,
+                            x: 1,
+                            y: 1,
+                            z: 2,
                             duration: 6
                         }, 0).to(this.mesh.rotation, {
                             y: Math.PI,
                             duration: 6
                         }, 0).to(".webgl", {
-                            opacity: .28,
-                            duration: 1.5
+                            opacity: .18,
+                            duration: 1
                         }, 0).to(".webgl", {
-                            opacity: .36,
-                            duration: 3
-                        }, 3)
+                            opacity: .85,
+                            duration: 2
+                        }, 4)
                 }
             }, {
                 key: "resize",
@@ -21098,8 +21116,8 @@ function updateBylineMotion(scrollY, maxScroll) {
     var viewportH = window.innerHeight || 800;
     var progress = Math.min(Math.max(scrollY / (viewportH * 1.5), 0), 1);
 
-    // 1. Burning Flame Phase (progress >= 0.40)
-    if (progress >= 0.40 && progress < 0.98) {
+    // 1. Burning Flame Phase (starts as soon as scrolling begins)
+    if (progress >= 0.06 && progress < 0.96) {
         bylineInner.classList.add("is-burning");
     } else {
         bylineInner.classList.remove("is-burning");
