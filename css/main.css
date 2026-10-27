@@ -1446,25 +1446,13 @@ a:visited,a:hover,a:focus,a:active {
     background: #0f7a0f;
 }
 @media only screen and (max-width: 768px) {
-   .header .holder {
-       left: 5px;
-       width: 40px;
-       height: 10px;
-
-    }
     .holder h6 {
-        padding: none;
         font-size: 10px;
     }
-    .header__nav {
-        top: 35px;
-    }
-
     .error-message {
         font-size: 11px;
         line-height: 0.8;
         padding: 5px 3px;
-
     }
 }
 
@@ -1874,7 +1862,7 @@ textarea.app-form-control {
    ========================================================================== */
 .header {
     height: auto !important;
-    min-height: 48px;
+    min-height: 52px;
     padding: clamp(6px, 1.4vh, 12px) var(--body-padding) !important;
     overflow: visible !important;
     transform: none !important; /* Never truncate #holder into the top screen edge */
@@ -1882,12 +1870,51 @@ textarea.app-form-control {
     justify-content: space-between !important;
     align-items: center !important;
     flex-wrap: nowrap !important;
+    gap: clamp(16px, 3.5vw, 48px) !important;
+}
+
+/* Give the animated digital matrix logo (#holder) a proper footprint with generous right spacing */
+.header .holder {
+    position: relative !important;
+    display: block !important;
+    width: 290px !important;
+    min-width: 290px !important;
+    height: 48px !important;
+    flex-shrink: 0 !important;
+    margin-right: clamp(16px, 3vw, 44px) !important;
+    bottom: auto !important;
+    left: auto !important;
+    overflow: visible !important;
+}
+
+@media only screen and (max-width: 860px) {
+    .header .holder {
+        width: 215px !important;
+        min-width: 215px !important;
+        height: 38px !important;
+        transform: scale(0.74) !important;
+        transform-origin: left center !important;
+        margin-right: clamp(12px, 2.5vw, 28px) !important;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .header .holder {
+        width: 175px !important;
+        min-width: 175px !important;
+        height: 32px !important;
+        transform: scale(0.6) !important;
+        transform-origin: left center !important;
+        margin-right: 12px !important;
+    }
 }
 
 .header__nav {
     display: flex !important;
     align-items: center !important;
     flex-wrap: nowrap !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
 }
 
 .header__nav-list {
