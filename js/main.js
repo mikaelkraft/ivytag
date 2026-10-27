@@ -19744,7 +19744,7 @@
                 endTrigger: ".intro__section",
                 end: "top 400"
             },
-            yPercent: -20
+            yPercent: 0
         }),
         (function() {
             var trackEl = document.getElementById("bylineTrack") || document.querySelector(".byline");
@@ -20163,11 +20163,30 @@
                         wireframe: true,
                         color: new ac(0x10b981),
                         transparent: true,
-                        opacity: 0.28
+                        opacity: 0.35
                     });
                     this.haloMesh = new Hc(haloGeo, haloMat);
                     this.haloMesh.rotation.x = Math.PI / 4;
                     this.scene.add(this.haloMesh);
+                    try {
+                        var pCount = 180;
+                        var pGeo = new _d();
+                        var pPos = new Float32Array(pCount * 3);
+                        for (var pi = 0; pi < pCount; pi++) {
+                            pPos[pi * 3] = (Math.random() - 0.5) * 7.5;
+                            pPos[pi * 3 + 1] = (Math.random() - 0.5) * 7.5;
+                            pPos[pi * 3 + 2] = (Math.random() - 0.5) * 7.5;
+                        }
+                        pGeo.setAttribute("position", new dc(pPos, 3));
+                        var pMat = new oc({
+                            color: new ac(0x00ff88),
+                            wireframe: true,
+                            transparent: true,
+                            opacity: 0.45
+                        });
+                        this.particles = new Hc(pGeo, pMat);
+                        this.scene.add(this.particles);
+                    } catch (pe) {}
                 }
             }, {
                 key: "addEvents",
@@ -20177,7 +20196,7 @@
             }, {
                 key: "addMobileSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 4.2),
+                    this.camera.position.set(0, 0, 4.0),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--mobile"
                         }),
@@ -20185,25 +20204,25 @@
                         this.mesh.material.uniforms.uNoiseStrength.value = 0.45,
                         this.mesh.material.uniforms.uFrequency.value = 2.0,
                         this.mesh.material.uniforms.uAmplitude.value = 0.5,
-                        this.mesh.material.uniforms.uAlpha.value = 0.3,
-                        this.mesh.material.uniforms.uIntensity.value = 1.1,
+                        this.mesh.material.uniforms.uAlpha.value = 0.4,
+                        this.mesh.material.uniforms.uIntensity.value = 1.25,
                         Lr.from(this.mesh.rotation, {
-                            y: 2.5 * Math.PI,
-                            duration: 4,
-                            ease: "expo",
-                            delay: 2.8
+                            y: 1.5 * Math.PI,
+                            duration: 2.5,
+                            ease: "power2.out",
+                            delay: 1.2
                         }),
                         Lr.from(this.camera.position, {
-                            z: 16,
-                            duration: 4,
-                            ease: "expo",
-                            delay: 2.8
+                            z: 6.5,
+                            duration: 2.2,
+                            ease: "power2.out",
+                            delay: 1.2
                         })
                 }
             }, {
                 key: "addDesktopSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 3.8),
+                    this.camera.position.set(0, 0, 3.6),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--desktop"
                         }),
@@ -20211,13 +20230,13 @@
                         this.mesh.material.uniforms.uNoiseStrength.value = 0.55,
                         this.mesh.material.uniforms.uFrequency.value = 2.5,
                         this.mesh.material.uniforms.uAmplitude.value = 0.65,
-                        this.mesh.material.uniforms.uAlpha.value = 0.35,
-                        this.mesh.material.uniforms.uIntensity.value = 1.25,
+                        this.mesh.material.uniforms.uAlpha.value = 0.45,
+                        this.mesh.material.uniforms.uIntensity.value = 1.35,
                         Lr.from(this.camera.position, {
-                            z: 14,
-                            duration: 3,
-                            ease: "expo",
-                            delay: 3.5
+                            z: 5.5,
+                            duration: 2.2,
+                            ease: "power2.out",
+                            delay: 1.2
                         })
                 }
             }, {
@@ -20277,10 +20296,10 @@
                             y: Math.PI,
                             duration: 6
                         }, 0).to(".webgl", {
-                            opacity: .35,
+                            opacity: .85,
                             duration: 1
                         }, 0).to(".webgl", {
-                            opacity: .9,
+                            opacity: .95,
                             duration: 2
                         }, 4)
                 }
@@ -20651,89 +20670,25 @@ function validateForm() {
     return true;
 }
 
-function initContactForm() {
-    var form = document.getElementById("contactForm");
-    if (!form) return;
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        if (!validateForm()) {
-            return false;
-        }
-
-        var btn = document.getElementById("submitBtn");
-        var originalHtml = btn ? btn.innerHTML : "SEND";
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = "<span>SENDING...</span>";
-        }
-
-        var formData = $(form).serialize();
-
-        $.ajax({
-            method: "POST",
-            url: form.getAttribute("action") || "https://formsubmit.co/ajax/ivytaglife@gmail.com",
-            dataType: "json",
-            accepts: "application/json",
-            data: formData,
-            success: function (data) {
-                if (typeof Swal !== "undefined") {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Message Sent!",
-                        text: "Thank you for reaching out to Ivytag. We will get back to you shortly!",
-                        background: "#021f0a",
-                        color: "#f1f5f9",
-                        confirmButtonColor: "#10b981",
-                        confirmButtonText: "Great!"
-                    });
-                } else {
-                    alert("Thank you! Your message has been sent successfully.");
-                }
-
-                form.reset();
-                document.querySelectorAll(".error-message").forEach(function (el) {
-                    el.innerHTML = "";
-                });
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = originalHtml;
-                }
-            },
-            error: function () {
-                if (typeof Swal !== "undefined") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Submission Issue",
-                        text: "Could not send right now. Please reach us directly via WhatsApp (+2348050671490) or email ivytaglife@gmail.com.",
-                        background: "#021f0a",
-                        color: "#f1f5f9",
-                        confirmButtonColor: "#10b981",
-                        confirmButtonText: "OK"
-                    });
-                } else {
-                    alert("Submission issue. Please reach us via WhatsApp (+2348050671490).");
-                }
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = originalHtml;
-                }
-            }
-        });
-    });
-}
-
 // ==========================================================================
-// 4. Preloader Monospace Digital Counter
+// 4. Preloader Sci-Fi Cyber Movie Boot Sequence
 // ==========================================================================
 function initPreloaderCounter() {
     var counterEl = document.getElementById("preloaderCounter");
     var fillEl = document.getElementById("preloaderCounterFill");
+    var logEl = document.getElementById("scifiTerminalLine");
     if (!counterEl) return;
 
     var duration = 2400; // ms
     var startTime = performance.now();
+
+    var bootLogs = [
+        { pct: 0, text: "> [SYS_BOOT] MOUNTING NEURAL VIRTUAL ENVIRONMENT..." },
+        { pct: 24, text: "> [SHADERS] COMPILING WEBGL VERTEX MATRIX [OK]" },
+        { pct: 52, text: "> [NET_SEC] ENCRYPTING QUANTUM HANDSHAKE..." },
+        { pct: 78, text: "> [DIAGNOSTICS] TELEMETRY STACK OPERATIONAL [OK]" },
+        { pct: 98, text: "> [ACCESS_GRANTED] IVYTAG OS v4.2 ONLINE" }
+    ];
 
     function updateCounter(currentTime) {
         var elapsed = currentTime - startTime;
@@ -20744,11 +20699,21 @@ function initPreloaderCounter() {
         counterEl.textContent = count + "%";
         if (fillEl) fillEl.style.width = count + "%";
 
+        if (logEl) {
+            for (var b = bootLogs.length - 1; b >= 0; b--) {
+                if (count >= bootLogs[b].pct) {
+                    logEl.textContent = bootLogs[b].text;
+                    break;
+                }
+            }
+        }
+
         if (progress < 1) {
             requestAnimationFrame(updateCounter);
         } else {
             counterEl.textContent = "100%";
             if (fillEl) fillEl.style.width = "100%";
+            if (logEl) logEl.textContent = "> [ACCESS_GRANTED] IVYTAG OS v4.2 ONLINE";
         }
     }
     requestAnimationFrame(updateCounter);
@@ -20759,7 +20724,7 @@ function initPreloaderCounter() {
 // ==========================================================================
 var SoundEngine = (function () {
     var ctx = null;
-    var isMuted = localStorage.getItem("ivytag_sfx") !== "on"; // Default off for user comfort
+    var isMuted = localStorage.getItem("ivytag_sfx") !== "on";
 
     function getAudioContext() {
         if (!ctx) {
@@ -20856,7 +20821,7 @@ function initSoundToggle() {
         CyberToast.show(enabled ? "Cyber Audio FX Enabled" : "Audio FX Muted");
     });
 
-    var hoverSelector = ".text-link, .text-link-nav, .project-card, .app-form-button, .social-link, .tech-item, .back-to-top-btn, .sound-toggle-btn, .project-card__btn";
+    var hoverSelector = ".text-link, .text-link-nav, .project-card, .app-form-button, .social-icon-btn, .tech-item, .back-to-top-btn, .sound-toggle-btn, .project-card__btn, .project-card__live-link";
     document.addEventListener("mouseenter", function (e) {
         if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
             SoundEngine.playHover();
@@ -20865,7 +20830,98 @@ function initSoundToggle() {
 }
 
 // ==========================================================================
-// 6. Featured Projects Data & Interactive Modal
+// 6. Tech Stack Permutation Shuffle (Zero Repeats Until Full Iteration)
+// ==========================================================================
+function initTechStackRandomizer() {
+    var items = document.querySelectorAll(".tech-item");
+    if (!items.length) return;
+
+    var shuffled = [];
+    var pointer = 0;
+    var timerId = null;
+    var isPaused = false;
+    var grid = document.getElementById("techStackGrid");
+
+    function shuffleFullCycle() {
+        shuffled = [];
+        for (var i = 0; i < items.length; i++) {
+            shuffled.push(i);
+        }
+        for (var j = shuffled.length - 1; j > 0; j--) {
+            var r = Math.floor(Math.random() * (j + 1));
+            var tmp = shuffled[j];
+            shuffled[j] = shuffled[r];
+            shuffled[r] = tmp;
+        }
+        pointer = 0;
+    }
+
+    shuffleFullCycle();
+
+    function resumeLighting() {
+        if (!isPaused) return;
+        isPaused = false;
+        if (timerId) clearTimeout(timerId);
+        timerId = setTimeout(lightNextStack, 200);
+    }
+
+    function pauseLighting() {
+        isPaused = true;
+        if (timerId) clearTimeout(timerId);
+        items.forEach(function (el) {
+            el.classList.remove("is-lit");
+        });
+    }
+
+    if (grid) {
+        grid.addEventListener("mouseenter", pauseLighting);
+        grid.addEventListener("mouseleave", resumeLighting);
+        grid.addEventListener("focusin", pauseLighting);
+        grid.addEventListener("focusout", resumeLighting);
+        grid.addEventListener("touchstart", function () {
+            pauseLighting();
+            setTimeout(resumeLighting, 2500);
+        }, { passive: true });
+        grid.addEventListener("touchend", function () {
+            setTimeout(resumeLighting, 800);
+        }, { passive: true });
+    }
+
+    function lightNextStack() {
+        if (isPaused) {
+            timerId = setTimeout(lightNextStack, 400);
+            return;
+        }
+
+        items.forEach(function (el) {
+            el.classList.remove("is-lit");
+        });
+
+        if (pointer >= shuffled.length) {
+            shuffleFullCycle();
+        }
+
+        var idx = shuffled[pointer];
+        pointer++;
+
+        var targetEl = items[idx];
+        if (targetEl) {
+            targetEl.classList.add("is-lit");
+        }
+
+        setTimeout(function () {
+            if (targetEl) targetEl.classList.remove("is-lit");
+            if (!isPaused) {
+                timerId = setTimeout(lightNextStack, 180);
+            }
+        }, 450);
+    }
+
+    timerId = setTimeout(lightNextStack, 800);
+}
+
+// ==========================================================================
+// 7. Featured Projects Data (Norra AI, ZeeBuilder, Grantify, WIT AI)
 // ==========================================================================
 var IVY_PROJECTS = {
     "norra-ai": {
@@ -20879,7 +20935,9 @@ var IVY_PROJECTS = {
             { label: "Telemetry", value: "Real-Time" }
         ],
         description: "Norra AI is an advanced sports predictive intelligence platform that processes real-time match telemetry, tactical formations, expected goals (xG), team momentum, and head-to-head metrics to generate high-precision football match outcome probabilities.",
-        tags: ["Python", "FastAPI", "React", "TypeScript", "PyTorch", "Tailwind CSS"]
+        tags: ["Python", "FastAPI", "React", "TypeScript", "PyTorch", "Tailwind CSS"],
+        liveUrl: "https://mynorra.xyz",
+        liveLabel: "Launch mynorra.xyz"
     },
     "zeebuilder": {
         id: "zeebuilder",
@@ -20892,7 +20950,9 @@ var IVY_PROJECTS = {
             { label: "Architecture", value: "Full-Stack" }
         ],
         description: "ZeeBuilder is an autonomous web engineering and component synthesis platform that turns human ideas into complete, production-ready full-stack applications with turnkey database bindings, auth, UI components, and instant cloud deployment.",
-        tags: ["Next.js", "TypeScript", "Node.js", "Docker", "Tailwind CSS", "Redis"]
+        tags: ["Next.js", "TypeScript", "Node.js", "Docker", "Tailwind CSS", "Redis"],
+        liveUrl: "https://zeebuilder.vercel.app",
+        liveLabel: "Launch zeebuilder.vercel.app"
     },
     "grantify": {
         id: "grantify",
@@ -20905,7 +20965,9 @@ var IVY_PROJECTS = {
             { label: "Verification", value: "Vetted" }
         ],
         description: "Grantify empowers startups, researchers, and small businesses to effortlessly discover, filter, and track verified global grants, innovation funding, and non-dilutive loans tailored specifically to their industry, geography, and growth stage.",
-        tags: ["React", "TypeScript", "PostgreSQL", "GraphQL", "Node.js", "Tailwind CSS"]
+        tags: ["React", "TypeScript", "PostgreSQL", "GraphQL", "Node.js", "Tailwind CSS"],
+        liveUrl: "https://grantify.help",
+        liveLabel: "Launch grantify.help"
     },
     "wit-ai": {
         id: "wit-ai",
@@ -20918,7 +20980,9 @@ var IVY_PROJECTS = {
             { label: "Platform", value: "Acode Mobile" }
         ],
         description: "WIT AI is Mikael Kraft's signature AI programming assistant plugin for the Acode mobile IDE. It connects mobile developers to multiple top-tier AI inference providers, features real-time web search for up-to-date documentation, context-aware codebase analysis, and instantaneous inline code generation.",
-        tags: ["JavaScript", "Acode Plugin API", "Multi-Provider AI", "REST", "Sass"]
+        tags: ["JavaScript", "Acode Plugin API", "Multi-Provider AI", "REST", "Sass"],
+        liveUrl: "https://github.com/mikaelkraft/wit-ai",
+        liveLabel: "View Plugin Repository"
     }
 };
 
@@ -20938,12 +21002,19 @@ function initProjectModal() {
         var nameEl = document.getElementById("modalProjectName");
         var taglineEl = document.getElementById("modalProjectTagline");
         var descEl = document.getElementById("modalProjectDesc");
+        var liveBtn = document.getElementById("modalLiveBtn");
+        var liveBtnText = document.getElementById("modalLiveBtnText");
 
         if (titleEl) titleEl.textContent = p.title + " // System Spec";
         if (badgeEl) badgeEl.textContent = p.badge;
         if (nameEl) nameEl.textContent = p.title;
         if (taglineEl) taglineEl.textContent = p.tagline;
         if (descEl) descEl.textContent = p.description;
+
+        if (liveBtn) {
+            liveBtn.href = p.liveUrl || "#";
+            if (liveBtnText) liveBtnText.textContent = p.liveLabel || "Launch Live Application";
+        }
 
         var metricsContainer = document.getElementById("modalProjectMetrics");
         if (metricsContainer) {
@@ -20994,7 +21065,8 @@ function initProjectModal() {
     });
 
     document.querySelectorAll(".modal-inquire-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
             closeModal();
             setTimeout(function () {
                 var contactEl = document.getElementById("contactForm") || document.getElementById("studio");
@@ -21009,8 +21081,24 @@ function initProjectModal() {
 }
 
 // ==========================================================================
-// 7. Scroll Progress Bar & Floating Back-To-Top Button
+// 8. Side Drawer Byline Upward Scroll Motion & Scroll Features
 // ==========================================================================
+function updateBylineMotion(scrollY, maxScroll) {
+    var trackEl = document.getElementById("bylineTrack");
+    if (!trackEl) return;
+    var viewportH = window.innerHeight || 800;
+    var progress = Math.min(Math.max(scrollY / (viewportH * 1.4), 0), 1);
+    var translateY = -progress * (viewportH * 1.35);
+    var opacity = 1 - Math.max(0, (progress - 0.65) / 0.35);
+    var tilt = -90 + (progress * 14); // Sci-fi dynamic tilt flare
+    trackEl.style.transform = "translate3d(0, " + translateY + "px, 0)";
+    trackEl.style.opacity = opacity;
+    var bylineInner = document.getElementById("siteByline");
+    if (bylineInner) {
+        bylineInner.style.transform = "rotate(" + tilt + "deg)";
+    }
+}
+
 function initScrollFeatures() {
     var progressBar = document.getElementById("scrollProgressBar");
     var topBtn = document.getElementById("backToTopBtn");
@@ -21021,12 +21109,15 @@ function initScrollFeatures() {
             progressBar.style.width = pct + "%";
         }
         if (topBtn) {
-            if (scrollY > 350) {
+            // Disappears quicker when scrolling back near the top
+            var threshold = (window.innerHeight || 800) * 0.85;
+            if (scrollY > threshold) {
                 topBtn.classList.add("is-visible");
             } else {
                 topBtn.classList.remove("is-visible");
             }
         }
+        updateBylineMotion(scrollY, maxScroll);
     }
 
     if (window.kd && typeof window.kd.on === "function") {
@@ -21054,10 +21145,24 @@ function initScrollFeatures() {
             }
         });
     }
+
+    // Start a Project button handler
+    document.querySelectorAll(".start-project-btn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (SoundEngine) SoundEngine.playClick();
+            var targetEl = document.getElementById("contactForm") || document.getElementById("studio");
+            if (window.kd && typeof window.kd.scrollTo === "function") {
+                window.kd.scrollTo(targetEl, { duration: 1000 });
+            } else if (targetEl) {
+                targetEl.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    });
 }
 
 // ==========================================================================
-// 8. Cyber Toast & Clipboard Copy Support
+// 9. Cyber Toast & Clipboard Copy Support
 // ==========================================================================
 var CyberToast = (function () {
     var toast = document.getElementById("cyberToast");
@@ -21116,9 +21221,91 @@ function initClipboardCopy() {
 }
 
 // ==========================================================================
-// 9. Initialize All Appwide Systems on Document Ready
+// 10. Contact Form Submission (Forwarding to plugboxne@gmail.com)
+// ==========================================================================
+function initContactForm() {
+    var form = document.getElementById("contactForm");
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return false;
+        }
+
+        var btn = document.getElementById("submitBtn");
+        var originalHtml = btn ? btn.innerHTML : "SEND";
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = "<span>SENDING...</span>";
+        }
+
+        var formData = $(form).serialize();
+
+        $.ajax({
+            method: "POST",
+            url: form.getAttribute("action") || "https://formsubmit.co/ajax/plugboxne@gmail.com",
+            dataType: "json",
+            accepts: "application/json",
+            data: formData,
+            success: function (data) {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Message Sent!",
+                        text: "Thank you for reaching out to Ivytag. We will get back to you shortly!",
+                        background: "#021f0a",
+                        color: "#f1f5f9",
+                        confirmButtonColor: "#10b981",
+                        confirmButtonText: "Great!"
+                    });
+                } else {
+                    alert("Thank you! Your message has been sent successfully.");
+                }
+
+                form.reset();
+                document.querySelectorAll(".error-message").forEach(function (el) {
+                    el.innerHTML = "";
+                });
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                }
+            },
+            error: function () {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Submission Issue",
+                        text: "Could not send right now. Please reach us directly via WhatsApp (+2348050671490) or email plugboxne@gmail.com.",
+                        background: "#021f0a",
+                        color: "#f1f5f9",
+                        confirmButtonColor: "#10b981",
+                        confirmButtonText: "OK"
+                    });
+                } else {
+                    alert("Submission issue. Please reach us via WhatsApp (+2348050671490).");
+                }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                }
+            }
+        });
+    });
+}
+
+// ==========================================================================
+// 11. Initialize All Systems on Document Ready
 // ==========================================================================
 $(document).ready(function () {
+    // Ensure scroll starts at top
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     initPreloaderCounter();
     initMatrixLogo();
     initTechStackRandomizer();

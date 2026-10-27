@@ -62,28 +62,35 @@
                 visibility: visible !important;
             }
         </style>
+        <script>
+            // Ensure page always starts at the top (header) on load/reload
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+        </script>
     </head>
     <body>
         <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
         <div class="header">
-            <div class="header__brand-group">
-                <div id="holder" class="holder">PLEASE WAIT</div>
-                <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
-                    <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                    </svg>
-                    <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                        <line x1="23" y1="9" x2="17" y2="15"></line>
-                        <line x1="17" y1="9" x2="23" y2="15"></line>
-                    </svg>
-                    <span class="sound-label">SFX: <b id="soundStatusText">OFF</b></span>
-                </button>
-            </div>
+            <div id="holder" class="holder">PLEASE WAIT</div>
             <nav class="header__nav">
                 <ul class="header__nav-list">
+                    <li class="header__nav-list-elem header__sound-item">
+                        <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
+                            <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                <path class="sound-wave" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                            </svg>
+                            <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <line x1="23" y1="9" x2="17" y2="15"></line>
+                                <line x1="17" y1="9" x2="23" y2="15"></line>
+                            </svg>
+                            <span class="sound-label">SFX: <b id="soundStatusText">OFF</b></span>
+                        </button>
+                    </li>
                     <li class="header__nav-list-elem">
                         <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
                             <span class="icon-scroll-top">↑</span>
@@ -271,7 +278,7 @@
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
                     <div class="web__section__cta section__cta cta gsap-cta">
-                        <a href="#background" class="btn">Start Project</a>
+                        <a href="#contactForm" target="contactForm" class="btn anchor-link start-project-btn">Start a Project</a>
                     </div>
                 </div>
             </section>
@@ -317,10 +324,15 @@
                                                 <span>React</span>
                                                 <span>PyTorch</span>
                                             </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="norra-ai">
-                                                <span>View Case Study</span>
-                                                <span>→</span>
-                                            </button>
+                                            <div class="project-card__actions-row">
+                                                <button type="button" class="project-card__btn js-open-project-modal" data-project-id="norra-ai">
+                                                    <span>View Case Study</span>
+                                                    <span>→</span>
+                                                </button>
+                                                <a href="https://mynorra.xyz" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open mynorra.xyz">
+                                                    <span>Live ↗</span>
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Project 2: ZeeBuilder -->
@@ -341,10 +353,15 @@
                                                 <span>Node.js</span>
                                                 <span>Docker</span>
                                             </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="zeebuilder">
-                                                <span>View Case Study</span>
-                                                <span>→</span>
-                                            </button>
+                                            <div class="project-card__actions-row">
+                                                <button type="button" class="project-card__btn js-open-project-modal" data-project-id="zeebuilder">
+                                                    <span>View Case Study</span>
+                                                    <span>→</span>
+                                                </button>
+                                                <a href="https://zeebuilder.vercel.app" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open zeebuilder.vercel.app">
+                                                    <span>Live ↗</span>
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Project 3: Grantify -->
@@ -365,10 +382,15 @@
                                                 <span>PostgreSQL</span>
                                                 <span>GraphQL</span>
                                             </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
-                                                <span>View Case Study</span>
-                                                <span>→</span>
-                                            </button>
+                                            <div class="project-card__actions-row">
+                                                <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
+                                                    <span>View Case Study</span>
+                                                    <span>→</span>
+                                                </button>
+                                                <a href="https://grantify.help" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open grantify.help">
+                                                    <span>Live ↗</span>
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Project 4: WIT AI (Acode Plugin) -->
@@ -389,10 +411,15 @@
                                                 <span>Multi-LLM</span>
                                                 <span>REST</span>
                                             </div>
-                                            <button type="button" class="project-card__btn js-open-project-modal" data-project-id="wit-ai">
-                                                <span>View Case Study</span>
-                                                <span>→</span>
-                                            </button>
+                                            <div class="project-card__actions-row">
+                                                <button type="button" class="project-card__btn js-open-project-modal" data-project-id="wit-ai">
+                                                    <span>View Case Study</span>
+                                                    <span>→</span>
+                                                </button>
+                                                <a href="https://github.com/mikaelkraft/wit-ai" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open Acode Plugin Repo">
+                                                    <span>Repo ↗</span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -440,10 +467,9 @@
                                 </div>
                             </li>
                             <hr class="studio__section__hr section__hr list__hr hr">
-                            <li class="list__elem gsap-list">
-                                <div class="list__icon gsap-list-icon"></div>
-                                <div class="list__text" style="width: 100%;">
-                                    <form class="background" id="contactForm" action="https://formsubmit.co/ajax/ivytaglife@gmail.com" method="POST" novalidate>
+                            <li class="list__elem gsap-list contact-list-item">
+                                <div class="contact-form-center-wrap">
+                                    <form class="background" id="contactForm" action="https://formsubmit.co/ajax/plugboxne@gmail.com" method="POST" novalidate>
                                         <div class="screen">
                                             <div class="screen-header">
                                                 <div class="screen-header-left">
@@ -451,7 +477,7 @@
                                                     <div class="screen-header-button ell2" title="Minimize"></div>
                                                     <div class="screen-header-button ell3" title="Expand"></div>
                                                 </div>
-                                                <div class="screen-header-title">contact@ivytag.world ~ bash</div>
+                                                <div class="screen-header-title">Ivytag World</div>
                                                 <div class="screen-header-right">
                                                     <div class="screen-header-ellipsis"></div>
                                                     <div class="screen-header-ellipsis"></div>
@@ -627,6 +653,7 @@
                 
         <div class="webgl__color"></div>
         <div class="preloader" id="preloader" style="position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; background-color: #000100 !important; z-index: 9999999 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;">
+            <div class="preloader__scanline"></div>
             <div class="preloader__wrapper">
                 <h1 class="preloader__logo preloader__elem">
                     <img class="preloader-spinner-d1" src="assets/img/ivyfavicon.png" alt="Loading">
@@ -634,9 +661,13 @@
                 <h4 class="preloader__brand preloader__elem">IVYTAG</h4>
                 <h4 class="preloader__byline preloader__elem">Making Dreams come true</h4>
             </div>
-            <div class="preloader__counter-wrap">
-                <div class="preloader__counter" id="preloaderCounter">0%</div>
-                <div class="preloader__counter-bar"><div class="preloader__counter-fill" id="preloaderCounterFill"></div></div>
+            <div class="preloader__scifi-wrap">
+                <div class="scifi-terminal-line" id="scifiTerminalLine">&gt; [SYS_INIT] BOOTING NEURAL INTERFACE...</div>
+                <div class="preloader__counter-wrap">
+                    <div class="preloader__counter" id="preloaderCounter">0%</div>
+                    <div class="preloader__counter-bar"><div class="preloader__counter-fill" id="preloaderCounterFill"></div></div>
+                </div>
+                <div class="scifi-status-bar">&gt; PROTOCOL: IVYGREEN // QUANTUM HANDSHAKE: ENCRYPTED</div>
             </div>
             <div class="preloader__bar js-preloader-bar"></div>
         </div>
@@ -694,11 +725,15 @@
                     </div>
 
                     <div class="project-modal__actions">
-                        <a href="#contactForm" class="modal-action-btn modal-action-btn--primary modal-inquire-btn">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="modal-action-btn modal-action-btn--primary" id="modalLiveBtn">
+                            <span id="modalLiveBtnText">Open Live Application</span>
+                            <span>↗</span>
+                        </a>
+                        <a href="#contactForm" class="modal-action-btn modal-action-btn--secondary modal-inquire-btn">
                             <span>Discuss Similar Project</span>
                             <span>→</span>
                         </a>
-                        <button type="button" class="modal-action-btn modal-action-btn--secondary" id="modalDismissBtn">
+                        <button type="button" class="modal-action-btn modal-action-btn--close" id="modalDismissBtn">
                             <span>Close [ESC]</span>
                         </button>
                     </div>

@@ -1870,46 +1870,55 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Header Brand Group & Compact Sound FX Toggle Below Logo
+   Header Navigation Bar & Leveled Menu Items
    ========================================================================== */
 .header {
     height: auto !important;
-    min-height: 52px;
-    padding: clamp(8px, 1.8vh, 16px) var(--body-padding) !important;
+    min-height: 54px;
+    padding: clamp(10px, 1.8vh, 18px) var(--body-padding) !important;
+    overflow: visible !important;
+    transform: none !important; /* Never truncate #holder into the top screen edge */
 }
 
-.header__brand-group {
+.header__nav {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    z-index: 101;
-    pointer-events: all;
+    align-items: center;
+}
+
+.header__nav-list {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 2rem);
+    list-style: none;
+}
+
+.header__sound-item {
+    display: inline-flex;
+    align-items: center;
 }
 
 .sound-toggle-btn {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 9999px;
-    background: rgba(1, 24, 10, 0.85);
-    border: 1px solid rgba(40, 223, 122, 0.3);
+    background: rgba(1, 24, 10, 0.82);
+    border: 1px solid rgba(40, 223, 122, 0.35);
     color: #94a3b8;
-    font-size: 10px;
+    font-size: 11px;
     font-family: monospace;
     font-weight: 600;
     letter-spacing: 0.05em;
     cursor: pointer;
     outline: none;
-    margin-top: 2px;
     transition: all 0.25s ease;
 }
 
 .sound-toggle-btn:hover {
     color: #00ff88;
     border-color: #00ff88;
-    transform: scale(1.04);
+    transform: translateY(-1px) scale(1.04);
 }
 
 .sound-toggle-btn.is-active {
@@ -1926,14 +1935,6 @@ textarea.app-form-control {
 @keyframes soundWavePulse {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 1; }
-}
-
-/* Futuristic Cool Font for Header Menu Items */
-.header__nav-list {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 2.5vw, 2.5rem);
-    list-style: none;
 }
 
 .header__nav-list-elem {
@@ -1958,7 +1959,7 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Side Drawer Byline (Scrolls Up from Left Bottom to Top)
+   Side Drawer Byline (Dynamic Motion with Sci-Fi Tilt & Neon Flare)
    ========================================================================== */
 .position-wrapper .byline-track {
     position: absolute;
@@ -1966,7 +1967,7 @@ textarea.app-form-control {
     bottom: clamp(20px, 5vh, 45px);
     z-index: 910;
     pointer-events: auto;
-    will-change: transform;
+    will-change: transform, opacity;
 }
 
 .position-wrapper .byline {
@@ -1981,20 +1982,21 @@ textarea.app-form-control {
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
-    padding: 6px 14px;
+    padding: 7px 16px;
     border-radius: 9999px;
-    background: rgba(2, 31, 10, 0.78);
-    border: 1px solid rgba(40, 223, 122, 0.35);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(40, 223, 122, 0.18);
+    background: rgba(2, 31, 10, 0.82);
+    border: 1px solid rgba(40, 223, 122, 0.4);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 255, 136, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     opacity: 0.95;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
 }
 
 .position-wrapper .byline:hover {
-    border-color: rgba(40, 223, 122, 0.8);
-    box-shadow: 0 4px 20px rgba(40, 223, 122, 0.35);
+    border-color: rgba(0, 255, 136, 0.85);
+    box-shadow: 0 4px 22px rgba(0, 255, 136, 0.5);
 }
 
 .position-wrapper .byline .byline__brand a {
@@ -2262,12 +2264,19 @@ textarea.app-form-control {
     border: 1px solid rgba(40, 223, 122, 0.15);
 }
 
+.project-card__actions-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
 .project-card__btn {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 10px 16px;
+    flex: 1;
+    padding: 10px 14px;
     border-radius: 8px;
     background: rgba(4, 45, 18, 0.65);
     border: 1px solid rgba(40, 223, 122, 0.32);
@@ -2280,6 +2289,28 @@ textarea.app-form-control {
 }
 
 .project-card__btn:hover {
+    background: #00ff88;
+    color: #011807;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 255, 136, 0.35);
+}
+
+.project-card__live-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(0, 255, 136, 0.15);
+    border: 1px solid rgba(0, 255, 136, 0.35);
+    color: #00ff88;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.project-card__live-link:hover {
     background: #00ff88;
     color: #011807;
     transform: translateY(-1px);
@@ -2484,9 +2515,9 @@ textarea.app-form-control {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 22px;
+    padding: 11px 20px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
@@ -2507,32 +2538,59 @@ textarea.app-form-control {
 }
 
 .modal-action-btn--secondary {
+    background: rgba(4, 45, 18, 0.5);
+    color: #34d399;
+    border: 1px solid rgba(40, 223, 122, 0.3);
+}
+
+.modal-action-btn--secondary:hover {
+    background: rgba(4, 45, 18, 0.85);
+    color: #ffffff;
+}
+
+.modal-action-btn--close {
     background: transparent;
     color: #94a3b8;
     border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
-.modal-action-btn--secondary:hover {
+.modal-action-btn--close:hover {
     color: #ffffff;
     border-color: #ffffff;
 }
 
 /* ==========================================================================
-   Contact Terminal Form - Wide, Responsive, Single-Row Copy Text
+   Contact Terminal Form - Centered, Responsive, Single-Row Copy Text
    ========================================================================== */
+.contact-list-item {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-bottom: 2rem;
+}
+
+.contact-form-center-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .background {
     width: 100% !important;
     max-width: 860px !important;
-    margin: 1.5rem 0 2rem;
+    margin: 1.5rem auto 2rem !important;
 }
 
 .screen-header-title {
-    font-size: clamp(11px, 2.5vw, 13px);
+    font-size: clamp(11.5px, 2.5vw, 13px);
     font-family: monospace;
+    font-weight: 700;
     color: #a7f3d0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: 0.08em;
 }
 
 @media screen and (min-width: 768px) {
@@ -2585,19 +2643,26 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Social Connect: Only Icons in One Row
+   Social Connect: Perfectly Centered Row of Icons
    ========================================================================== */
 .social-wrapper {
-    margin: 1.5rem 0 1rem;
+    margin: 2rem auto 1.5rem;
     width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
 }
 
 .social-links-row {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 14px !important;
+    justify-content: center !important;
+    gap: 16px !important;
     flex-wrap: nowrap !important;
+    margin: 0 auto;
 }
 
 .social-icon-btn {
@@ -2607,8 +2672,8 @@ textarea.app-form-control {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(3, 38, 14, 0.65);
-    border: 1px solid rgba(40, 223, 122, 0.28);
+    background: rgba(3, 38, 14, 0.7);
+    border: 1px solid rgba(40, 223, 122, 0.32);
     color: #e2e8f0;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2639,7 +2704,7 @@ textarea.app-form-control {
 
 .credits {
     text-align: center;
-    padding: 1rem 1rem 5.5rem; /* Generous bottom padding so Back-to-Top never blocks it */
+    padding: 1rem 1rem 5.5rem;
     font-size: 13px;
     color: #64748b;
 }
@@ -2650,7 +2715,7 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Floating Back-to-Top Button
+   Floating Back-to-Top Button (Hides Quicker)
    ========================================================================== */
 .back-to-top-btn {
     position: fixed;
@@ -2675,7 +2740,7 @@ textarea.app-form-control {
     opacity: 0;
     visibility: hidden;
     transform: translateY(16px);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
 .back-to-top-btn.is-visible {
@@ -2692,29 +2757,61 @@ textarea.app-form-control {
 }
 
 /* ==========================================================================
-   Preloader Monospace Counter & Bar
+   Preloader Sci-Fi Movie Boot Sequence & Scanline
    ========================================================================== */
-.preloader__counter-wrap {
+.preloader__scanline {
     position: absolute;
-    bottom: 44px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 255, 136, 0), rgba(0, 255, 136, 0.05) 50%, rgba(0, 255, 136, 0));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.preloader__scifi-wrap {
+    position: absolute;
+    bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
     z-index: 10;
+    width: 90%;
+    max-width: 520px;
+    text-align: center;
+}
+
+.scifi-terminal-line {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11.5px;
+    color: #00ff88;
+    letter-spacing: 0.12em;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+    min-height: 18px;
+    font-weight: 700;
+}
+
+.preloader__counter-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
 }
 
 .preloader__counter {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 800;
     letter-spacing: 0.2em;
     color: #00ff88;
-    text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+    text-shadow: 0 0 14px rgba(0, 255, 136, 0.8);
 }
 
 .preloader__counter-bar {
-    width: 140px;
+    width: 160px;
     height: 3px;
     background: rgba(0, 255, 136, 0.15);
     border-radius: 999px;
@@ -2726,6 +2823,14 @@ textarea.app-form-control {
     height: 100%;
     background: linear-gradient(90deg, #10b981, #00ff88);
     transition: width 0.08s linear;
+}
+
+.scifi-status-bar {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9px;
+    color: #64748b;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
 }
 
 /* ==========================================================================
