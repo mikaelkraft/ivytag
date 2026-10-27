@@ -1,64 +1,95 @@
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  /* Small pause at the end for smoother reset */
-  98% {
-    transform: translateX(calc(-250px * 9));
-  }
-  100% {
-    transform: translateX(0);
-    /* Reset instantly (hidden by identical slides) */
-  }
-}
-
+/* Infinite Seamless Logo Slider */
 .slider {
   background: transparent;
-  height: 100px;
-  margin: auto;
+  height: 90px;
+  margin: 2.5rem auto 1.5rem;
   overflow: hidden;
   position: relative;
-  width: auto;
+  width: 100%;
+  max-width: 1200px;
 }
 
-/* Stronger fade effect to mask the transition */
+/* Elegant gradient masks for smooth edge fade-in / fade-out */
 .slider::before,
 .slider::after {
-  background: linear-gradient(to right, green 0%, rgba(255, 255, 255, 0) 20%);
   content: "";
-  height: 100px;
+  height: 100%;
   position: absolute;
-  width: 150px; /* Wider gradient for better masking */
-  z-index: 2;
-}
-
-.slider::after {
-  right: 0;
   top: 0;
-  transform: rotateZ(180deg);
+  width: clamp(50px, 12vw, 140px);
+  z-index: 3;
+  pointer-events: none;
 }
 
 .slider::before {
   left: 0;
-  top: 0;
+  background: linear-gradient(to right, rgba(2, 31, 10, 0.95) 0%, rgba(2, 31, 10, 0) 100%);
+}
+
+.slider::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(2, 31, 10, 0.95) 0%, rgba(2, 31, 10, 0) 100%);
 }
 
 .slider .slide-track {
-  animation: scroll 30s linear infinite; /* Faster = less noticeable reset */
   display: flex;
-  width: calc(250px * 18);
+  width: max-content;
+  align-items: center;
+  animation: infiniteLogoScroll 28s linear infinite;
   will-change: transform;
 }
 
+.slider:hover .slide-track {
+  animation-play-state: paused;
+}
+
+@keyframes infiniteLogoScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .slider .slide {
-  height: 100px;
-  width: 250px;
-  margin: 8px;
+  height: 70px;
+  width: 180px;
+  margin: 0 16px;
   flex-shrink: 0;
-  /* Slight scale-down to emphasize motion */
-  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: rgba(4, 45, 18, 0.45);
+  border: 1px solid rgba(40, 223, 122, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease, 
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+}
+
+.slider .slide img {
+  max-height: 48px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(35%) brightness(0.92) contrast(1.05);
+  transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .slider .slide:hover {
-  transform: scale(0.95); /* Optional: Interactive effect */
+  transform: translateY(-3px) scale(1.04);
+  background: rgba(10, 60, 25, 0.7);
+  border-color: rgba(40, 223, 122, 0.6);
+  box-shadow: 0 8px 24px rgba(40, 223, 122, 0.25);
+}
+
+.slider .slide:hover img {
+  filter: grayscale(0%) brightness(1.1) contrast(1.1);
+  transform: scale(1.02);
 }

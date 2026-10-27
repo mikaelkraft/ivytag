@@ -16,15 +16,14 @@
         <link rel="stylesheet" href="css/splitting.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/logo.css">
-        <meta name="theme-color" content="lemongreen">
+        <meta name="theme-color" content="#021f0a">
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" sizes="180x180" href="assets/img/ivyfavicon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
         <link rel="mask-icon" href="assets/img/ivyfavicon.svg">
         <link rel="shortcut-icon" href="assets/img/ivyfavicon.ico">
-        <meta name="msapplication-TileColor" content="lemongreen">
-        <meta name="theme-color" content="lemongreen">
+        <meta name="msapplication-TileColor" content="#021f0a">
         <title>Ivytag * Creative software design studio making dreams come true</title>
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://ivytag.com/">
@@ -38,7 +37,6 @@
         <script src="js/jquery-3.1.1.js"></script>
         <!-- Include Swal library -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     </head>
     <body>
@@ -63,17 +61,14 @@
             </nav>
         </div>
         <div class="position-wrapper">
-            <div class="byline">
-                <span>Your Reality</span>
-                <span>By</span>
-                <span>Mikael Kraft</span>
-                <span>
+            <div class="byline" id="siteByline">
+                <span class="byline__brand"><a href="#app" target="app" class="anchor-link text-link">Ivytag</a></span>
+                <span class="byline__by">by</span>
+                <span class="byline__author">Mikael Kraft</span>
+                <span class="byline__icon">
                     <svg class="icon icon-sun">
                         <use xlink:href="#icon-sun"></use>
                     </svg>
-                </span>
-                <span>
-                    <a href="#app" target="app" class="anchor-link text-link">Ivytag </a>
                 </span>
             </div>
             <div class="scroll-down">
@@ -264,7 +259,7 @@
                                 <div class="list__text">
                                     <p>
                                         PORTFOLIO: <br>
-                                        <a class="text-link" href="#" target="_blank" rel="noopener" noreferrer“>Coming Soon</a>
+                                        <a class="text-link" href="#" target="_blank" rel="noopener noreferrer">Coming Soon</a>
                                        
                                     </p>
                                 </div>
@@ -277,95 +272,137 @@
                                 </div>
                                 <div class="list__text">
                                     <p>TECHNOLOGIES:</p> 
-                                    <div class="container">
-                                    <br><br><p><span><i class="devicon-angularjs-plain icon-container"></i></span><span><i class="devicon-appwrite-plain icon-container2"></i></span><span><i class="devicon-bootstrap-plain-wordmark icon-container3"></i></span><span><i class="devicon-css3-plain-wordmark icon-container4"></i></span><span><i class="devicon-django-plain-wordmark icon-container5"></i></span></p><br>
-                                    <p><span><i class="devicon-figma-plain icon-container6"></i></span><span><i class="devicon-gatsby-plain-wordmark icon-container7"></i></span><span><i class="devicon-git-plain-wordmark icon-container8"></i></span><span><i class="devicon-github-original icon-container9"></i></span><span><i class="devicon-graphql-plain-wordmark icon-container10"></i></span></p><br>
-                                    <p><span><i class="devicon-html5-plain-wordmark icon-container11"></i></span><span><i class="devicon-javascript-plain icon-container4"></i></span><span><i class="devicon-mongodb-plain-wordmark icon-container2"></i></span><span><i class="devicon-mysql-plain-wordmark icon-container7"></i></span><span><i class="devicon-nextjs-plain-wordmark icon-container9"></i></span></p><br>
-                                    <p><span><i class="devicon-nodejs-plain icon-container11"></i></span><span><i class="devicon-php-plain icon-container5"></i></span><span><i class="devicon-postgresql-plain-wordmark icon-container8"></i></span><span><i class="devicon-python-plain-wordmark icon-container10"></i></span><span><i class="devicon-react-original-wordmark icon-container2"></i></span></p><br>
-                                    <p><span><i class="devicon-sass-original icon-container4"></i></span><span><i class="devicon-socketio-original-wordmark icon-container6"></i></span><span><i class="devicon-solidity-plain icon-container8"></i></span><span><i class="devicon-storybook-plain-wordmark icon-container10"></i></span><span><i class="devicon-tailwindcss-original-wordmark icon-container"></i></span></p><br>
-                                    <p><span><i class="devicon-typescript-plain icon-container3"></i></span><span><i class="devicon-webpack-plain-wordmark icon-container5"></i></span><span><i class="devicon-wordpress-plain-wordmark icon-container7"></i></span></p>
+                                    <div class="tech-stack-container">
+                                        <div class="tech-stack-grid" id="techStackGrid">
+                                            <div class="tech-item" data-tech="Angular"><i class="devicon-angularjs-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Appwrite"><i class="devicon-appwrite-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Bootstrap"><i class="devicon-bootstrap-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="CSS3"><i class="devicon-css3-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Django"><i class="devicon-django-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Figma"><i class="devicon-figma-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Gatsby"><i class="devicon-gatsby-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Git"><i class="devicon-git-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="GitHub"><i class="devicon-github-original tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="GraphQL"><i class="devicon-graphql-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="HTML5"><i class="devicon-html5-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="JavaScript"><i class="devicon-javascript-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="MongoDB"><i class="devicon-mongodb-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="MySQL"><i class="devicon-mysql-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Next.js"><i class="devicon-nextjs-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Node.js"><i class="devicon-nodejs-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="PHP"><i class="devicon-php-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="PostgreSQL"><i class="devicon-postgresql-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Python"><i class="devicon-python-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="React"><i class="devicon-react-original-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Sass"><i class="devicon-sass-original tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Socket.io"><i class="devicon-socketio-original-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Solidity"><i class="devicon-solidity-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Storybook"><i class="devicon-storybook-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Tailwind CSS"><i class="devicon-tailwindcss-original-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="TypeScript"><i class="devicon-typescript-plain tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Webpack"><i class="devicon-webpack-plain-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="WordPress"><i class="devicon-wordpress-plain-wordmark tech-icon"></i></div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
                             <hr class="studio__section__hr section__hr list__hr hr">
                             <li class="list__elem gsap-list">
                                 <div class="list__icon gsap-list-icon"></div>
-                                <div class="list__text">
-                                        <form class="background" id="background" action="https://formsubmit.co/ajax/ivytaglife@gmail.com" method="POST">
-                                            
-                                            <div class="container">
-                                                <div class="screen">
-                                                    <div class="screen-header" id="screen-header">
-                                                        <div class="screen-header-left">
-                                                            <div class="screen-header-button ell"></div>
-                                                            <div class="screen-header-button ell2"></div>
-                                                            <div class="screen-header-button ell3"></div>
-                                                        </div>
-                                                        <div class="screen-header-right">
-                                                            <div class="screen-header-ellipsis"></div>
-                                                            <div class="screen-header-ellipsis"></div>
-                                                            <div class="screen-header-ellipsis"></div>
-                                                        </div>
+                                <div class="list__text" style="width: 100%;">
+                                    <form class="background" id="contactForm" action="https://formsubmit.co/ajax/ivytaglife@gmail.com" method="POST" novalidate>
+                                        <div class="screen">
+                                            <div class="screen-header">
+                                                <div class="screen-header-left">
+                                                    <div class="screen-header-button ell" title="Close"></div>
+                                                    <div class="screen-header-button ell2" title="Minimize"></div>
+                                                    <div class="screen-header-button ell3" title="Expand"></div>
+                                                </div>
+                                                <div class="screen-header-title">contact@ivytag.world ~ bash</div>
+                                                <div class="screen-header-right">
+                                                    <div class="screen-header-ellipsis"></div>
+                                                    <div class="screen-header-ellipsis"></div>
+                                                    <div class="screen-header-ellipsis"></div>
+                                                </div>
+                                            </div>
+                                            <div class="screen-body">
+                                                <div class="screen-body-item left">
+                                                    <div class="app-title">
+                                                        <span>CONTACT US</span>
+                                                        <small>Turn your vision into digital reality</small>
                                                     </div>
-                                                    <div class="screen-body">
-                                                        <div class="screen-body-item left">
-                                                            <div class="app-title">
-                                                                <span>CONTACT US</span>
-                                                            </div>
-                                                            <div class="app-contact">WHATSAPP : +2348050671490</div>
-                                                        </div>
-                                                        <div class="screen-body-item">
-                                                            <div class="app-form">
-                                                                <div class="app-form-group">
-                                                                    <input class="app-form-control" id="fname" name="fname" type="text" placeholder="Name"
-                                                                        onkeyup="validateName()">
-                                                                    <span class='error-message' id='name-error'></span>
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <input type="email" id="email" class="app-form-control" name="email" id="email"
-                                                                        placeholder="Email" onkeyup="validateEmail()">
-                                                                    <span class='error-message' id='email-error'></span>
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <input type="text" class="app-form-control" id="phone" name="phone"
-                                                                        placeholder="Phone Number" onkeyup="validatePhone()">
-                                                                    <span class='error-message' id='phone-error'></span>
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <textarea class="app-form-control" name="message" id="message"
-                                                                        placeholder="Type your message" onkeyup="validateMessage()"></textarea>
-                                                                        <span class='error-message' id='message-error'></span>
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <input type="hidden" name="_captcha" value="true">
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <input type="text" name="_honey" style="display:none">
-                                                                </div>
-                                                                <div class="app-form-group">
-                                                                    <input type="hidden" name="_blacklist" value="https://, shop online, how to make money online, buy from us">
-                                                                </div>
-                                                                <div class="app-form-group buttons">
-                                                                    <button class="app-form-button" type="submit" onclick=" return validateForm()">SEND</button>
-                                                                    <span class='error-message' id='submit-error'></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    <div class="app-contact">
+                                                        <span>WHATSAPP:</span>
+                                                        <a href="https://wa.me/2348050671490" target="_blank" rel="noopener noreferrer">+234 805 067 1490</a>
                                                     </div>
-                                        </form>
+                                                </div>
+                                                <div class="screen-body-item">
+                                                    <div class="app-form">
+                                                        <div class="app-form-group">
+                                                            <input class="app-form-control" id="fname" name="name" type="text" placeholder="Your Name" required onkeyup="validateName()" onblur="validateName()">
+                                                            <span class="error-message" id="name-error"></span>
+                                                        </div>
+                                                        <div class="app-form-group">
+                                                            <input type="email" id="email" class="app-form-control" name="email" placeholder="Your Email" required onkeyup="validateEmail()" onblur="validateEmail()">
+                                                            <span class="error-message" id="email-error"></span>
+                                                        </div>
+                                                        <div class="app-form-group">
+                                                            <input type="tel" class="app-form-control" id="phone" name="phone" placeholder="Phone Number (Optional)" onkeyup="validatePhone()" onblur="validatePhone()">
+                                                            <span class="error-message" id="phone-error"></span>
+                                                        </div>
+                                                        <div class="app-form-group">
+                                                            <textarea class="app-form-control" name="message" id="message" placeholder="Type your message (min 20 characters)..." required rows="3" onkeyup="validateMessage()" onblur="validateMessage()"></textarea>
+                                                            <span class="error-message" id="message-error"></span>
+                                                        </div>
+                                                        <input type="hidden" name="_captcha" value="false">
+                                                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+                                                        <div class="app-form-group buttons">
+                                                            <button class="app-form-button" id="submitBtn" type="submit">
+                                                                <span>SEND MESSAGE</span>
+                                                                <span>→</span>
+                                                            </button>
+                                                        </div>
+                                                        <span class="error-message" id="submit-error" style="text-align: right;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        </li>
-                                        </ul>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
                         <div class="icon-ivy">
-                            <img src="assets/img/ivyfavicon.png">
+                            <img src="assets/img/ivyfavicon.png" alt="Ivytag Emblem">
                         </div>
-                        <p class="social">Follow us:</p>  </br>
-                           <p class="social"> 
-                            <a href="https://x.com/ivytag101" style="padding: 5px 25px;">X</a>
-                            <a href="https://linkedin.com/company/ivytag">Linkedin</a>
-                            <a href="https://instagram.com/ivytag101">instagram</a>
-                            <a href="ivytag101.github.io">github</a>
-                        </p>
+                        <div class="social-wrapper">
+                            <h5 class="social-title">Follow Us</h5>
+                            <div class="social-links">
+                                <a href="https://x.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--x" aria-label="X (formerly Twitter)">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    </svg>
+                                    <span>X</span>
+                                </a>
+                                <a href="https://linkedin.com/company/ivytag" target="_blank" rel="noopener noreferrer" class="social-link social-link--linkedin" aria-label="LinkedIn">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                                    </svg>
+                                    <span>LinkedIn</span>
+                                </a>
+                                <a href="https://instagram.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--instagram" aria-label="Instagram">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                                    </svg>
+                                    <span>Instagram</span>
+                                </a>
+                                <a href="https://github.com/ivytag101" target="_blank" rel="noopener noreferrer" class="social-link social-link--github" aria-label="GitHub">
+                                    <svg class="social-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12 0a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 0z"/>
+                                    </svg>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <p>&nbsp;</p>
                     <div class="flex-wrapper">
@@ -444,21 +481,25 @@
                  </div>
                                 <!-- __________________ -->
                 <hr class="studio__section__hr section__hr list__hr hr">
-                <hr class="studio__section__hr section__hr list__hr hr">
-                <div style="text-align: center; display:block; background-color: rgb(8, 100, 8); width: 100%; height: 50px; ">Ivytag &copy; <span id="year"></span>. All rights reserved.</div>
-                <div class="credits">__
-                Icons by : &nbsp;<a href="https://devicon.dev" target="_blank">DevIcon</a></div>
-                <script>
-   document.getElementById("year").textContent = new Date().getFullYear();
-                </script>
-                        </section>
+                            </section>
+            
+            <footer class="site-footer">
+                <div class="site-footer__content">
+                    <p class="site-footer__copy">
+                        <span class="brand">Ivytag</span> &copy; <span id="year"></span>. All rights reserved.
+                    </p>
+                    <p class="site-footer__credits">
+                        Crafted with modern web technologies &bull; Icons by <a href="https://devicon.dev" target="_blank" rel="noopener noreferrer">DevIcon</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
                 
         <div class="webgl__color"></div>
         <div class="preloader" id="preloader">
             <div class="preloader__wrapper">
                 <h1 class="preloader__logo preloader__elem">
-                    <img class="preloader-spinner-d1" src="assets/img/ivyfavicon.png">
-                </img>
+                    <img class="preloader-spinner-d1" src="assets/img/ivyfavicon.png" alt="Loading">
                 </h1>
                 <h4 class="preloader__brand preloader__elem">IVYTAG</h4>
                 <h4 class="preloader__byline preloader__elem">Making Dreams come true</h4>
@@ -468,188 +509,32 @@
         <span class="c-scrollbar">
             <span class="c-scrollbar_thumb"></span>
         </span>
+        
+        <!-- SVG Symbols Definition -->
+        <svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+                <symbol id="icon-scroll-top" viewBox="0 0 32 32">
+                    <path d="M2.7 32v-4.4h10.8v-18.8l-7.5 7.5-3.2-3.2 12.9-13.1 13.1 13.1-3.2 3.2-7.6-7.5v18.9h10.8v4.3h-26.1z"></path>
+                </symbol>
+                <symbol id="icon-sun" viewBox="0 0 31 31">
+                    <path fill-rule="evenodd" d="M30.99 15.492l-10.92.582 10.4 3.3-10.71-2.175 9.16 5.793-9.77-4.784 7.3 7.89-8.15-7.067 4.95 9.45-5.99-8.868 2.25 10.367-3.41-10.065-.6 10.576-.6-10.576-3.41 10.065 2.24-10.367-5.98 8.868 4.94-9.45-8.15 7.067 7.3-7.89-9.76 4.784 9.16-5.793L.53 19.374l10.4-3.3L0 15.492l10.93-.582-10.4-3.3 10.71 2.175-9.16-5.792 9.76 4.783-7.3-7.89 8.15 7.067-4.94-9.45 5.98 8.867-2.24-10.366 3.41 10.065.6-10.576.6 10.576 3.41-10.065-2.25 10.366 5.99-8.867-4.95 9.45 8.15-7.067-7.3 7.89 9.77-4.783-9.16 5.792 10.71-2.175-10.4 3.3z"></path>
+                </symbol>
+                <symbol id="icon-checkmark" viewBox="0 0 20 20">
+                    <path d="M0 11l2-2 5 5 11-11 2 2-13 13z"></path>
+                </symbol>
+                <symbol id="icon-trust" viewBox="0 0 32 32">
+                    <path d="M 16.033 30.004 c -11.033 -0.004 -11.033 -0.004 -11.037 -12.339 c 0 -3.053 1.745 -6.071 5.042 -6.538 v -2.145 c 0 -3.307 2.687 -5.986 6 -5.986 c 3.314 0 6 2.68 6 5.986 v 2.146 c 3.182 0.475 4.967 3.434 4.967 6.536 c -0.005 12.336 -0.005 12.336 -10.972 12.34 V 30 z M 14.475 23.947 c 1.584 2.11 1.534 2.16 2.975 0 l -1.298 -3.47 c 0.728 -0.102 1.298 -0.701 1.298 -1.456 c 0 -0.826 -0.672 -1.497 -1.5 -1.497 s -1.5 0.671 -1.5 1.497 c 0 0.718 0.518 1.29 1.194 1.435 l -1.256 3.491 z M 20.037 8.982 c 0 -2.204 -1.791 -3.991 -4 -3.991 s -4 1.787 -4 3.991 v 2.182 s 1.982 -0.048 7.985 0.013 z"></path>
+                </symbol>
+                <symbol id="icon-angle" viewBox="0 0 40 38">
+                    <path d="M 12 31 h -29 C -13 28 -9 25 -5 22 v -14 z"></path>
+                </symbol>
+            </defs>
+        </svg>
+
         <script src="js/main.js"></script>
         <script>
-
-            var A = [[0, 1, 1, 0],
-            [1, 0, 0, 1],
-            [1, 1, 1, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1]
-            ];
-            var B = [[1, 1, 1, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 0],
-            [1, 0, 0, 1],
-            [1, 1, 1, 1]
-            ];
-            var C = [[0, 1, 1, 1],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0],
-            [0, 1, 1, 1]
-            ];
-            var D = [[1, 1, 1, 0],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 0]
-            ];
-            var E = [[1, 1, 1, 1],
-            [1, 0, 0, 0],
-            [1, 1, 1, 0],
-            [1, 0, 0, 0],
-            [1, 1, 1, 1]
-            ];
-            var F = [[1, 1, 1, 1],
-            [1, 0, 0, 0],
-            [1, 1, 1, 0],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0]
-            ];
-            var G = [[1, 1, 1, 1],
-            [1, 0, 0, 0],
-            [1, 0, 1, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 1]
-            ];
-            var H = [[1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1]
-            ];
-            var I = [[1, 1, 1],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0],
-            [1, 1, 1]
-            ];
-            var J = [[0, 0, 0, 1],
-            [0, 0, 0, 1],
-            [0, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 1]
-            ];
-            var K = [[1, 0, 0, 1],
-            [1, 0, 1, 0],
-            [1, 1, 0, 0],
-            [1, 0, 1, 0],
-            [1, 0, 0, 1]
-            ];
-            var L = [[1, 0, 0],
-            [1, 0, 0],
-            [1, 0, 0],
-            [1, 0, 0],
-            [1, 1, 1]
-            ];
-            var M = [[1, 1, 1, 1, 0],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1]
-            ];
-            var N = [[1, 0, 0, 0, 1],
-            [1, 1, 0, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 0, 1, 1],
-            [1, 0, 0, 0, 1]
-            ];
-            var O = [[0, 1, 1, 0],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [0, 1, 1, 0]
-            ];
-            var P = [[1, 1, 1, 0],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 0],
-            [1, 0, 0, 0]
-            ];
-            // letter Q is reaallly annoying!!
-            var Q = [[0, 1, 1, 0, 0],
-            [1, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0],
-            [0, 1, 1, 0, 1]
-            ];
-            var R = [[1, 1, 1, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 1, 1, 0],
-            [1, 0, 0, 1]
-            ];
-            var S = [[0, 1, 1],
-            [1, 0, 0],
-            [1, 1, 1],
-            [0, 0, 1],
-            [1, 1, 0]
-            ];
-            var T = [[1, 1, 1],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0]
-            ];
-            var U = [[1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [1, 0, 0, 1],
-            [0, 1, 1, 0]
-            ];
-            var V = [[1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1],
-            [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0]
-            ];
-            var W = [[1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [0, 1, 1, 1, 0]
-            ];
-            var X = [[1, 0, 0, 0, 1],
-            [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0],
-            [0, 1, 0, 1, 0],
-            [1, 0, 0, 0, 1]
-            ];
-            var Y = [[1, 0, 0, 0, 1],
-            [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0]
-            ];
-            var Z = [[1, 1, 1, 1],
-            [0, 0, 0, 1],
-            [0, 1, 1, 0],
-            [1, 0, 0, 0],
-            [1, 1, 1, 1]
-            ];
-
+            var yrEl = document.getElementById("year");
+            if (yrEl) yrEl.textContent = new Date().getFullYear();
         </script>
     </body>
 </html>
-<svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <symbol id="icon-scroll-top" viewBox="0 0 32 32">
-            <path d="M2.7 32v-4.4h10.8v-18.8l-7.5 7.5-3.2-3.2 12.9-13.1 13.1 13.1-3.2 3.2-7.6-7.5v18.9h10.8v4.3h-26.1z"></path>
-        </symbol>
-        <symbol id="icon-sun" viewBox="0 0 31 31">
-            <path fill-rule="evenodd" d="M30.99 15.492l-10.92.582 10.4 3.3-10.71-2.175 9.16 5.793-9.77-4.784 7.3 7.89-8.15-7.067 4.95 9.45-5.99-8.868 2.25 10.367-3.41-10.065-.6 10.576-.6-10.576-3.41 10.065 2.24-10.367-5.98 8.868 4.94-9.45-8.15 7.067 7.3-7.89-9.76 4.784 9.16-5.793L.53 19.374l10.4-3.3L0 15.492l10.93-.582-10.4-3.3 10.71 2.175-9.16-5.792 9.76 4.783-7.3-7.89 8.15 7.067-4.94-9.45 5.98 8.867-2.24-10.366 3.41 10.065.6-10.576.6 10.576 3.41-10.065-2.25 10.366 5.99-8.867-4.95 9.45 8.15-7.067-7.3 7.89 9.77-4.783-9.16 5.792 10.71-2.175-10.4 3.3z"></path>
-        </symbol>
-        <symbol id="icon-checkmark" viewBox="0 0 20 20">
-            <path d="M0 11l2-2 5 5 11-11 2 2-13 13z"></path>
-        </symbol>
-        <symbol id="icon-trust" viewBox="0 0 32 32">
-            <path d="M 16.033 30.004 c -11.033 -0.004 -11.033 -0.004 -11.037 -12.339 c 0 -3.053 1.745 -6.071 5.042 -6.538 v -2.145 c 0 -3.307 2.687 -5.986 6 -5.986 c 3.314 0 6 2.68 6 5.986 v 2.146 c 3.182 0.475 4.967 3.434 4.967 6.536 c -0.005 12.336 -0.005 12.336 -10.972 12.34 V 30 z M 14.475 23.947 c 1.584 2.11 1.534 2.16 2.975 0 l -1.298 -3.47 c 0.728 -0.102 1.298 -0.701 1.298 -1.456 c 0 -0.826 -0.672 -1.497 -1.5 -1.497 s -1.5 0.671 -1.5 1.497 c 0 0.718 0.518 1.29 1.194 1.435 l -1.256 3.491 z M 20.037 8.982 c 0 -2.204 -1.791 -3.991 -4 -3.991 s -4 1.787 -4 3.991 v 2.182 s 1.982 -0.048 7.985 0.013 z"></path>
-        </symbol>
-        
-
-        <symbol id="icon-angle" viewBox="0 0 40 38">
-            <path d="M 12 31 h -29 C -13 28 -9 25 -5 22 v -14 z"></path>
-        </symbol>
-    </defs>
-</svg>

@@ -19746,20 +19746,26 @@
             },
             yPercent: -20
         }),
-        document.querySelector(".byline") && Lr.from(".byline", {
-            scrollTrigger: {
-                trigger: "#app",
-                toggleActions: "restart none reverse none",
-                start: "top -400",
-                endTrigger: ".intro__section",
-                end: "top 400"
-            },
-            xPercent: -5,
-            rotate: -93,
-            opacity: 0,
-            duration: 1,
-            ease: "expo.inOut"
-        }),
+        document.querySelector(".byline") && (function() {
+            var bEl = document.querySelector(".byline");
+            Lr.to(bEl, {
+                scrollTrigger: {
+                    trigger: "#app",
+                    start: "top -80",
+                    toggleActions: "play none none reverse",
+                    onToggle: function(self) {
+                        if (self.isActive) {
+                            bEl.classList.add("is-visible");
+                        } else {
+                            bEl.classList.remove("is-visible");
+                        }
+                    }
+                },
+                opacity: 1,
+                duration: 0.6,
+                ease: "power2.out"
+            });
+        })(),
         Lr.to(".scroll-down span", {
             xPercent: 20,
             repeat: -1,
@@ -19858,17 +19864,18 @@
             })
         }
         )),
-        Lr.utils.toArray(".social").forEach((function (t, e) {
+        Lr.utils.toArray(".social-link").forEach((function (t, e) {
             Lr.from(t, {
                 scrollTrigger: {
-                    trigger: t,
-                    toggleActions: "restart none none none"
+                    trigger: t.parentElement,
+                    toggleActions: "play none none none",
+                    start: "top 90%"
                 },
-                scaleX: 0,
-                delay: .3,
-                transformOrigin: "right center",
-                ease: "ease",
-                duration: 1
+                y: 16,
+                opacity: 0,
+                delay: .08 * e,
+                ease: "power2.out",
+                duration: 0.6
             })
         }
         )),
@@ -19877,13 +19884,14 @@
             Lr.from(t, {
                 scrollTrigger: {
                     trigger: t,
-                    toggleActions: "restart none none none"
+                    toggleActions: "play none none none",
+                    start: "top 85%"
                 },
-                scaleX: 0,
-                delay: .3,
-                transformOrigin: "left center",
-                ease: "ease",
-                duration: 1
+                y: 30,
+                opacity: 0,
+                delay: .2,
+                ease: "power2.out",
+                duration: 0.8
             })
         }
         )),
@@ -20125,7 +20133,7 @@
                             wireframe: !0,
                             transparent: !0,
                             vertexShader: tp,
-                            fragmentShader: "\n  //varying vec2 vUv;\n  varying float vDistort;\n  \n  uniform float uTime;\n  uniform float uIntensity;\n  uniform float uAlpha;\n  \n  vec3 cosPalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {\n    return a + b * cos(6.28318 * (c * t + d));\n  }     \n  \n  void main() {\n    float distort = vDistort * uIntensity;\n    \n    vec3 brightness = vec3(.1, .0, .1);\n    vec3 contrast = vec3(.1, .4, .1);\n    vec3 oscilation = vec3(.4, .4, .4);\n    vec3 phase = vec3(.6, .9, .5);\n    // vec3 brightness = vec3(.4, .0, .5);\n    // vec3 contrast = vec3(.3, .3, .1);\n    // vec3 oscilation = vec3(.7, .1, .1); // (.7, .8, .1);\n    // vec3 phase = vec3(.1, .4, .8);\n  \n    vec3 color = cosPalette(distort, brightness, contrast, oscilation, phase);\n    \n    gl_FragColor = vec4(color, (vDistort + uAlpha));\n  }  \n",
+                            fragmentShader: "\n  //varying vec2 vUv;\n  varying float vDistort;\n  \n  uniform float uTime;\n  uniform float uIntensity;\n  uniform float uAlpha;\n  \n  vec3 cosPalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {\n    return a + b * cos(6.28318 * (c * t + d));\n  }     \n  \n  void main() {\n    float distort = vDistort * uIntensity;\n    \n    vec3 brightness = vec3(.04, .22, .10);\n    vec3 contrast = vec3(.15, .60, .40);\n    vec3 oscilation = vec3(.28, .70, .48);\n    vec3 phase = vec3(.18, .88, .48);\n  \n    vec3 color = cosPalette(distort, brightness, contrast, oscilation, phase);\n    float alpha = clamp(abs(vDistort) * 1.6 + uAlpha, 0.18, 0.95);\n    gl_FragColor = vec4(color, alpha);\n  }  \n",
                             uniforms: {
                                 uTime: {
                                     value: 0
@@ -20164,25 +20172,25 @@
             }, {
                 key: "addMobileSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 8),
+                    this.camera.position.set(0, 0, 4.2),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--mobile"
                         }),
-                        Lr.from(this.mesh.material.uniforms.uNoiseDensity, {
-                            value: 0,
-                            duration: 5,
-                            ease: "expo",
-                            delay: 2.8
-                        }),
+                        this.mesh.material.uniforms.uNoiseDensity.value = 1.0,
+                        this.mesh.material.uniforms.uNoiseStrength.value = 0.45,
+                        this.mesh.material.uniforms.uFrequency.value = 2.0,
+                        this.mesh.material.uniforms.uAmplitude.value = 0.5,
+                        this.mesh.material.uniforms.uAlpha.value = 0.3,
+                        this.mesh.material.uniforms.uIntensity.value = 1.1,
                         Lr.from(this.mesh.rotation, {
                             y: 2.5 * Math.PI,
-                            duration: 5,
+                            duration: 4,
                             ease: "expo",
                             delay: 2.8
                         }),
                         Lr.from(this.camera.position, {
-                            z: 50,
-                            duration: 5,
+                            z: 16,
+                            duration: 4,
                             ease: "expo",
                             delay: 2.8
                         })
@@ -20190,42 +20198,18 @@
             }, {
                 key: "addDesktopSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 4),
+                    this.camera.position.set(0, 0, 3.8),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--desktop"
                         }),
-                        Lr.set(this.mesh.material.uniforms.uNoiseDensity, {
-                            value: 1
-                        }),
-                        Lr.set(this.mesh.material.uniforms.uNoiseStrength, {
-                            value: 0
-                        }),
-                        Lr.set(this.mesh.material.uniforms.uFrequency, {
-                            value: 0
-                        }),
-                        Lr.set(this.mesh.material.uniforms.uAmplitude, {
-                            value: 0
-                        }),
-                        Lr.set(this.mesh.material.uniforms.uAlpha, {
-                            value: 1
-                        }),
-                        Lr.set(this.mesh.material.uniforms.uIntensity, {
-                            value: 1.5
-                        }),
-                        Lr.from(this.mesh.material.uniforms.uNoiseStrength, {
-                            value: 5,
-                            duration: 3,
-                            ease: "expo",
-                            delay: 3.5
-                        }),
-                        Lr.from(this.mesh.material.uniforms.uIntensity, {
-                            value: 0,
-                            duration: 3,
-                            ease: "expo",
-                            delay: 3.5
-                        }),
+                        this.mesh.material.uniforms.uNoiseDensity.value = 1.2,
+                        this.mesh.material.uniforms.uNoiseStrength.value = 0.55,
+                        this.mesh.material.uniforms.uFrequency.value = 2.5,
+                        this.mesh.material.uniforms.uAmplitude.value = 0.65,
+                        this.mesh.material.uniforms.uAlpha.value = 0.35,
+                        this.mesh.material.uniforms.uIntensity.value = 1.25,
                         Lr.from(this.camera.position, {
-                            z: 20,
+                            z: 14,
                             duration: 3,
                             ease: "expo",
                             delay: 3.5
@@ -20239,28 +20223,28 @@
                         Lr.to(".unique", {
                             x: .05 * e.clientX,
                             y: .05 * e.clientY,
-                            duration: 5,
-                            ease: "expo"
+                            duration: 1.5,
+                            ease: "power2.out"
                         }),
                             Lr.to(t.mesh.material.uniforms.uAmplitude, {
                                 value: e.clientY / window.innerHeight * 1,
-                                duration: 5,
-                                ease: "expo"
+                                duration: 1.5,
+                                ease: "power2.out"
                             }),
                             Lr.to(t.mesh.material.uniforms.uFrequency, {
                                 value: e.clientY / window.innerHeight * 10,
-                                duration: 5,
-                                ease: "expo"
+                                duration: 1.5,
+                                ease: "power2.out"
                             }),
                             Lr.to(t.mesh.material.uniforms.uNoiseDensity, {
                                 value: e.clientX / window.innerWidth * 1.8,
-                                duration: 5,
-                                ease: "expo"
+                                duration: 1.5,
+                                ease: "power2.out"
                             }),
                             Lr.to(t.mesh.material.uniforms.uNoiseStrength, {
                                 value: e.clientX / window.innerWidth * 1,
-                                duration: 5,
-                                ease: "expo"
+                                duration: 1.5,
+                                ease: "power2.out"
                             })
                     }
                     ))
@@ -20315,13 +20299,14 @@
             }, {
                 key: "renderMobile",
                 value: function () {
-                    this.mesh.material.uniforms.uTime.value = .2 * this.clock.getElapsedTime(),
+                    this.mesh.material.uniforms.uTime.value = .22 * this.clock.getElapsedTime(),
                         this.renderer.render(this.scene, this.camera)
                 }
             }, {
                 key: "render",
                 value: function () {
-                    this.renderer.render(this.scene, this.camera)
+                    this.mesh.material.uniforms.uTime.value = .32 * this.clock.getElapsedTime(),
+                        this.renderer.render(this.scene, this.camera)
                 }
             }]) && t(n.prototype, i),
             r && t(n, r),
@@ -20334,278 +20319,379 @@
         jo.refresh()
 }();
 
-$(document).ready(function () {
-    //  input string
-    //var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var str = "ivytaG";
-    str = str.toUpperCase();
 
-    //vars
-    var cont, sp, curr, offx, arr, count, c2, x, y;
+// ==========================================================================
+// IVYTAG Custom Interactive Features & Enhancements
+// ==========================================================================
 
-    main();
-    function main() {
+// Letter matrices for #holder animated logo (A-Z)
+var LETTER_MATRICES = {
+    A: [[0,1,1,0],[1,0,0,1],[1,1,1,1],[1,0,0,1],[1,0,0,1]],
+    B: [[1,1,1,1],[1,0,0,1],[1,1,1,0],[1,0,0,1],[1,1,1,1]],
+    C: [[0,1,1,1],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,1,1,1]],
+    D: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,1,1,0]],
+    E: [[1,1,1,1],[1,0,0,0],[1,1,1,0],[1,0,0,0],[1,1,1,1]],
+    F: [[1,1,1,1],[1,0,0,0],[1,1,1,0],[1,0,0,0],[1,0,0,0]],
+    G: [[1,1,1,1],[1,0,0,0],[1,0,1,1],[1,0,0,1],[1,1,1,1]],
+    H: [[1,0,0,1],[1,0,0,1],[1,1,1,1],[1,0,0,1],[1,0,0,1]],
+    I: [[1,1,1],[0,1,0],[0,1,0],[0,1,0],[1,1,1]],
+    J: [[0,0,0,1],[0,0,0,1],[0,0,0,1],[1,0,0,1],[1,1,1,1]],
+    K: [[1,0,0,1],[1,0,1,0],[1,1,0,0],[1,0,1,0],[1,0,0,1]],
+    L: [[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,1,1]],
+    M: [[1,1,1,1,0],[1,0,1,0,1],[1,0,1,0,1],[1,0,1,0,1],[1,0,1,0,1]],
+    N: [[1,0,0,0,1],[1,1,0,0,1],[1,0,1,0,1],[1,0,0,1,1],[1,0,0,0,1]],
+    O: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[1,0,0,1],[0,1,1,0]],
+    P: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,1,1,0],[1,0,0,0]],
+    Q: [[0,1,1,0,0],[1,0,0,1,0],[1,0,0,1,0],[1,0,0,1,0],[0,1,1,0,1]],
+    R: [[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,0],[1,0,0,1]],
+    S: [[0,1,1],[1,0,0],[1,1,1],[0,0,1],[1,1,0]],
+    T: [[1,1,1],[0,1,0],[0,1,0],[0,1,0],[0,1,0]],
+    U: [[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[0,1,1,0]],
+    V: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0]],
+    W: [[1,0,1,0,1],[1,0,1,0,1],[1,0,1,0,1],[1,0,1,0,1],[0,1,1,1,0]],
+    X: [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]],
+    Y: [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+    Z: [[1,1,1,1],[0,0,0,1],[0,1,1,0],[1,0,0,0],[1,1,1,1]]
+};
 
-        //   variable 
-        cont = $("#holder");
-        sp = [[0, 0, 0, 0]];
-        curr;
+// ==========================================================================
+// 1. Pixel Matrix Animated Logo (#holder)
+// ==========================================================================
+function initMatrixLogo() {
+    var cont = $("#holder");
+    if (!cont.length) return;
+
+    var str = "IVYTAG";
+    var sp = [[0, 0, 0, 0]];
+    var offx = 20;
+    var arr = [];
+    var count = 0;
+    var c2 = 0;
+
+    function sw(c, pt) {
+        switch (c) {
+            case 0:
+                pt.y += Math.round(Math.random() * -400) - 80;
+                break;
+            case 1:
+                pt.x += offx + Math.round(Math.random() * 400) + 80;
+                break;
+            case 2:
+                pt.y += Math.round(Math.random() * 400) + 80;
+                break;
+            case 3:
+                pt.x += offx - Math.round(Math.random() * 400) + 80;
+                break;
+        }
+    }
+
+    function buildMatrix() {
         offx = 20;
         arr = [];
         count = 0;
-        cont.html("");
         c2 = 0;
+        var htmlBuf = "";
 
-        // main loop
         for (var j0 = 0; j0 < str.length; j0++) {
-            if (str[j0].match(/[^A-Z]/)) {
-                // if it's not a letter
-                curr = sp;
-            }
-            else {
-                // just evals the current letter to get the variable instead of using if statements or switch case
-                curr = eval(str[j0]);
-            }
-            // j1 loops vertically in the matrix
-            for (var j1 = 0; j1 < curr.length; j1++) {
-                // j2 loops horizontally
-                for (var j2 = 0; j2 < curr[j1].length; j2++) {
-                    // if it's 1, add a <h6> tag to container div
-                    if (curr[j1][j2] == 1) {
-                        x = j2 * 10;
-                        y = j1 * 10;
-                        // randomizes the starting point of squares
-                        sw(count);
+            var char = str[j0];
+            var curr = LETTER_MATRICES[char] || sp;
 
-                        cont.html(cont.html() + "<h6 style=' top:" + y + "px;left:" + x + "px;'></h6>");
-                        // push the right coordinates
+            for (var j1 = 0; j1 < curr.length; j1++) {
+                for (var j2 = 0; j2 < curr[j1].length; j2++) {
+                    if (curr[j1][j2] === 1) {
+                        var pt = {
+                            x: j2 * 10,
+                            y: j1 * 10
+                        };
+                        sw(count, pt);
+                        htmlBuf += "<h6 style='top:" + pt.y + "px;left:" + pt.x + "px;'></h6>";
                         arr.push({
                             y: j1 * 10,
                             x: j2 * 10 + offx
                         });
-                        // just a counter that loops through 0-3 over and over again
-                        count++;
-                        count = count > 3 ? 0 : count;
+                        count = (count + 1) % 4;
                     }
-                }   // end of j2 loop
-            } // end of j1 for loop
-
-            offx += 10 + (curr[0].length * 10)
-
-        } // end of main loop
-
-
-
-        // the animation part
-        for (var j3 = 0; j3 < arr.length; j3++) {
-
-            $("h6:eq(" + j3 + ")").animate({ "top": arr[j3].y + "px", "left": arr[j3].x + "px" }, Math.round(Math.random() * 3000 + 400), "swing", callbac);
-
-        }   // j3 loop
-
-
-        //} //  end of main function''
-
-        // I separated the switch case for clarity
-        function sw(c) {
-            switch (c) {
-                case 0: // square comes from above
-                    y += Math.round(Math.random() * -500) - 100;
-                    break;
-                case 1: //  from  right
-                    x += offx + Math.round(Math.random() * 500) + 100;
-                    break;
-                case 2: // from bottom
-                    y += Math.round(Math.random() * 500) + 100;
-                    break;
-                case 3: // from left
-                    x += offx - Math.round(Math.random() * 500) + 100;
-                    break;
+                }
             }
+            offx += 10 + (curr[0].length * 10);
         }
 
-    } //  end of main function
+        cont.html(htmlBuf);
 
-    // a callback counter function is needed so that the animation repeats only after all the animations are complete:
-    function callbac() {
+        // Animate pixels to target positions
+        for (var j3 = 0; j3 < arr.length; j3++) {
+            $("h6:eq(" + j3 + ")", cont).animate(
+                { top: arr[j3].y + "px", left: arr[j3].x + "px" },
+                Math.round(Math.random() * 2200 + 400),
+                "swing",
+                onPixelDone
+            );
+        }
+    }
+
+    function onPixelDone() {
         c2++;
-        //if all animations are done:
         if (c2 >= arr.length) {
             setTimeout(function () {
-                main();
-                clrs();
-            }, 1000)
+                buildMatrix();
+                updateColors();
+            }, 3000);
         }
     }
 
-    // color changer func
-    function clrs() {
-        var r = Math.floor(Math.random() * 0);
-        var g = Math.floor(Math.random() * 255);
-        var b = Math.floor(Math.random() * 0);
-        $("h6").css("background", "rgb(" + r + "," + g + "," + b + ")");
-        $(".h6").css("borderColor", "rgb(" + (r - 30) + "," + (g - 30) + "," + (b - 30) + ")");
+    function updateColors() {
+        var g = Math.floor(Math.random() * 100) + 155;
+        cont.find("h6").css({
+            background: "rgb(20," + g + ",50)",
+            borderColor: "rgb(40,255,122)"
+        });
     }
 
-})
-var formdata = 'name =' + fname + '&email =' + email + '&phone =' + phone + '&message =' + message;
+    buildMatrix();
+}
+
+// ==========================================================================
+// 2. Tech Stack Random Light-Up Animation (Snappy, one at a time)
+// ==========================================================================
+function initTechStackRandomizer() {
+    var items = document.querySelectorAll(".tech-item");
+    if (!items.length) return;
+
+    var lastIdx = -1;
+    var timerId = null;
+    var isPaused = false;
+    var grid = document.getElementById("techStackGrid");
+
+    if (grid) {
+        grid.addEventListener("mouseenter", function () {
+            isPaused = true;
+            items.forEach(function (el) {
+                el.classList.remove("is-lit");
+            });
+        });
+        grid.addEventListener("mouseleave", function () {
+            isPaused = false;
+        });
+    }
+
+    function lightNextRandom() {
+        if (isPaused) {
+            timerId = setTimeout(lightNextRandom, 500);
+            return;
+        }
+
+        // Clean previous lit
+        if (lastIdx >= 0 && items[lastIdx]) {
+            items[lastIdx].classList.remove("is-lit");
+        }
+
+        // Pick next random (guarantee no consecutive repeats)
+        var nextIdx = Math.floor(Math.random() * items.length);
+        if (items.length > 1 && nextIdx === lastIdx) {
+            nextIdx = (nextIdx + 1) % items.length;
+        }
+        lastIdx = nextIdx;
+
+        var currentItem = items[nextIdx];
+        if (currentItem) {
+            currentItem.classList.add("is-lit");
+        }
+
+        // Snappy active duration (450ms), then quick pause (200ms) before next
+        setTimeout(function () {
+            if (currentItem) {
+                currentItem.classList.remove("is-lit");
+            }
+            timerId = setTimeout(lightNextRandom, 200);
+        }, 450);
+    }
+
+    // Start lighting
+    timerId = setTimeout(lightNextRandom, 800);
+}
+
+// ==========================================================================
+// 3. Contact Form Real-Time Validation & AJAX Submission
+// ==========================================================================
+function producePrompt(message, promptLocation, colorType) {
+    var el = document.getElementById(promptLocation);
+    if (!el) return;
+    el.innerHTML = message;
+    el.className = "error-message " + (colorType === "lime" ? "lime" : "peach");
+}
+
 function validateName() {
+    var fnameEl = document.getElementById("fname");
+    if (!fnameEl) return false;
+    var fname = fnameEl.value.trim();
 
-    var fname = document.getElementById('fname').value;
-
-    if (fname.length == 0) {
-
-        producePrompt('Please Name is required', 'name-error', 'peach')
+    if (fname.length === 0) {
+        producePrompt("Name is required", "name-error", "peach");
         return false;
-
     }
-
-    if (!fname.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
-
-        producePrompt('Include First and last name', 'name-error', 'peach');
+    if (fname.length < 2) {
+        producePrompt("Please enter at least 2 characters", "name-error", "peach");
         return false;
-
     }
-
-    producePrompt('Name is valid', 'name-error', 'lime');
+    producePrompt("Name is valid", "name-error", "lime");
     return true;
-
 }
 
 function validatePhone() {
+    var phoneEl = document.getElementById("phone");
+    if (!phoneEl) return true;
+    var phone = phoneEl.value.trim();
 
-    var phone = document.getElementById('phone').value;
+    // Phone is optional
+    if (phone.length === 0) {
+        producePrompt("", "phone-error", "lime");
+        return true;
+    }
 
-    if (phone.length == 0) {
-        producePrompt('Phone number is required.', 'phone-error', 'peach');
+    if (!phone.match(/^[0-9+()\s-]{7,20}$/)) {
+        producePrompt("Please use a valid phone format (e.g. +234...)", "phone-error", "peach");
         return false;
     }
 
-    if (phone.length < 10) {
-        producePrompt('Please use international format eg +234.', 'phone-error', 'peach');
-        return false;
-    }
-
-    if (!phone.match(/^[0-9()+-]{14}$/)) {
-        producePrompt('Only numbers and + sign, please.', 'phone-error', 'peach');
-        return false;
-    }
-
-    producePrompt('Number format is valid', 'phone-error', 'lime');
+    producePrompt("Phone number valid", "phone-error", "lime");
     return true;
-
 }
 
 function validateEmail() {
+    var emailEl = document.getElementById("email");
+    if (!emailEl) return false;
+    var email = emailEl.value.trim();
 
-    var email = document.getElementById('email').value;
-
-    if (email.length == 0) {
-
-        producePrompt('Email cannot be empty', 'email-error', 'peach');
+    if (email.length === 0) {
+        producePrompt("Email is required", "email-error", "peach");
         return false;
-
     }
 
-    if (!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
-
-        producePrompt('Email format is Invalid', 'email-error', 'peach');
+    var emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!emailPattern.test(email) || email.indexOf(".") === -1) {
+        producePrompt("Please enter a valid email address", "email-error", "peach");
         return false;
-
     }
 
-    producePrompt(' Email is Valid', 'email-error', 'lime');
+    producePrompt("Email is valid", "email-error", "lime");
     return true;
-
 }
 
 function validateMessage() {
-    var message = document.getElementById('message').value;
-    var required = 1000;
-    var left = required - message.length;
+    var msgEl = document.getElementById("message");
+    if (!msgEl) return false;
+    var message = msgEl.value.trim();
 
-    if (left >= 950) {
-        producePrompt("Total remaining: " + left + " characters, but you can't type lesser than 50 characters", 'message-error', 'peach');
+    if (message.length === 0) {
+        producePrompt("Message cannot be empty", "message-error", "peach");
         return false;
     }
 
-    producePrompt('minimum required input is Valid.' + left + ' characters remaining.', 'message-error', 'lime');
-    return true;
+    if (message.length < 20) {
+        var needed = 20 - message.length;
+        producePrompt(needed + " more characters needed (min 20)", "message-error", "peach");
+        return false;
+    }
 
+    producePrompt("Message valid (" + message.length + " characters)", "message-error", "lime");
+    return true;
 }
 
 function validateForm() {
-    if (!validateName() || !validatePhone() || !validateEmail() || !validateMessage()) {
-        jsShow('submit-error');
-        producePrompt('Please fix errors to submit.', 'submit-error', 'peach');
-        setTimeout(function () { jsHide('submit-error'); }, 2000);
+    var isNameValid = validateName();
+    var isPhoneValid = validatePhone();
+    var isEmailValid = validateEmail();
+    var isMsgValid = validateMessage();
+
+    if (!isNameValid || !isPhoneValid || !isEmailValid || !isMsgValid) {
+        producePrompt("Please check errors in the form before submitting", "submit-error", "peach");
+        setTimeout(function () {
+            producePrompt("", "submit-error", "peach");
+        }, 3500);
         return false;
     }
-    else {
-        // Handle form submission with AJAX for any form with the "ajax-form" class
-        $('.background').on('submit', function(event) {
-            event.preventDefault();
-        
-            $.ajax({
-              method: 'POST',
-              url: 'https://formsubmit.co/ajax/ivytaglife@gmail.com',
-              dataType: 'json',
-              accepts: 'application/json',
-              data: $(this).serialize(), // Serialize the form data
-              success: function(data) {
-                // Handle success
-                console.log(data);
-                // Display success message using Swal
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Success!',
-                  text: data.message,
-                  showConfirmButton: true
-                }).then(function() {
-                  // Optionally, you can redirect the user to a thank you page
-                  // window.location.href = 'thank-you.html';
+    producePrompt("", "submit-error", "lime");
+    return true;
+}
+
+function initContactForm() {
+    var form = document.getElementById("contactForm");
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return false;
+        }
+
+        var btn = document.getElementById("submitBtn");
+        var originalHtml = btn ? btn.innerHTML : "SEND";
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = "<span>SENDING...</span>";
+        }
+
+        var formData = $(form).serialize();
+
+        $.ajax({
+            method: "POST",
+            url: form.getAttribute("action") || "https://formsubmit.co/ajax/ivytaglife@gmail.com",
+            dataType: "json",
+            accepts: "application/json",
+            data: formData,
+            success: function (data) {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Message Sent!",
+                        text: "Thank you for reaching out to Ivytag. We will get back to you shortly!",
+                        background: "#021f0a",
+                        color: "#f1f5f9",
+                        confirmButtonColor: "#10b981",
+                        confirmButtonText: "Great!"
+                    });
+                } else {
+                    alert("Thank you! Your message has been sent successfully.");
+                }
+
+                form.reset();
+                document.querySelectorAll(".error-message").forEach(function (el) {
+                    el.innerHTML = "";
                 });
-              },
-              error: function(err) {
-                // Handle error
-                console.log(err);
-                // Display custom error message using Swal
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops!',
-                  text: 'Something went wrong. Please try again later.',
-                  showConfirmButton: true
-                });
-              }
-            });
-          });
-  ///end of form submission 
-
-    }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                }
+            },
+            error: function () {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Submission Issue",
+                        text: "Could not send right now. Please reach us directly via WhatsApp (+2348050671490) or email ivytaglife@gmail.com.",
+                        background: "#021f0a",
+                        color: "#f1f5f9",
+                        confirmButtonColor: "#10b981",
+                        confirmButtonText: "OK"
+                    });
+                } else {
+                    alert("Submission issue. Please reach us via WhatsApp (+2348050671490).");
+                }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                }
+            }
+        });
+    });
 }
 
-function jsShow(id) {
-    document.getElementById(id).style.display = 'block';
-}
-
-function jsHide(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-
-function producePrompt(message, promptLocation, color) {
-
-    document.getElementById(promptLocation).innerHTML = message;
-    document.getElementById(promptLocation).style.color = color;
-
-}
-//logo slides
-document.addEventListener('DOMContentLoaded', () => {
-  const track = document.querySelector('.slide-track');
-  const slides = document.querySelectorAll('.slide');
-  // Double the slides for seamless looping
-  slides.forEach(slide => {
-    const clone = slide.cloneNode(true);
-    track.appendChild(clone);
-  });
+// ==========================================================================
+// 4. Initialize Everything on Document Ready
+// ==========================================================================
+$(document).ready(function () {
+    initMatrixLogo();
+    initTechStackRandomizer();
+    initContactForm();
 });
