@@ -20197,6 +20197,7 @@
                 key: "addMobileSetup",
                 value: function () {
                     this.camera.position.set(0, 0, 4.0),
+                        Lr.set(".webgl", { opacity: 0.95 }),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--mobile"
                         }),
@@ -20207,22 +20208,23 @@
                         this.mesh.material.uniforms.uAlpha.value = 0.4,
                         this.mesh.material.uniforms.uIntensity.value = 1.25,
                         Lr.from(this.mesh.rotation, {
-                            y: 1.5 * Math.PI,
-                            duration: 2.5,
-                            ease: "power2.out",
-                            delay: 1.2
-                        }),
-                        Lr.from(this.camera.position, {
-                            z: 6.5,
+                            y: 2 * Math.PI,
                             duration: 2.2,
                             ease: "power2.out",
-                            delay: 1.2
+                            delay: 2.4
+                        }),
+                        Lr.from(this.camera.position, {
+                            z: 7.5,
+                            duration: 2.2,
+                            ease: "power2.out",
+                            delay: 2.4
                         })
                 }
             }, {
                 key: "addDesktopSetup",
                 value: function () {
-                    this.camera.position.set(0, 0, 3.6),
+                    this.camera.position.set(0, 0, 3.8),
+                        Lr.set(".webgl", { opacity: 0.95 }),
                         Lr.set(".webgl__color", {
                             className: "+=webgl__color webgl__color--desktop"
                         }),
@@ -20233,10 +20235,16 @@
                         this.mesh.material.uniforms.uAlpha.value = 0.45,
                         this.mesh.material.uniforms.uIntensity.value = 1.35,
                         Lr.from(this.camera.position, {
-                            z: 5.5,
+                            z: 7.0,
                             duration: 2.2,
                             ease: "power2.out",
-                            delay: 1.2
+                            delay: 2.4
+                        }),
+                        Lr.from(this.mesh.rotation, {
+                            y: 2 * Math.PI,
+                            duration: 2.2,
+                            ease: "power2.out",
+                            delay: 2.4
                         })
                 }
             }, {
@@ -20288,20 +20296,20 @@
                                 end: "bottom bottom"
                             }
                         }).to(this.camera.position, {
-                            x: 1,
-                            y: 1,
-                            z: 2,
+                            x: 0.8,
+                            y: 0.4,
+                            z: 4.2,
                             duration: 6
                         }, 0).to(this.mesh.rotation, {
                             y: Math.PI,
                             duration: 6
                         }, 0).to(".webgl", {
-                            opacity: .85,
-                            duration: 1
+                            opacity: .28,
+                            duration: 1.5
                         }, 0).to(".webgl", {
-                            opacity: .95,
-                            duration: 2
-                        }, 4)
+                            opacity: .36,
+                            duration: 3
+                        }, 3)
                 }
             }, {
                 key: "resize",
@@ -21085,17 +21093,40 @@ function initProjectModal() {
 // ==========================================================================
 function updateBylineMotion(scrollY, maxScroll) {
     var trackEl = document.getElementById("bylineTrack");
-    if (!trackEl) return;
-    var viewportH = window.innerHeight || 800;
-    var progress = Math.min(Math.max(scrollY / (viewportH * 1.4), 0), 1);
-    var translateY = -progress * (viewportH * 1.35);
-    var opacity = 1 - Math.max(0, (progress - 0.65) / 0.35);
-    var tilt = -90 + (progress * 14); // Sci-fi dynamic tilt flare
-    trackEl.style.transform = "translate3d(0, " + translateY + "px, 0)";
-    trackEl.style.opacity = opacity;
     var bylineInner = document.getElementById("siteByline");
-    if (bylineInner) {
-        bylineInner.style.transform = "rotate(" + tilt + "deg)";
+    if (!trackEl || !bylineInner) return;
+    var viewportH = window.innerHeight || 800;
+    var progress = Math.min(Math.max(scrollY / (viewportH * 1.5), 0), 1);
+
+    // 1. Burning Flame Phase (progress >= 0.40)
+    if (progress >= 0.40 && progress < 0.98) {
+        bylineInner.classList.add("is-burning");
+    } else {
+        bylineInner.classList.remove("is-burning");
+    }
+
+    // 2. Motion, Dynamic Tilt & Fly-Away Rocket Launch
+    if (progress < 0.68) {
+        // Normal ascent along left side
+        var translateY = -progress * (viewportH * 1.3);
+        var tilt = -90 + (progress * 15);
+        trackEl.style.transform = "translate3d(0, " + translateY + "px, 0)";
+        trackEl.style.opacity = 1;
+        bylineInner.style.transform = "rotate(" + tilt + "deg) scale(1)";
+        bylineInner.style.setProperty("--byline-tilt", tilt + "deg");
+    } else {
+        // Fly away: accelerates upward & out, tilts steeply, shrinks, and vanishes
+        var flyProgress = (progress - 0.68) / 0.32;
+        var accelY = -(0.68 * viewportH * 1.3) - (Math.pow(flyProgress, 2) * viewportH * 1.6);
+        var accelX = -flyProgress * 75; // streak to the left
+        var tilt = -75 + (flyProgress * 45); // tilts from -75deg to -30deg
+        var scale = 1 + (0.12 * Math.sin(flyProgress * Math.PI)) - (flyProgress * 0.4);
+        var opacity = Math.max(0, 1 - (flyProgress * 1.7));
+
+        trackEl.style.transform = "translate3d(" + accelX + "px, " + accelY + "px, 0)";
+        trackEl.style.opacity = opacity;
+        bylineInner.style.transform = "rotate(" + tilt + "deg) scale(" + scale + ")";
+        bylineInner.style.setProperty("--byline-tilt", tilt + "deg");
     }
 }
 
@@ -21296,8 +21327,50 @@ function initContactForm() {
     });
 }
 
+
 // ==========================================================================
-// 11. Initialize All Systems on Document Ready
+// 11. Interactive Portfolio Category Filters (Scalable to 10+ Projects)
+// ==========================================================================
+function initPortfolioFilters() {
+    var filterBtns = document.querySelectorAll(".portfolio-filter-btn");
+    var cards = document.querySelectorAll(".project-card");
+    var countPill = document.getElementById("portfolioCountPill");
+    if (!filterBtns.length || !cards.length) return;
+
+    filterBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            var filter = btn.getAttribute("data-filter");
+            filterBtns.forEach(function (b) { b.classList.remove("is-active"); });
+            btn.classList.add("is-active");
+
+            var visibleCount = 0;
+            cards.forEach(function (card) {
+                var category = card.getAttribute("data-category");
+                if (filter === "all" || category === filter) {
+                    card.classList.remove("is-filtered-out");
+                    card.style.opacity = "1";
+                    card.style.transform = "scale(1)";
+                    visibleCount++;
+                } else {
+                    card.style.opacity = "0";
+                    card.style.transform = "scale(0.95)";
+                    setTimeout(function () {
+                        if (card.style.opacity === "0") {
+                            card.classList.add("is-filtered-out");
+                        }
+                    }, 200);
+                }
+            });
+
+            if (countPill) {
+                countPill.textContent = visibleCount + (visibleCount === 1 ? " Project" : " Projects");
+            }
+        });
+    });
+}
+
+// ==========================================================================
+// 12. Initialize All Systems on Document Ready
 // ==========================================================================
 $(document).ready(function () {
     // Ensure scroll starts at top
@@ -21312,6 +21385,7 @@ $(document).ready(function () {
     initContactForm();
     initSoundToggle();
     initProjectModal();
+    initPortfolioFilters();
     initScrollFeatures();
     initClipboardCopy();
 });

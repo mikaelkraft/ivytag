@@ -78,17 +78,22 @@
                 <ul class="header__nav-list">
                     <li class="header__nav-list-elem header__sound-item">
                         <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
-                            <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                                <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                                <path class="sound-wave" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                            </svg>
-                            <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                                <line x1="23" y1="9" x2="17" y2="15"></line>
-                                <line x1="17" y1="9" x2="23" y2="15"></line>
-                            </svg>
-                            <span class="sound-label">SFX: <b id="soundStatusText">OFF</b></span>
+                            <span class="sound-icon-wrap">
+                                <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                    <path class="sound-wave" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                                </svg>
+                                <svg class="sound-icon sound-icon--off" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                                </svg>
+                            </span>
+                            <span class="sound-switch-track" aria-hidden="true">
+                                <span class="sound-switch-thumb"></span>
+                            </span>
+                            <span class="sound-status-badge" id="soundStatusText">OFF</span>
                         </button>
                     </li>
                     <li class="header__nav-list-elem">
@@ -302,12 +307,22 @@
                             <li class="list__elem gsap-list portfolio-list-elem">
                                 <div class="portfolio-container">
                                     <div class="portfolio-header">
-                                        <span class="portfolio-tagline">// SELECTED CLIENT & ECOSYSTEM WORKS</span>
+                                        <div class="portfolio-header__meta">
+                                            <span class="portfolio-tagline">// SELECTED CLIENT & ECOSYSTEM WORKS</span>
+                                            <span class="portfolio-count-pill" id="portfolioCountPill">4 Projects</span>
+                                        </div>
                                         <h3 class="portfolio-heading">Featured Deployments</h3>
+                                        <div class="portfolio-filters" id="portfolioFilters" role="tablist" aria-label="Project Categories">
+                                            <button type="button" class="portfolio-filter-btn is-active" data-filter="all">All (4)</button>
+                                            <button type="button" class="portfolio-filter-btn" data-filter="ai">AI &amp; Sports</button>
+                                            <button type="button" class="portfolio-filter-btn" data-filter="saas">Autonomous Web</button>
+                                            <button type="button" class="portfolio-filter-btn" data-filter="fintech">Fintech</button>
+                                            <button type="button" class="portfolio-filter-btn" data-filter="tools">Developer Tools</button>
+                                        </div>
                                     </div>
                                     <div class="portfolio-grid" id="portfolioGrid">
                                         <!-- Project 1: Norra AI -->
-                                        <div class="project-card" data-project="norra-ai">
+                                        <div class="project-card" data-project="norra-ai" data-category="ai">
                                             <div class="project-card__header">
                                                 <span class="project-card__badge badge--ai">FOOTBALL ANALYTICS</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> LIVE</span>
@@ -336,7 +351,7 @@
                                         </div>
 
                                         <!-- Project 2: ZeeBuilder -->
-                                        <div class="project-card" data-project="zeebuilder">
+                                        <div class="project-card" data-project="zeebuilder" data-category="saas">
                                             <div class="project-card__header">
                                                 <span class="project-card__badge badge--saas">APP GENERATOR</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> CLOUD</span>
@@ -365,7 +380,7 @@
                                         </div>
 
                                         <!-- Project 3: Grantify -->
-                                        <div class="project-card" data-project="grantify">
+                                        <div class="project-card" data-project="grantify" data-category="fintech">
                                             <div class="project-card__header">
                                                 <span class="project-card__badge badge--web3">FINTECH DISCOVERY</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> PLATFORM</span>
@@ -394,7 +409,7 @@
                                         </div>
 
                                         <!-- Project 4: WIT AI (Acode Plugin) -->
-                                        <div class="project-card" data-project="wit-ai">
+                                        <div class="project-card" data-project="wit-ai" data-category="tools">
                                             <div class="project-card__header">
                                                 <span class="project-card__badge badge--infra">ACODE PLUGIN</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> ACTIVE</span>
@@ -647,8 +662,7 @@
                             </section>
             
             <div class="original-copyright-bar">Ivytag &copy; <span id="year"></span>. All rights reserved.</div>
-                <div class="credits">__
-                Icons by : &nbsp;<a href="https://devicon.dev" target="_blank" rel="noopener noreferrer">DevIcon</a></div>
+            <div class="credits">Icons by <a href="https://devicon.dev" target="_blank" rel="noopener noreferrer">Devicons</a></div>
         </div>
                 
         <div class="webgl__color"></div>
