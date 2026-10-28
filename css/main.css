@@ -514,10 +514,10 @@ body {
 }
 
 .position-wrapper .byline .icon-sun {
-    width: 26px;
-    height: 26px;
+    width: 38px !important;
+    height: 38px !important;
     fill: #00ff88;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95));
 }
 
 .position-wrapper .scroll-down {
@@ -2195,24 +2195,35 @@ textarea.app-form-control {
 }
 
 .position-wrapper .byline .byline__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 6px;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 8px !important;
+    vertical-align: middle !important;
 }
 
 /* Continuous 360-degree rolling sun */
-.position-wrapper .byline .byline__icon svg,
-.position-wrapper .byline .icon-sun {
-    display: inline-block !important;
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
-    fill: #00ff88 !important;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
-    animation: rollSunIcon 5s linear infinite !important;
+.byline__sun-spin {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    animation: rollSunIcon 4s linear infinite !important;
     transform-origin: 50% 50% !important;
+    will-change: transform;
+}
+
+.position-wrapper .byline .byline__icon svg,
+.position-wrapper .byline .icon-sun,
+.byline__sun-spin svg {
+    display: block !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    fill: #00ff88 !important;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95)) !important;
     vertical-align: middle !important;
 }
 
@@ -2256,10 +2267,10 @@ textarea.app-form-control {
 }
 
 .position-wrapper .byline .icon-sun {
-    width: 26px;
-    height: 26px;
+    width: 38px !important;
+    height: 38px !important;
     fill: #00ff88;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95));
 }
 
 /* ==========================================================================
@@ -2390,7 +2401,7 @@ textarea.app-form-control {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    touch-action: pan-y !important;
+    touch-action: auto !important;
     overscroll-behavior-x: contain;
     overscroll-behavior-y: auto;
     cursor: grab;
@@ -2409,7 +2420,7 @@ textarea.app-form-control {
 }
 
 .portfolio-carousel .project-card {
-    touch-action: pan-y !important;
+    touch-action: auto !important;
     flex: 0 0 clamp(270px, 78vw, 340px);
     max-width: 340px;
     scroll-snap-align: start;
@@ -3231,21 +3242,6 @@ textarea.app-form-control {
     position: relative;
     background: transparent !important;
     overflow: visible;
-}
-
-.intro__section::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(280px, 80vw, 750px);
-    height: clamp(280px, 80vw, 750px);
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(0, 255, 136, 0.16) 0%, rgba(0, 255, 136, 0.04) 45%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    border-radius: 50%;
-    filter: blur(20px);
 }
 
 .intro__section .unique {

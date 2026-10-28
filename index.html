@@ -81,11 +81,14 @@
                             <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
                         </li>
                         <li class="header__nav-menu-item">
-                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
+                            <a href="#projects" target="projects" class="text-link-nav anchor-link anchor-link-projects">Projects</a>
+                        </li>
+                        <li class="header__nav-menu-item">
+                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks</a>
                         </li>
                     </ul>
                     <div class="header__nav-sub">
-                        <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
+                        <button class="sound-toggle-btn is-active" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
                             <span class="sound-icon-wrap">
                                 <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -101,10 +104,10 @@
                             <span class="sound-switch-track" aria-hidden="true">
                                 <span class="sound-switch-thumb"></span>
                             </span>
-                            <span class="sound-status-badge" id="soundStatusText">OFF</span>
+                            <span class="sound-status-badge" id="soundStatusText">ON</span>
                         </button>
-                        <a href="#intro" target="intro" class="header__scroll-top-btn anchor-link anchor-link-intro" id="headerScrollTop" aria-label="Scroll to top" title="Scroll to top">
-                            <span class="icon-scroll-top">↑</span>
+                        <a href="#web" target="web" class="header__scroll-top-btn anchor-link" id="headerScrollTop" aria-label="Scroll down" title="Scroll down">
+                            <span class="icon-scroll-top">↓</span>
                         </a>
                     </div>
                 </div>
@@ -117,9 +120,11 @@
                     <span class="byline__by">by</span>
                     <span class="byline__author">Mikael Kraft</span>
                     <span class="byline__icon">
-                        <svg class="icon icon-sun">
-                            <use xlink:href="#icon-sun"></use>
-                        </svg>
+                        <span class="byline__sun-spin">
+                            <svg class="icon icon-sun" viewBox="0 0 31 31">
+                                <use xlink:href="#icon-sun"></use>
+                            </svg>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -296,23 +301,16 @@
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <ul class="list">
-                            <li>
-                                <h4 class="studio__section__h4 section__h4 h4">
-                                    IVYTAG <br>
-                                    Creative Developer & Design Agency <p>&nbsp;</p>
-                                </h4>
-                            </li>
-                            <li class="list__elem gsap-list portfolio-list-elem">
+                            <li class="list__elem gsap-list portfolio-list-elem" id="projects">
                                 <div class="portfolio-container">
                                     <div class="portfolio-header">
                                         <div class="portfolio-header__top">
-                                            <span class="portfolio-tagline">// SELECTED CLIENT &amp; ECOSYSTEM WORKS</span>
+                                            <h3 class="portfolio-heading">Featured Projects</h3>
                                             <div class="carousel-nav-arrows">
                                                 <button type="button" class="carousel-nav-btn js-carousel-prev" aria-label="Previous Project" title="Previous Project">←</button>
                                                 <button type="button" class="carousel-nav-btn js-carousel-next" aria-label="Next Project" title="Next Project">→</button>
                                             </div>
                                         </div>
-                                        <h3 class="portfolio-heading">Featured Deployments</h3>
                                     </div>
                                     <div class="portfolio-carousel" id="portfolioCarousel">
                                         <!-- Project 1: Norra AI -->
