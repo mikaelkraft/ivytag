@@ -75,8 +75,16 @@
         <div class="header">
             <div id="holder" class="holder">PLEASE WAIT</div>
             <nav class="header__nav">
-                <ul class="header__nav-list">
-                    <li class="header__nav-list-elem header__sound-item">
+                <div class="header__nav-wrap">
+                    <ul class="header__nav-menu">
+                        <li class="header__nav-menu-item">
+                            <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
+                        </li>
+                        <li class="header__nav-menu-item">
+                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
+                        </li>
+                    </ul>
+                    <div class="header__nav-sub">
                         <button class="sound-toggle-btn" id="soundToggle" type="button" aria-label="Toggle Sound FX" title="Toggle Sound FX">
                             <span class="sound-icon-wrap">
                                 <svg class="sound-icon sound-icon--on" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -95,19 +103,11 @@
                             </span>
                             <span class="sound-status-badge" id="soundStatusText">OFF</span>
                         </button>
-                    </li>
-                    <li class="header__nav-list-elem">
-                        <a href="#intro" target="intro" class="text-link-nav anchor-link anchor-link-intro">
+                        <a href="#intro" target="intro" class="header__scroll-top-btn anchor-link anchor-link-intro" aria-label="Scroll to top" title="Scroll to top">
                             <span class="icon-scroll-top">↑</span>
                         </a>
-                    </li>
-                    <li class="header__nav-list-elem">
-                        <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
-                    </li>
-                    <li class="header__nav-list-elem">
-                        <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks & Contact</a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
                 <div class="liner"></div>
                 <div class="liner--before"></div>
             </nav>
@@ -307,41 +307,33 @@
                             <li class="list__elem gsap-list portfolio-list-elem">
                                 <div class="portfolio-container">
                                     <div class="portfolio-header">
-                                        <div class="portfolio-header__meta">
-                                            <span class="portfolio-tagline">// SELECTED CLIENT & ECOSYSTEM WORKS</span>
-                                            <span class="portfolio-count-pill" id="portfolioCountPill">4 Projects</span>
+                                        <div class="portfolio-header__top">
+                                            <span class="portfolio-tagline">// SELECTED CLIENT &amp; ECOSYSTEM WORKS</span>
+                                            <div class="carousel-nav-arrows">
+                                                <button type="button" class="carousel-nav-btn js-carousel-prev" aria-label="Previous Project" title="Previous Project">←</button>
+                                                <button type="button" class="carousel-nav-btn js-carousel-next" aria-label="Next Project" title="Next Project">→</button>
+                                            </div>
                                         </div>
                                         <h3 class="portfolio-heading">Featured Deployments</h3>
-                                        <div class="portfolio-filters" id="portfolioFilters" role="tablist" aria-label="Project Categories">
-                                            <button type="button" class="portfolio-filter-btn is-active" data-filter="all">All (4)</button>
-                                            <button type="button" class="portfolio-filter-btn" data-filter="ai">AI &amp; Sports</button>
-                                            <button type="button" class="portfolio-filter-btn" data-filter="saas">Autonomous Web</button>
-                                            <button type="button" class="portfolio-filter-btn" data-filter="fintech">Fintech</button>
-                                            <button type="button" class="portfolio-filter-btn" data-filter="tools">Developer Tools</button>
-                                        </div>
                                     </div>
-                                    <div class="portfolio-grid" id="portfolioGrid">
+                                    <div class="portfolio-carousel" id="portfolioCarousel">
                                         <!-- Project 1: Norra AI -->
-                                        <div class="project-card" data-project="norra-ai" data-category="ai">
+                                        <div class="project-card" data-project="norra-ai">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--ai">FOOTBALL ANALYTICS</span>
+                                                <span class="project-card__badge badge--ai">AI &amp; SPORTS</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> LIVE</span>
                                             </div>
                                             <h4 class="project-card__title">Norra AI</h4>
-                                            <p class="project-card__desc">AI-powered football match analytics, predictive probability modeling & real-time telemetry.</p>
-                                            <div class="project-card__metric">
-                                                <span class="metric-val">84.6% Accuracy</span>
-                                                <span class="metric-label">50+ Global Football Leagues</span>
-                                            </div>
+                                            <p class="project-card__desc">AI-powered football match analytics, predictive probability modeling &amp; real-time telemetry.</p>
                                             <div class="project-card__tech">
                                                 <span>Python</span>
                                                 <span>FastAPI</span>
-                                                <span>React</span>
                                                 <span>PyTorch</span>
+                                                <span>React</span>
                                             </div>
                                             <div class="project-card__actions-row">
                                                 <button type="button" class="project-card__btn js-open-project-modal" data-project-id="norra-ai">
-                                                    <span>View Case Study</span>
+                                                    <span>Case Study</span>
                                                     <span>→</span>
                                                 </button>
                                                 <a href="https://mynorra.xyz" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open mynorra.xyz">
@@ -351,17 +343,13 @@
                                         </div>
 
                                         <!-- Project 2: ZeeBuilder -->
-                                        <div class="project-card" data-project="zeebuilder" data-category="saas">
+                                        <div class="project-card" data-project="zeebuilder">
                                             <div class="project-card__header">
                                                 <span class="project-card__badge badge--saas">APP GENERATOR</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> CLOUD</span>
                                             </div>
                                             <h4 class="project-card__title">ZeeBuilder</h4>
                                             <p class="project-card__desc">Autonomous full-stack web app generator with instant cloud bindings and multiple integrations.</p>
-                                            <div class="project-card__metric">
-                                                <span class="metric-val">&lt;60s Deploy</span>
-                                                <span class="metric-label">Turnkey Cloud Integrations</span>
-                                            </div>
                                             <div class="project-card__tech">
                                                 <span>Next.js</span>
                                                 <span>TypeScript</span>
@@ -370,7 +358,7 @@
                                             </div>
                                             <div class="project-card__actions-row">
                                                 <button type="button" class="project-card__btn js-open-project-modal" data-project-id="zeebuilder">
-                                                    <span>View Case Study</span>
+                                                    <span>Case Study</span>
                                                     <span>→</span>
                                                 </button>
                                                 <a href="https://zeebuilder.vercel.app" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open zeebuilder.vercel.app">
@@ -380,17 +368,13 @@
                                         </div>
 
                                         <!-- Project 3: Grantify -->
-                                        <div class="project-card" data-project="grantify" data-category="fintech">
+                                        <div class="project-card" data-project="grantify">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--web3">FINTECH DISCOVERY</span>
+                                                <span class="project-card__badge badge--fintech">FINTECH DISCOVERY</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> PLATFORM</span>
                                             </div>
                                             <h4 class="project-card__title">Grantify</h4>
                                             <p class="project-card__desc">Intelligent grants and loans discovery platform matching startups with vetted funding opportunities.</p>
-                                            <div class="project-card__metric">
-                                                <span class="metric-val">2,500+ Programs</span>
-                                                <span class="metric-label">Smart Eligibility Matching</span>
-                                            </div>
                                             <div class="project-card__tech">
                                                 <span>React</span>
                                                 <span>TypeScript</span>
@@ -399,7 +383,7 @@
                                             </div>
                                             <div class="project-card__actions-row">
                                                 <button type="button" class="project-card__btn js-open-project-modal" data-project-id="grantify">
-                                                    <span>View Case Study</span>
+                                                    <span>Case Study</span>
                                                     <span>→</span>
                                                 </button>
                                                 <a href="https://grantify.help" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open grantify.help">
@@ -409,17 +393,13 @@
                                         </div>
 
                                         <!-- Project 4: WIT AI (Acode Plugin) -->
-                                        <div class="project-card" data-project="wit-ai" data-category="tools">
+                                        <div class="project-card" data-project="wit-ai">
                                             <div class="project-card__header">
-                                                <span class="project-card__badge badge--infra">ACODE PLUGIN</span>
+                                                <span class="project-card__badge badge--tools">ACODE PLUGIN</span>
                                                 <span class="project-card__status"><span class="status-dot"></span> ACTIVE</span>
                                             </div>
                                             <h4 class="project-card__title">WIT AI</h4>
                                             <p class="project-card__desc">AI coding assistant plugin for Acode integrating multiple inference providers and live web search.</p>
-                                            <div class="project-card__metric">
-                                                <span class="metric-val">Multi-Model</span>
-                                                <span class="metric-label">Live Web Search &amp; Reasoning</span>
-                                            </div>
                                             <div class="project-card__tech">
                                                 <span>JavaScript</span>
                                                 <span>Acode API</span>
@@ -428,7 +408,7 @@
                                             </div>
                                             <div class="project-card__actions-row">
                                                 <button type="button" class="project-card__btn js-open-project-modal" data-project-id="wit-ai">
-                                                    <span>View Case Study</span>
+                                                    <span>Case Study</span>
                                                     <span>→</span>
                                                 </button>
                                                 <a href="https://github.com/mikaelkraft/wit-ai" target="_blank" rel="noopener noreferrer" class="project-card__live-link" title="Open Acode Plugin Repo">
@@ -436,6 +416,12 @@
                                                 </a>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="carousel-indicators" id="carouselIndicators">
+                                        <span class="indicator-dot is-active" data-index="0"></span>
+                                        <span class="indicator-dot" data-index="1"></span>
+                                        <span class="indicator-dot" data-index="2"></span>
+                                        <span class="indicator-dot" data-index="3"></span>
                                     </div>
                                 </div>
                             </li>

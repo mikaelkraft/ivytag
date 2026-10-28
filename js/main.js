@@ -21112,39 +21112,17 @@ function initProjectModal() {
 function updateBylineMotion(scrollY, maxScroll) {
     var trackEl = document.getElementById("bylineTrack");
     var bylineInner = document.getElementById("siteByline");
-    if (!trackEl || !bylineInner) return;
+    if (!trackEl) return;
     var viewportH = window.innerHeight || 800;
-    var progress = Math.min(Math.max(scrollY / (viewportH * 1.5), 0), 1);
+    // Smooth flow from bottom to top as user scrolls through the page
+    var progress = Math.min(Math.max(scrollY / (viewportH * 2.2), 0), 1);
+    var translateY = -progress * (viewportH * 1.35);
+    var opacity = progress < 0.85 ? 1 : Math.max(0, 1 - (progress - 0.85) / 0.15);
 
-    // 1. Burning Flame Phase (starts as soon as scrolling begins)
-    if (progress >= 0.06 && progress < 0.96) {
-        bylineInner.classList.add("is-burning");
-    } else {
-        bylineInner.classList.remove("is-burning");
-    }
-
-    // 2. Motion, Dynamic Tilt & Fly-Away Rocket Launch
-    if (progress < 0.68) {
-        // Normal ascent along left side
-        var translateY = -progress * (viewportH * 1.3);
-        var tilt = -90 + (progress * 15);
-        trackEl.style.transform = "translate3d(0, " + translateY + "px, 0)";
-        trackEl.style.opacity = 1;
-        bylineInner.style.transform = "rotate(" + tilt + "deg) scale(1)";
-        bylineInner.style.setProperty("--byline-tilt", tilt + "deg");
-    } else {
-        // Fly away: accelerates upward & out, tilts steeply, shrinks, and vanishes
-        var flyProgress = (progress - 0.68) / 0.32;
-        var accelY = -(0.68 * viewportH * 1.3) - (Math.pow(flyProgress, 2) * viewportH * 1.6);
-        var accelX = -flyProgress * 75; // streak to the left
-        var tilt = -75 + (flyProgress * 45); // tilts from -75deg to -30deg
-        var scale = 1 + (0.12 * Math.sin(flyProgress * Math.PI)) - (flyProgress * 0.4);
-        var opacity = Math.max(0, 1 - (flyProgress * 1.7));
-
-        trackEl.style.transform = "translate3d(" + accelX + "px, " + accelY + "px, 0)";
-        trackEl.style.opacity = opacity;
-        bylineInner.style.transform = "rotate(" + tilt + "deg) scale(" + scale + ")";
-        bylineInner.style.setProperty("--byline-tilt", tilt + "deg");
+    trackEl.style.transform = "translate3d(0, " + translateY + "px, 0)";
+    trackEl.style.opacity = opacity;
+    if (bylineInner) {
+        bylineInner.style.transform = "rotate(-90deg)";
     }
 }
 
@@ -21243,6 +21221,13 @@ function initClipboardCopy() {
             e.preventDefault();
             var text = this.getAttribute("data-copy");
             if (!text) return;
+
+            var targetBtn = this;
+            var origBg = targetBtn.style.backgroundColor;
+            targetBtn.style.backgroundColor = "#047857";
+            setTimeout(function () {
+                targetBtn.style.backgroundColor = origBg;
+            }, 600);
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(function () {
@@ -21347,43 +21332,82 @@ function initContactForm() {
 
 
 // ==========================================================================
-// 11. Interactive Portfolio Category Filters (Scalable to 10+ Projects)
+// 11. Static Swipeable Project Carousel with Touch & Mouse Drag Support
 // ==========================================================================
-function initPortfolioFilters() {
-    var filterBtns = document.querySelectorAll(".portfolio-filter-btn");
-    var cards = document.querySelectorAll(".project-card");
-    var countPill = document.getElementById("portfolioCountPill");
-    if (!filterBtns.length || !cards.length) return;
+function initProjectCarousel() {
+    var carousel = document.getElementById("portfolioCarousel");
+    if (!carousel) return;
+    var prevBtn = document.querySelector(".js-carousel-prev");
+    var nextBtn = document.querySelector(".js-carousel-next");
+    var dots = document.querySelectorAll(".indicator-dot");
 
-    filterBtns.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            var filter = btn.getAttribute("data-filter");
-            filterBtns.forEach(function (b) { b.classList.remove("is-active"); });
-            btn.classList.add("is-active");
+    function getCardStep() {
+        var card = carousel.querySelector(".project-card");
+        return card ? card.offsetWidth + 16 : 320;
+    }
 
-            var visibleCount = 0;
-            cards.forEach(function (card) {
-                var category = card.getAttribute("data-category");
-                if (filter === "all" || category === filter) {
-                    card.classList.remove("is-filtered-out");
-                    card.style.opacity = "1";
-                    card.style.transform = "scale(1)";
-                    visibleCount++;
-                } else {
-                    card.style.opacity = "0";
-                    card.style.transform = "scale(0.95)";
-                    setTimeout(function () {
-                        if (card.style.opacity === "0") {
-                            card.classList.add("is-filtered-out");
-                        }
-                    }, 200);
-                }
-            });
+    if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+            if (SoundEngine) SoundEngine.playHover();
+            carousel.scrollBy({ left: -getCardStep(), behavior: "smooth" });
+        });
+    }
 
-            if (countPill) {
-                countPill.textContent = visibleCount + (visibleCount === 1 ? " Project" : " Projects");
+    if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+            if (SoundEngine) SoundEngine.playHover();
+            carousel.scrollBy({ left: getCardStep(), behavior: "smooth" });
+        });
+    }
+
+    dots.forEach(function (dot) {
+        dot.addEventListener("click", function () {
+            var idx = parseInt(dot.getAttribute("data-index") || "0", 10);
+            if (SoundEngine) SoundEngine.playHover();
+            carousel.scrollTo({ left: idx * getCardStep(), behavior: "smooth" });
+        });
+    });
+
+    function updateActiveDot() {
+        var scrollLeft = carousel.scrollLeft;
+        var step = getCardStep();
+        var activeIdx = Math.round(scrollLeft / step);
+        dots.forEach(function (d, i) {
+            if (i === activeIdx) {
+                d.classList.add("is-active");
+            } else {
+                d.classList.remove("is-active");
             }
         });
+    }
+
+    carousel.addEventListener("scroll", updateActiveDot, { passive: true });
+
+    // Touch and mouse drag swipe support
+    var isDown = false;
+    var startX = 0;
+    var scrollLeftStart = 0;
+
+    carousel.addEventListener("mousedown", function (e) {
+        isDown = true;
+        carousel.classList.add("is-dragging");
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeftStart = carousel.scrollLeft;
+    });
+
+    window.addEventListener("mouseup", function () {
+        if (isDown) {
+            isDown = false;
+            carousel.classList.remove("is-dragging");
+        }
+    });
+
+    carousel.addEventListener("mousemove", function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - carousel.offsetLeft;
+        var walk = (x - startX) * 1.5;
+        carousel.scrollLeft = scrollLeftStart - walk;
     });
 }
 
@@ -21403,7 +21427,7 @@ $(document).ready(function () {
     initContactForm();
     initSoundToggle();
     initProjectModal();
-    initPortfolioFilters();
+    initProjectCarousel();
     initScrollFeatures();
     initClipboardCopy();
 });
