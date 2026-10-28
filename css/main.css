@@ -411,24 +411,11 @@ body {
 }
 
 .liner {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-top: var(--font-size-xs);
-    width: 100%;
-    height: 4px;
-    background-image: linear-gradient(to right, rgba(4, 88, 57, 0.1) 30%, rgba(28, 113, 40, 0.7) 92%, rgb(243, 255, 155));
-    z-index: 920;
+    display: none !important;
 }
 
 .liner--before {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    margin-top: -2px;
-    z-index: 910;
+    display: none !important;
 }
 
 .position-wrapper {
@@ -527,10 +514,10 @@ body {
 }
 
 .position-wrapper .byline .icon-sun {
-    width: 14px;
-    height: 14px;
-    fill: #eab308;
-    filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.8));
+    width: 26px;
+    height: 26px;
+    fill: #00ff88;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
 }
 
 .position-wrapper .scroll-down {
@@ -1844,16 +1831,19 @@ textarea.app-form-control {
 /* ==========================================================================
    Interactive Scroll Progress Bar (Top)
    ========================================================================== */
-.scroll-progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, #10b981 0%, #00ff88 50%, #a3e635 100%);
-    box-shadow: 0 0 12px rgba(0, 255, 136, 0.8), 0 0 24px rgba(16, 185, 129, 0.4);
-    z-index: 1000000;
-    pointer-events: none;
+.scroll-progress-bar,
+.liner {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 4px !important;
+    width: 0% !important;
+    background-image: linear-gradient(to right, rgba(4, 88, 57, 0.1) 30%, rgba(28, 113, 40, 0.7) 92%, rgb(243, 255, 155)) !important;
+    box-shadow: 0 0 12px rgba(243, 255, 155, 0.7), 0 0 24px rgba(28, 113, 40, 0.4) !important;
+    z-index: 1000000 !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+    transform: none !important;
     transition: width 0.08s ease-out;
 }
 
@@ -1861,16 +1851,21 @@ textarea.app-form-control {
    Header Navigation Bar: Responsive Layout with Aligned Sub-Row
    ========================================================================== */
 .header {
+    box-sizing: border-box !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
     height: auto !important;
     min-height: 52px;
     padding: clamp(6px, 1.4vh, 12px) var(--body-padding) !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     transform: none !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     flex-wrap: nowrap !important;
     gap: clamp(12px, 2.5vw, 40px) !important;
+    left: 0 !important;
+    right: 0 !important;
 }
 
 /* Animated Digital Matrix Logo (#holder) */
@@ -2027,71 +2022,134 @@ textarea.app-form-control {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
     border-radius: 50% !important;
-    background: rgba(1, 24, 10, 0.85) !important;
-    border: 1px solid rgba(40, 223, 122, 0.35) !important;
+    background: rgba(3, 38, 14, 0.92) !important;
+    border: 1px solid rgba(40, 223, 122, 0.5) !important;
     color: #00ff88 !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
     text-decoration: none !important;
     transition: all 0.2s ease !important;
     line-height: 1 !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 6px rgba(0, 255, 136, 0.25) !important;
+    flex-shrink: 0 !important;
 }
 
 .header__scroll-top-btn:hover {
     background: #00ff88 !important;
     color: #011807 !important;
     border-color: #00ff88 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.6) !important;
+    transform: scale(1.08) !important;
+}
+
+.header__scroll-top-btn .icon-scroll-top {
+    display: inline-block !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
 }
 
 /* Mobile Header Layout: Logo on same row with Menu; Sound toggle & Arrow under menu perfectly aligned */
 @media only screen and (max-width: 768px) {
     .header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+        padding: 6px 10px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
         align-items: flex-start !important;
-        padding: 8px var(--body-padding) !important;
-        gap: 8px !important;
+        gap: 4px !important;
+        overflow: hidden !important;
     }
 
     .header .holder {
-        width: 145px !important;
-        min-width: 145px !important;
-        height: 28px !important;
-        transform: scale(0.50) !important;
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        height: 24px !important;
+        transform: scale(0.36) !important;
         transform-origin: left top !important;
-        margin-right: 6px !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    .header__nav {
+        margin-left: auto !important;
+        flex-shrink: 1 !important;
+        max-width: calc(100vw - 115px) !important;
+        overflow: visible !important;
     }
 
     .header__nav-wrap {
+        display: flex !important;
         flex-direction: column !important;
         align-items: flex-end !important;
-        gap: 5px !important;
+        gap: 4px !important;
+        width: 100% !important;
+        padding-right: 2px !important;
     }
 
     .header__nav-menu {
-        gap: 6px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 5px !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .header__nav-menu-item a {
-        font-size: 11px !important;
-        padding: 2px 5px !important;
+        font-size: 10px !important;
+        letter-spacing: 0.03em !important;
+        padding: 2px 4px !important;
+        white-space: nowrap !important;
     }
 
     .header__nav-sub {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
         justify-content: flex-end !important;
         gap: 6px !important;
+        width: 100% !important;
     }
 
     .sound-toggle-btn {
-        padding: 2px 6px !important;
-        gap: 4px !important;
+        padding: 2px 5px !important;
+        gap: 3px !important;
+        font-size: 8.5px !important;
+        flex-shrink: 0 !important;
     }
 
     .header__scroll-top-btn {
-        width: 20px !important;
-        height: 20px !important;
-        font-size: 10px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        color: #00ff88 !important;
+        background: rgba(3, 38, 14, 0.95) !important;
+        border: 1px solid rgba(0, 255, 136, 0.6) !important;
+        box-shadow: 0 0 6px rgba(0, 255, 136, 0.3) !important;
+        flex-shrink: 0 !important;
+        margin-right: 2px !important;
     }
 }
 
@@ -2146,11 +2204,16 @@ textarea.app-form-control {
 /* Continuous 360-degree rolling sun */
 .position-wrapper .byline .byline__icon svg,
 .position-wrapper .byline .icon-sun {
-    display: block;
+    display: inline-block !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
     fill: #00ff88 !important;
-    filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.6));
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
     animation: rollSunIcon 5s linear infinite !important;
     transform-origin: 50% 50% !important;
+    vertical-align: middle !important;
 }
 
 @keyframes rollSunIcon {
@@ -2193,10 +2256,10 @@ textarea.app-form-control {
 }
 
 .position-wrapper .byline .icon-sun {
-    width: 14px;
-    height: 14px;
-    fill: #eab308;
-    filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.8));
+    width: 26px;
+    height: 26px;
+    fill: #00ff88;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
 }
 
 /* ==========================================================================
@@ -2327,7 +2390,9 @@ textarea.app-form-control {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: pan-y !important;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
     cursor: grab;
     padding: 12px 4px 18px;
     margin: 0 -4px;
@@ -2344,6 +2409,7 @@ textarea.app-form-control {
 }
 
 .portfolio-carousel .project-card {
+    touch-action: pan-y !important;
     flex: 0 0 clamp(270px, 78vw, 340px);
     max-width: 340px;
     scroll-snap-align: start;
@@ -3163,8 +3229,23 @@ textarea.app-form-control {
    ========================================================================== */
 .intro__section {
     position: relative;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.12) 0%, rgba(4, 45, 18, 0.25) 42%, transparent 75%) !important;
+    background: transparent !important;
     overflow: visible;
+}
+
+.intro__section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(280px, 80vw, 750px);
+    height: clamp(280px, 80vw, 750px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.16) 0%, rgba(0, 255, 136, 0.04) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(20px);
 }
 
 .intro__section .unique {

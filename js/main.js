@@ -19972,17 +19972,6 @@
                 scrub: .1
             }
         }),
-        Lr.from(".liner", {
-            scaleX: 0,
-            transformOrigin: "left bottom",
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#app",
-                start: "top 1",
-                end: "bottom bottom",
-                scrub: .1
-            }
-        }),
         Lr.utils.toArray(".gsap-para-m").forEach((function (t, e) {
             Lr.from(t, {
                 scrollTrigger: {
@@ -21163,6 +21152,19 @@ function initScrollFeatures() {
 
     if (topBtn) {
         topBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (SoundEngine) SoundEngine.playClick();
+            if (window.kd && typeof window.kd.scrollTo === "function") {
+                window.kd.scrollTo("#intro", { duration: 900 });
+            } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        });
+    }
+
+    var headerTopBtn = document.getElementById("headerScrollTop") || document.querySelector(".header__scroll-top-btn");
+    if (headerTopBtn) {
+        headerTopBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (SoundEngine) SoundEngine.playClick();
             if (window.kd && typeof window.kd.scrollTo === "function") {
