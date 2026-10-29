@@ -19665,116 +19665,166 @@
                 ))
         }()
     }
-    Vd.addListener(jd),
-        jd(Vd),
-        function smoothScrollToElement(targetEl, offset) {
-            if (!targetEl) return;
-            var off = (typeof offset === "number") ? offset : -60;
-            if (window.kd && typeof window.kd.scrollTo === "function") {
-                try {
-                    if (typeof window.kd.update === "function") {
-                        window.kd.update();
-                    }
-                    window.kd.scrollTo(targetEl, {
-                        offset: off,
-                        duration: 900
-                    });
-                    return;
-                } catch (scrollErr) {
-                    console.warn("Locomotive scrollTo error:", scrollErr);
-                }
-            }
+    Vd.addListener(jd);
+    jd(Vd);
+
+    function smoothScrollToElement(targetEl, offset) {
+        if (!targetEl) return;
+        var off = (typeof offset === "number") ? offset : -60;
+        if (window.kd && typeof window.kd.scrollTo === "function") {
             try {
-                var rect = targetEl.getBoundingClientRect();
-                var absY = window.pageYOffset + rect.top + off;
-                window.scrollTo({
-                    top: absY,
-                    behavior: "smooth"
+                if (typeof window.kd.update === "function") {
+                    window.kd.update();
+                }
+                window.kd.scrollTo(targetEl, {
+                    offset: off,
+                    duration: 900
                 });
-            } catch (fallbackErr) {
-                targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                return;
+            } catch (scrollErr) {
+                console.warn("Locomotive scrollTo error:", scrollErr);
             }
         }
-        window.smoothScrollToElement = smoothScrollToElement;
-
-        document.querySelectorAll(".anchor-link").forEach(function (t) {
-            t.addEventListener("click", function (e) {
-                e.preventDefault();
-                if (typeof SoundEngine !== "undefined" && SoundEngine) {
-                    SoundEngine.playClick();
-                }
-                var href = t.getAttribute("href") || "";
-                var targetAttr = t.getAttribute("data-target") || t.getAttribute("target") || "";
-                var targetId = href.startsWith("#") ? href.slice(1) : targetAttr;
-                if (!targetId && targetAttr) targetId = targetAttr;
-
-                var targetEl = document.getElementById(targetId) || (href ? document.querySelector(href) : null);
-                if (targetEl) {
-                    smoothScrollToElement(targetEl, -60);
-                }
+        try {
+            var rect = targetEl.getBoundingClientRect();
+            var absY = window.pageYOffset + rect.top + off;
+            window.scrollTo({
+                top: absY,
+                behavior: "smooth"
             });
-        });
-        jo.defaults({
-            scroller: ".js-smooth-scroll"
-        }),
-        Lr.timeline({
-            defaults: (Fd = {
-                duration: .1
-            },
-                e(Fd, "duration", .7),
-                e(Fd, "ease", "expo"),
-                Fd)
-        }).from(".preloader__logo", {
-            delay: .5,
-            yoyo: !0,
-            repeat: 1,
-            scale: 1,
-            autoAlpha: 0
-        }).from(".preloader__brand", {
-            yoyo: !0,
-            repeat: 1,
-            scale: 1,
-            autoAlpha: 0
-        }, "-=.3").from(".preloader__byline", {
-            yoyo: !0,
-            repeat: 1,
-            scale: .5,
-            autoAlpha: 0
-        }, "-=.3"),
-        window.onload = function () {
-            Lr.utils.toArray(".char").forEach((function (t, e) {
-                var n = t.parentNode
-                    , i = document.createElement("span");
-                i.style.overflow = "hidden",
-                    i.style.display = "inline-block",
-                    i.style.padding = ".5ch 0",
-                    i.style.marginTop = "-.5ch",
-                    n.replaceChild(i, t),
-                    i.appendChild(t)
+        } catch (fallbackErr) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+    window.smoothScrollToElement = smoothScrollToElement;
+
+    document.querySelectorAll(".anchor-link").forEach(function (t) {
+        t.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (typeof SoundEngine !== "undefined" && SoundEngine) {
+                SoundEngine.playClick();
             }
-            )),
+            var href = t.getAttribute("href") || "";
+            var targetAttr = t.getAttribute("data-target") || t.getAttribute("target") || "";
+            var targetId = href.startsWith("#") ? href.slice(1) : targetAttr;
+            if (!targetId && targetAttr) targetId = targetAttr;
+
+            var targetEl = document.getElementById(targetId) || (href ? document.querySelector(href) : null);
+            if (targetEl) {
+                smoothScrollToElement(targetEl, -60);
+            }
+        });
+    });
+
+    jo.defaults({
+        scroller: ".js-smooth-scroll"
+    });
+
+    Lr.timeline({
+        defaults: (Fd = {
+            duration: .1
+        },
+            e(Fd, "duration", .7),
+            e(Fd, "ease", "expo"),
+            Fd)
+    }).from(".preloader__logo", {
+        delay: .5,
+        yoyo: !0,
+        repeat: 1,
+        scale: 1,
+        autoAlpha: 0
+    }).from(".preloader__brand", {
+        yoyo: !0,
+        repeat: 1,
+        scale: 1,
+        autoAlpha: 0
+    }, "-=.3").from(".preloader__byline", {
+        yoyo: !0,
+        repeat: 1,
+        scale: .5,
+        autoAlpha: 0
+    }, "-=.3");
+
+    var preloaderDismissed = false;
+    function dismissPreloader() {
+        if (preloaderDismissed) return;
+        preloaderDismissed = true;
+
+        var preloader = document.getElementById("preloader") || document.querySelector(".preloader");
+
+        try {
+            Lr.utils.toArray(".char").forEach(function (t) {
+                try {
+                    if (t && t.parentNode && !t.__wrapped) {
+                        t.__wrapped = true;
+                        var i = document.createElement("span");
+                        i.style.overflow = "hidden";
+                        i.style.display = "inline-block";
+                        i.style.padding = ".5ch 0";
+                        i.style.marginTop = "-.5ch";
+                        t.parentNode.replaceChild(i, t);
+                        i.appendChild(t);
+                    }
+                } catch (ce) {}
+            });
+        } catch (err) {}
+
+        if (typeof Lr !== "undefined" && preloader) {
+            try {
                 Lr.timeline({
                     defaults: {
-                        duration: .7,
+                        duration: 0.7,
                         ease: "expo.inOut"
                     }
-                }).to(".preloader", {
-                    duration: 1,
+                }).to(preloader, {
+                    duration: 0.9,
                     yPercent: -100,
-                    ease: "expo.inOut"
-                }, 2.8).from(".gsap-intro-in--1 > b > span > span, .gsap-intro-in--1 > span > span > span", {
+                    ease: "expo.inOut",
+                    onComplete: function () {
+                        preloader.classList.add("is-loaded");
+                        preloader.style.display = "none";
+                        preloader.style.visibility = "hidden";
+                        preloader.style.pointerEvents = "none";
+                    }
+                }).from(".gsap-intro-in--1 > b > span > span, .gsap-intro-in--1 > span > span > span", {
                     opacity: 0,
                     x: "-100",
-                    stagger: .03
-                }, 3.6).from([".header__brand", ".header__nav-list-elem", ".scroll-down"], {
+                    stagger: 0.03
+                }, "+=0.1").from([".header__brand", ".header__nav-list-elem", ".scroll-down"], {
                     opacity: 0,
-                    stagger: .1,
+                    stagger: 0.1,
                     y: "-20",
-                    scale: .9
-                }, 3)
+                    scale: 0.9
+                }, "-=0.3");
+                return;
+            } catch (tlErr) {
+                console.warn("GSAP dismissPreloader error:", tlErr);
+            }
         }
-        ,
-        Lr.to(".header", {
+
+        if (preloader) {
+            preloader.classList.add("is-loaded");
+            preloader.style.transition = "transform 0.8s ease, opacity 0.8s ease";
+            preloader.style.transform = "translateY(-100%)";
+            preloader.style.opacity = "0";
+            setTimeout(function () {
+                preloader.style.display = "none";
+                preloader.style.visibility = "hidden";
+            }, 800);
+        }
+    }
+    window.dismissPreloader = dismissPreloader;
+
+    if (document.readyState === "complete") {
+        setTimeout(dismissPreloader, 2800);
+    } else {
+        window.addEventListener("load", function () {
+            setTimeout(dismissPreloader, 2800);
+        });
+    }
+    setTimeout(dismissPreloader, 3600);
+
+    Lr.to(".header", {
             scrollTrigger: {
                 trigger: "#app",
                 toggleActions: "restart none reverse none",
@@ -20739,6 +20789,11 @@ function initPreloaderCounter() {
             counterEl.textContent = "100%";
             if (fillEl) fillEl.style.width = "100%";
             if (logEl) logEl.textContent = "> [ACCESS_GRANTED] IVYTAG OS v4.2 ONLINE";
+            setTimeout(function () {
+                if (typeof window.dismissPreloader === "function") {
+                    window.dismissPreloader();
+                }
+            }, 300);
         }
     }
     requestAnimationFrame(updateCounter);
