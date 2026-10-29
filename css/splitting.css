@@ -98,9 +98,13 @@
     cursor: pointer;
 }
 
-.tech-item i.tech-icon {
+.tech-item i.tech-icon,
+.tech-item svg.tech-icon {
     font-size: 26px;
+    width: 26px;
+    height: 26px;
     color: #86efac;
+    fill: currentColor;
     opacity: 0.55;
     transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease, color 0.3s ease;
     filter: drop-shadow(0 0 0 transparent);
@@ -116,9 +120,11 @@
     z-index: 10;
 }
 
-.tech-item:hover i.tech-icon {
+.tech-item:hover i.tech-icon,
+.tech-item:hover svg.tech-icon {
     opacity: 1;
     color: #00ff88;
+    fill: currentColor;
     transform: scale(1.2);
     filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.85));
 }
@@ -126,9 +132,11 @@
 /* Random lit-up state: energetic, snappy glow with maximum visibility */
 .tech-item.is-lit,
 .tech-item.is-lit i.tech-icon,
+.tech-item.is-lit svg.tech-icon,
 .tech-icon.is-lit {
     opacity: 1 !important;
     color: #00ff88 !important;
+    fill: currentColor !important;
     filter: drop-shadow(0 0 16px rgba(0, 255, 136, 1)) brightness(1.6) !important;
 }
 
@@ -140,7 +148,8 @@
     z-index: 10;
 }
 
-.tech-item.is-lit i.tech-icon {
+.tech-item.is-lit i.tech-icon,
+.tech-item.is-lit svg.tech-icon {
     transform: scale(1.25) !important;
 }
 
