@@ -292,13 +292,17 @@ html,body {
     -ms-overflow-scrolling: touch;
 }
 
+html {
+    background-color: rgb(1, 10, 4);
+}
+
 body {
     box-sizing: border-box;
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
-    background-color: rgb(1, 10, 4);
+    background-color: transparent !important;
 }
 
 ::-moz-selection {
@@ -516,8 +520,8 @@ body {
 .position-wrapper .byline .icon-sun {
     width: 38px !important;
     height: 38px !important;
-    fill: #00ff88;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95));
+    fill: #fbbf24 !important;
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.95)) !important;
 }
 
 .position-wrapper .scroll-down {
@@ -2222,8 +2226,8 @@ textarea.app-form-control {
     height: 38px !important;
     min-width: 38px !important;
     min-height: 38px !important;
-    fill: #00ff88 !important;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95)) !important;
+    fill: #fbbf24 !important;
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 4px #f59e0b) !important;
     vertical-align: middle !important;
 }
 
@@ -2249,11 +2253,14 @@ textarea.app-form-control {
 }
 
 .position-wrapper .byline .byline__by {
-    color: #94a3b8;
-    font-size: 0.85em;
-    font-style: italic;
-    text-transform: lowercase;
-    padding: 0 0.3em;
+    color: #f8fafc !important;
+    opacity: 1 !important;
+    font-size: 0.95em !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    text-transform: lowercase !important;
+    padding: 0 0.35em !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
 }
 
 .position-wrapper .byline .byline__author {
@@ -2269,8 +2276,8 @@ textarea.app-form-control {
 .position-wrapper .byline .icon-sun {
     width: 38px !important;
     height: 38px !important;
-    fill: #00ff88;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.95));
+    fill: #fbbf24 !important;
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.95)) !important;
 }
 
 /* ==========================================================================
@@ -2364,10 +2371,71 @@ textarea.app-form-control {
     width: 100%;
 }
 
-.carousel-nav-arrows {
+/* Portfolio Carousel Wrapper with Side Edge Buttons */
+.portfolio-carousel-wrapper {
+    position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
+    margin: 4px 0 16px;
+}
+
+.carousel-side-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(2, 28, 10, 0.9);
+    border: 1px solid rgba(40, 223, 122, 0.45);
+    color: #00ff88;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 12;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.65), 0 0 12px rgba(0, 255, 136, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.carousel-side-nav-btn:hover {
+    background: #00ff88;
+    color: #011807;
+    border-color: #00ff88;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 22px rgba(0, 255, 136, 0.65);
+}
+
+.carousel-side-nav-btn:active {
+    transform: translateY(-50%) scale(0.96);
+}
+
+.carousel-side-nav-btn--prev {
+    left: -18px;
+}
+
+.carousel-side-nav-btn--next {
+    right: -18px;
+}
+
+@media (max-width: 768px) {
+    .carousel-side-nav-btn {
+        width: 38px;
+        height: 38px;
+    }
+    .carousel-side-nav-btn--prev {
+        left: -10px;
+    }
+    .carousel-side-nav-btn--next {
+        right: -10px;
+    }
+}
+
+.carousel-nav-arrows {
+    display: none;
 }
 
 .carousel-nav-btn {
@@ -3009,6 +3077,21 @@ textarea.app-form-control {
     margin: 0 auto;
 }
 
+@keyframes socialIconPulseWave {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        border-color: rgba(40, 223, 122, 0.35);
+        color: #e2e8f0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.12);
+        border-color: #00ff88;
+        color: #00ff88;
+        box-shadow: 0 10px 22px rgba(0, 255, 136, 0.45), 0 0 15px rgba(0, 255, 136, 0.4);
+    }
+}
+
 .social-icon-btn {
     display: inline-flex;
     align-items: center;
@@ -3016,18 +3099,34 @@ textarea.app-form-control {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(3, 38, 14, 0.7);
-    border: 1px solid rgba(40, 223, 122, 0.32);
+    background: rgba(3, 38, 14, 0.75);
+    border: 1px solid rgba(40, 223, 122, 0.35);
     color: #e2e8f0;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: socialIconPulseWave 2.8s ease-in-out infinite;
+    will-change: transform, box-shadow, color;
+}
+
+.social-links-row .social-icon-btn:nth-child(1) {
+    animation-delay: 0s;
+}
+.social-links-row .social-icon-btn:nth-child(2) {
+    animation-delay: 0.35s;
+}
+.social-links-row .social-icon-btn:nth-child(3) {
+    animation-delay: 0.7s;
+}
+.social-links-row .social-icon-btn:nth-child(4) {
+    animation-delay: 1.05s;
 }
 
 .social-icon-btn:hover {
     background: #00ff88;
     color: #011807;
     border-color: #00ff88;
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 18px rgba(0, 255, 136, 0.4);
+    transform: translateY(-5px) scale(1.18) !important;
+    box-shadow: 0 8px 24px rgba(0, 255, 136, 0.65) !important;
+    animation-play-state: paused;
 }
 
 /* ==========================================================================

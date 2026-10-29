@@ -19667,15 +19667,53 @@
     }
     Vd.addListener(jd),
         jd(Vd),
-        document.querySelectorAll(".anchor-link").forEach((function (t) {
-            t.addEventListener("click", (function (e) {
-                e.preventDefault();
-                var n = t.target;
-                kd.scrollTo("#".concat(n), 0, 3e3)
+        function smoothScrollToElement(targetEl, offset) {
+            if (!targetEl) return;
+            var off = (typeof offset === "number") ? offset : -60;
+            if (window.kd && typeof window.kd.scrollTo === "function") {
+                try {
+                    if (typeof window.kd.update === "function") {
+                        window.kd.update();
+                    }
+                    window.kd.scrollTo(targetEl, {
+                        offset: off,
+                        duration: 900
+                    });
+                    return;
+                } catch (scrollErr) {
+                    console.warn("Locomotive scrollTo error:", scrollErr);
+                }
             }
-            ))
+            try {
+                var rect = targetEl.getBoundingClientRect();
+                var absY = window.pageYOffset + rect.top + off;
+                window.scrollTo({
+                    top: absY,
+                    behavior: "smooth"
+                });
+            } catch (fallbackErr) {
+                targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
         }
-        )),
+        window.smoothScrollToElement = smoothScrollToElement;
+
+        document.querySelectorAll(".anchor-link").forEach(function (t) {
+            t.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (typeof SoundEngine !== "undefined" && SoundEngine) {
+                    SoundEngine.playClick();
+                }
+                var href = t.getAttribute("href") || "";
+                var targetAttr = t.getAttribute("data-target") || t.getAttribute("target") || "";
+                var targetId = href.startsWith("#") ? href.slice(1) : targetAttr;
+                if (!targetId && targetAttr) targetId = targetAttr;
+
+                var targetEl = document.getElementById(targetId) || (href ? document.querySelector(href) : null);
+                if (targetEl) {
+                    smoothScrollToElement(targetEl, -60);
+                }
+            });
+        });
         jo.defaults({
             scroller: ".js-smooth-scroll"
         }),
@@ -20201,13 +20239,13 @@
                             value: 1
                         }),
                         Lr.set(this.mesh.material.uniforms.uNoiseStrength, {
-                            value: 0
+                            value: 1
                         }),
                         Lr.set(this.mesh.material.uniforms.uFrequency, {
-                            value: 0
+                            value: 5
                         }),
                         Lr.set(this.mesh.material.uniforms.uAmplitude, {
-                            value: 0
+                            value: 2
                         }),
                         Lr.set(this.mesh.material.uniforms.uAlpha, {
                             value: 1
@@ -20291,10 +20329,10 @@
                             y: Math.PI,
                             duration: 6
                         }, 0).to(".webgl", {
-                            opacity: .18,
+                            opacity: .35,
                             duration: 1
                         }, 0).to(".webgl", {
-                            opacity: .85,
+                            opacity: .9,
                             duration: 2
                         }, 4)
                 }
@@ -21154,8 +21192,11 @@ function initScrollFeatures() {
         topBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (SoundEngine) SoundEngine.playClick();
-            if (window.kd && typeof window.kd.scrollTo === "function") {
-                window.kd.scrollTo("#intro", { duration: 900 });
+            var targetEl = document.getElementById("intro") || document.getElementById("app");
+            if (typeof smoothScrollToElement === "function") {
+                smoothScrollToElement(targetEl, 0);
+            } else if (window.kd && typeof window.kd.scrollTo === "function") {
+                window.kd.scrollTo(targetEl || 0, { duration: 900 });
             } else {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -21168,24 +21209,19 @@ function initScrollFeatures() {
             if (typeof SoundEngine !== "undefined" && SoundEngine) SoundEngine.playClick();
             if (arrowDirection === "down") {
                 var nextTarget = document.getElementById("web") || document.querySelector(".web__section");
-                var currentY = window.pageYOffset || document.documentElement.scrollTop;
-                if (window.kd && typeof window.kd.scrollTo === "function") {
-                    if (currentY < 120 && nextTarget) {
-                        window.kd.scrollTo(nextTarget, { duration: 900 });
-                    } else {
-                        var targetY = window.kd.scroll.instance.scroll.y + window.innerHeight * 0.85;
-                        window.kd.scrollTo(targetY, { duration: 800 });
-                    }
-                } else {
-                    if (currentY < 120 && nextTarget) {
-                        nextTarget.scrollIntoView({ behavior: "smooth" });
-                    } else {
-                        window.scrollBy({ top: window.innerHeight * 0.85, behavior: "smooth" });
-                    }
+                if (typeof smoothScrollToElement === "function") {
+                    smoothScrollToElement(nextTarget, -50);
+                } else if (window.kd && typeof window.kd.scrollTo === "function") {
+                    window.kd.scrollTo(nextTarget, { duration: 900 });
+                } else if (nextTarget) {
+                    nextTarget.scrollIntoView({ behavior: "smooth" });
                 }
             } else {
-                if (window.kd && typeof window.kd.scrollTo === "function") {
-                    window.kd.scrollTo("#intro", { duration: 900 });
+                var introEl = document.getElementById("intro") || document.getElementById("app");
+                if (typeof smoothScrollToElement === "function") {
+                    smoothScrollToElement(introEl, 0);
+                } else if (window.kd && typeof window.kd.scrollTo === "function") {
+                    window.kd.scrollTo(introEl || 0, { duration: 900 });
                 } else {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 }
@@ -21199,7 +21235,9 @@ function initScrollFeatures() {
             e.preventDefault();
             if (SoundEngine) SoundEngine.playClick();
             var targetEl = document.getElementById("contactForm") || document.getElementById("studio");
-            if (window.kd && typeof window.kd.scrollTo === "function") {
+            if (typeof smoothScrollToElement === "function") {
+                smoothScrollToElement(targetEl, -50);
+            } else if (window.kd && typeof window.kd.scrollTo === "function") {
                 window.kd.scrollTo(targetEl, { duration: 1000 });
             } else if (targetEl) {
                 targetEl.scrollIntoView({ behavior: "smooth" });

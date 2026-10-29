@@ -43,9 +43,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
         <style>
             /* Critical Preloader Styles to prevent FOUC */
-            html, body {
-                background-color: #000100 !important;
-            }
             #preloader {
                 position: fixed !important;
                 top: 0 !important;
@@ -78,13 +75,13 @@
                 <div class="header__nav-wrap">
                     <ul class="header__nav-menu">
                         <li class="header__nav-menu-item">
-                            <a href="#web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
+                            <a href="#web" data-target="web" target="web" class="text-link-nav anchor-link anchor-link-web">Attitude</a>
                         </li>
                         <li class="header__nav-menu-item">
-                            <a href="#projects" target="projects" class="text-link-nav anchor-link anchor-link-projects">Projects</a>
+                            <a href="#projects" data-target="projects" target="projects" class="text-link-nav anchor-link anchor-link-projects">Projects</a>
                         </li>
                         <li class="header__nav-menu-item">
-                            <a href="#studio" target="studio" class="text-link-nav anchor-link anchor-link-studio">Stacks</a>
+                            <a href="#stacks" data-target="stacks" target="stacks" class="text-link-nav anchor-link anchor-link-studio">Stacks</a>
                         </li>
                     </ul>
                     <div class="header__nav-sub">
@@ -306,13 +303,15 @@
                                     <div class="portfolio-header">
                                         <div class="portfolio-header__top">
                                             <h3 class="portfolio-heading">Featured Projects</h3>
-                                            <div class="carousel-nav-arrows">
-                                                <button type="button" class="carousel-nav-btn js-carousel-prev" aria-label="Previous Project" title="Previous Project">←</button>
-                                                <button type="button" class="carousel-nav-btn js-carousel-next" aria-label="Next Project" title="Next Project">→</button>
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="portfolio-carousel" id="portfolioCarousel">
+                                    <div class="portfolio-carousel-wrapper">
+                                        <button type="button" class="carousel-side-nav-btn carousel-side-nav-btn--prev js-carousel-prev" aria-label="Previous Project" title="Previous Project">
+                                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="15 18 9 12 15 6"></polyline>
+                                            </svg>
+                                        </button>
+                                        <div class="portfolio-carousel" id="portfolioCarousel">
                                         <!-- Project 1: Norra AI -->
                                         <div class="project-card" data-project="norra-ai">
                                             <div class="project-card__header">
@@ -412,6 +411,12 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        </div>
+                                        <button type="button" class="carousel-side-nav-btn carousel-side-nav-btn--next js-carousel-next" aria-label="Next Project" title="Next Project">
+                                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                            </svg>
+                                        </button>
                                     </div>
                                     <div class="carousel-indicators" id="carouselIndicators">
                                         <span class="indicator-dot is-active" data-index="0"></span>
@@ -421,7 +426,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list__elem gsap-list">
+                            <li class="list__elem gsap-list" id="stacks">
                                 <div class="list__icon gsap-list-icon">
                                     <svg class="icon icon-angle">
                                         <use xlink:href="#icon-angle"></use>
@@ -451,6 +456,7 @@
                                             <div class="tech-item" data-tech="PostgreSQL"><i class="devicon-postgresql-plain-wordmark tech-icon"></i></div>
                                             <div class="tech-item" data-tech="Python"><i class="devicon-python-plain-wordmark tech-icon"></i></div>
                                             <div class="tech-item" data-tech="React"><i class="devicon-react-original-wordmark tech-icon"></i></div>
+                                            <div class="tech-item" data-tech="Rust"><i class="devicon-rust-plain tech-icon"></i></div>
                                             <div class="tech-item" data-tech="Sass"><i class="devicon-sass-original tech-icon"></i></div>
                                             <div class="tech-item" data-tech="Socket.io"><i class="devicon-socketio-original-wordmark tech-icon"></i></div>
                                             <div class="tech-item" data-tech="Solidity"><i class="devicon-solidity-plain tech-icon"></i></div>
