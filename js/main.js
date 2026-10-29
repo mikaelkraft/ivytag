@@ -19893,7 +19893,7 @@
                 scrollTrigger: {
                     trigger: t,
                     toggleActions: "play none none none",
-                    scrub: 6,
+                    scrub: 3,
                     start: "top center",
                     end: "top top"
                 }
@@ -19903,32 +19903,32 @@
                 rotate: -1,
                 transformOrigin: "left bottom",
                 xPercent: -1,
-                duration: 1.2
+                duration: .6
             }).from(".".concat(n, "studio__section__h2"), {
                 autoAlpha: 0,
                 scale: .95,
                 rotate: -1,
                 transformOrigin: "left bottom",
                 xPercent: -1,
-                duration: 1.2
-            }, "<.3").from(".".concat(n, "web__section__imgs img"), {
+                duration: .6
+            }, "<.2").from(".".concat(n, "web__section__imgs img"), {
                 autoAlpha: 0,
                 scale: .95,
-                yPercent: -20,
-                duration: 3.5,
-                stagger: 1.2
-            }, "<.2")
+                yPercent: -30,
+                duration: 2,
+                stagger: 1
+            }, "<.1")
         }
         )),
         Lr.utils.toArray(".section__legende").forEach((function (t, e) {
             Lr.fromTo(t, {
-                xPercent: 12
+                xPercent: "30"
             }, {
-                xPercent: -12,
+                xPercent: "-30",
                 scrollTrigger: {
                     trigger: t,
                     toggleActions: "restart pause resume none",
-                    scrub: 6
+                    scrub: 2
                 }
             })
         }
@@ -19997,13 +19997,13 @@
         )),
         Lr.utils.toArray(".section__imgs").forEach((function (t, e) {
             Lr.fromTo(t, {
-                xPercent: 18
+                xPercent: "50"
             }, {
-                xPercent: -18,
+                xPercent: "-50",
                 scrollTrigger: {
                     trigger: t,
                     toggleActions: "restart pause resume none",
-                    scrub: 8
+                    scrub: 4
                 }
             })
         }
@@ -20055,41 +20055,14 @@
                 scrollTrigger: {
                     trigger: t,
                     toggleActions: "restart pause resume none",
-                    scrub: 6,
-                    start: "top 80%",
-                    end: "top 10%"
+                    scrub: 3,
+                    start: "top center",
+                    end: "top top"
                 },
-                yPercent: 35
+                yPercent: 100
             })
         }
         )),
-        Lr.utils.toArray(".mission-animate-title").forEach((function (t) {
-            Lr.from(t, {
-                scrollTrigger: {
-                    trigger: t,
-                    toggleActions: "play none none none",
-                    start: "top 90%"
-                },
-                opacity: 0,
-                y: 20,
-                duration: 1.4,
-                ease: "power2.out"
-            })
-        })),
-        Lr.utils.toArray(".mission-animate-desc").forEach((function (t) {
-            Lr.from(t, {
-                scrollTrigger: {
-                    trigger: t,
-                    toggleActions: "play none none none",
-                    start: "top 88%"
-                },
-                opacity: 0,
-                y: 32,
-                filter: "blur(6px)",
-                duration: 1.6,
-                ease: "power2.out"
-            })
-        })),
         Lr.utils.toArray(".gsap-para-l").forEach((function (t, e) {
             Lr.from(t, {
                 scrollTrigger: {

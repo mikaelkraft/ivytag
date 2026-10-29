@@ -3380,6 +3380,8 @@ textarea.app-form-control {
 .web__section__h3 {
     color: #ffffff !important;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .web__section__p {
@@ -3387,6 +3389,9 @@ textarea.app-form-control {
     font-size: clamp(14px, 1.3vw, 16px) !important;
     line-height: 1.8 !important;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95);
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-width: 880px;
 }
 
 .web__section__list .list__elem h5 {
@@ -3398,14 +3403,4 @@ textarea.app-form-control {
 .web__section__legende_p {
     color: #a7f3d0 !important;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
-}
-
-.mission-animate-title {
-    will-change: transform, opacity;
-    letter-spacing: 0.14em;
-}
-
-.mission-animate-desc {
-    will-change: transform, opacity, filter;
-    max-width: 880px;
 }
