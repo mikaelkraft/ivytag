@@ -21086,8 +21086,8 @@ var IVY_PROJECTS = {
             { label: "Palette", value: "Forest & Emerald" },
             { label: "License", value: "MIT Open Source" }
         ],
-        description: "Ivytag Theme is Mikael Kraft's signature developer dark theme where green is the living soul — harmonizing deep spruce, electric emeralds, and seafoam jade with oceanic blue accents for an ergonomic, high-contrast coding experience across VS Code, Antigravity, and Eclipse.",
-        tags: ["VS Code", "TextMate", "Color Systems", "JSON", "UI Design"],
+        description: "Ivytag Theme is Mikael Kraft's signature developer dark theme where green is the living soul, harmonizing deep spruce, electric emeralds, and seafoam jade with oceanic blue accents for an ergonomic, high-contrast coding experience across VS Code, Antigravity, Eclipse, and Cloud Shells.",
+        tags: ["VS Code", "Antigravity", "Eclipse", "Cloud Shells"],
         liveUrl: "https://github.com/mikaelkraft/ivytag-theme",
         liveLabel: "View Theme Repository"
     }
