@@ -1174,7 +1174,10 @@ a:visited,a:hover,a:focus,a:active {
     z-index: 20;
     text-align: right;
     color: Chartreuse;
-    padding-right: clamp(16px, 4vw, 36px);
+    font-size: clamp(18px, 2.4vw, 28px) !important;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding-right: clamp(20px, 4.5vw, 48px);
     box-sizing: border-box;
 }
 
@@ -1253,8 +1256,8 @@ a:visited,a:hover,a:focus,a:active {
         display: block !important;
         visibility: visible !important;
         opacity: 1;
-        font-size: clamp(11px, 2.8vw, 13px);
-        padding-right: 18px;
+        font-size: clamp(15px, 4.2vw, 20px) !important;
+        padding-right: 20px;
     }
 }
 
@@ -1373,7 +1376,7 @@ a:visited,a:hover,a:focus,a:active {
 .web__section__content .list__elem:not(:first-child):after {
     position: absolute;
     content: "";
-    background-color: #0a4725;
+    background-color: lime !important;
     top: calc(var(--font-size-s) * -2);
     left: calc(var(--font-size-s) * 1.5);
     height: calc(var(--font-size-s) * 2);
@@ -1383,6 +1386,7 @@ a:visited,a:hover,a:focus,a:active {
     transform-origin: top;
     -webkit-transform: scaleY(0);
     transform: scaleY(0);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.45);
 }
 
 .web__section__content .list__elem .list__icon .icon {
@@ -1397,6 +1401,7 @@ a:visited,a:hover,a:focus,a:active {
 .web__section__content .list__elem.active:not(:first-child):after {
     -webkit-transform: scaleY(1);
     transform: scaleY(1);
+    background-color: lime !important;
 }
 
 .web__section__content .list__elem.active .list__icon {
