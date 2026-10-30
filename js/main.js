@@ -19889,13 +19889,14 @@
         )),
         Lr.utils.toArray(".gsap-section-in").forEach((function (t, e) {
             var n = t.id;
+            var isMobile = typeof window !== "undefined" && window.innerWidth < 768;
             Lr.timeline({
                 scrollTrigger: {
                     trigger: t,
                     toggleActions: "play none none none",
-                    scrub: 3,
-                    start: "top center",
-                    end: "top top"
+                    scrub: isMobile ? 1.2 : 1.8,
+                    start: isMobile ? "top 80%" : "top 70%",
+                    end: "top 15%"
                 }
             }).from(".".concat(n, "studio__section__h1"), {
                 autoAlpha: 0,
@@ -19913,22 +19914,28 @@
                 duration: .6
             }, "<.2").from(".".concat(n, "web__section__imgs img"), {
                 autoAlpha: 0,
-                scale: .95,
-                yPercent: -30,
-                duration: 2,
-                stagger: 1
+                scale: .94,
+                yPercent: isMobile ? -16 : -25,
+                duration: 1.4,
+                stagger: isMobile ? 0.2 : 0.35,
+                ease: "power2.out"
             }, "<.1")
         }
         )),
         Lr.utils.toArray(".section__legende").forEach((function (t, e) {
+            var isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+            var drift = isMobile ? 16 : 26;
             Lr.fromTo(t, {
-                xPercent: "30"
+                xPercent: drift
             }, {
-                xPercent: "-30",
+                xPercent: -drift,
+                ease: "none",
                 scrollTrigger: {
                     trigger: t,
+                    start: "top bottom",
+                    end: "bottom top",
                     toggleActions: "restart pause resume none",
-                    scrub: 2
+                    scrub: isMobile ? 1.5 : 2
                 }
             })
         }
@@ -19996,14 +20003,19 @@
         }
         )),
         Lr.utils.toArray(".section__imgs").forEach((function (t, e) {
+            var isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+            var drift = isMobile ? 24 : 36;
             Lr.fromTo(t, {
-                xPercent: "50"
+                xPercent: drift
             }, {
-                xPercent: "-50",
+                xPercent: -drift,
+                ease: "none",
                 scrollTrigger: {
                     trigger: t,
+                    start: "top bottom",
+                    end: "bottom top",
                     toggleActions: "restart pause resume none",
-                    scrub: 4
+                    scrub: isMobile ? 1.4 : 2.2
                 }
             })
         }
@@ -21063,6 +21075,21 @@ var IVY_PROJECTS = {
         tags: ["JavaScript", "Acode Plugin API", "Multi-Provider AI", "REST", "Sass"],
         liveUrl: "https://github.com/mikaelkraft/wit-ai",
         liveLabel: "View Plugin Repository"
+    },
+    "ivytag-theme": {
+        id: "ivytag-theme",
+        title: "Ivytag Theme",
+        tagline: "Signature Developer Dark Theme with Deep Forest Greens, Electric Emeralds & Vibrant Accents",
+        badge: "VS CODE THEME // DEV TOOLS",
+        stats: [
+            { label: "Platforms", value: "VS Code & IDEs" },
+            { label: "Palette", value: "Forest & Emerald" },
+            { label: "License", value: "MIT Open Source" }
+        ],
+        description: "Ivytag Theme is Mikael Kraft's signature developer dark theme where green is the living soul — harmonizing deep spruce, electric emeralds, and seafoam jade with oceanic blue accents for an ergonomic, high-contrast coding experience across VS Code, Antigravity, and Eclipse.",
+        tags: ["VS Code", "TextMate", "Color Systems", "JSON", "UI Design"],
+        liveUrl: "https://github.com/mikaelkraft/ivytag-theme",
+        liveLabel: "View Theme Repository"
     }
 };
 
